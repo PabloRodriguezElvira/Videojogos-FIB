@@ -1,15 +1,8 @@
 ﻿  Game.cpp
   main.cpp
+  Menu.cpp
+C:\Users\Paloli\Desktop\VJ\Videojogos-FIB\Proyecto\Night-Knight\Game.h(51,7): error C3646: 'menu': especificador de invalidación desconocido
+C:\Users\Paloli\Desktop\VJ\Videojogos-FIB\Proyecto\Night-Knight\Game.h(51,11): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
   Player.cpp
   Scene.cpp
-  Shader.cpp
-  ShaderProgram.cpp
-  Sprite.cpp
-  Texture.cpp
-  TileMap.cpp
   Generando código...
-SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_DXT.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_helper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(SOIL.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-SOIL.lib(stb_image_aug.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(stb_image_aug.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
-  Night-Knight.vcxproj -> C:\Users\Paloli\Desktop\VJ\Videojogos-FIB\Proyecto\Night-Knight\Debug\Night-Knight.exe
