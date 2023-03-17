@@ -4,9 +4,13 @@
 #include <vector>
 
 #include "TileMap.h"
+#include "ShaderCtrl.h"
 
 
 using namespace std;
+
+#define SCREEN_X 32
+#define SCREEN_Y 16
 
 
 TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
@@ -184,7 +188,7 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	return false;
 }
 
-bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) const
+bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) 
 {
 	int x0, x1, y;
 	
@@ -193,45 +197,21 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	y = (pos.y + size.y - 1) / tileSize;
 	for(int x=x0; x<=x1; x++)
 	{
-		if(map[y*mapSize.x+x] != 0)
+		int posTile = y * mapSize.x + x;
+		if(map[posTile] != 0)
 		{
+			//Pintar tile: (si es diferente del 0 - aire).
+			map[posTile] = 2;
+			prepareArrays(glm::vec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
+
+			//Actualizar posición de Y.
 			if(*posY - tileSize * y + size.y <= 4)
 			{
 				*posY = tileSize * y - size.y;
 				return true;
 			}
 		}
-	}
-	
+	}	
 	return false;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
