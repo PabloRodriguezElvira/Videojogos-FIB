@@ -200,10 +200,6 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 		int posTile = y * mapSize.x + x;
 		if(map[posTile] != 0)
 		{
-			//Pintar tile: (si es diferente del 0 - aire).
-			map[posTile] = 2;
-			prepareArrays(glm::vec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
-
 			//Actualizar posición de Y.
 			if(*posY - tileSize * y + size.y <= 4)
 			{
@@ -213,5 +209,24 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 		}
 	}	
 	return false;
+}
+
+void TileMap::pintarTiles(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) 
+{
+	int x0, x1, y;
+	
+	x0 = pos.x / tileSize;
+	x1 = (pos.x + size.x - 1) / tileSize;
+	y = (pos.y + size.y - 1) / tileSize;
+	for(int x=x0; x<=x1; x++)
+	{
+		int posTile = (y+1) * mapSize.x + x;
+		if(map[posTile] != 0)
+		{
+			//Pintar tile: (si es diferente del 0 - aire).
+			map[posTile] = 2;
+			prepareArrays(glm::vec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
+		}
+	}	
 }
 

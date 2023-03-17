@@ -61,6 +61,8 @@ void Player::update(int deltaTime)
 			posPlayer.x += 2;
 			sprite->changeAnimation(STAND_LEFT);
 		}
+		//Pintar tiles.
+		map->pintarTiles(posPlayer, glm::ivec2(32,32), &posPlayer.y);
 	}
 	else if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 	{
@@ -72,6 +74,8 @@ void Player::update(int deltaTime)
 			posPlayer.x -= 2;
 			sprite->changeAnimation(STAND_RIGHT);
 		}
+		//Pintar tiles.
+		map->pintarTiles(posPlayer, glm::ivec2(32,32), &posPlayer.y);
 	}
 	else
 	{
@@ -101,6 +105,9 @@ void Player::update(int deltaTime)
 		posPlayer.y += FALL_STEP;
 		if(map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y))
 		{
+			//Pintar tiles.
+			map->pintarTiles(posPlayer, glm::ivec2(32,32), &posPlayer.y);
+
 			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
 			{
 				bJumping = true;
@@ -109,7 +116,6 @@ void Player::update(int deltaTime)
 			}
 		}
 	}
-	
 	sprite->setPosition(glm::vec2(float(tileMapDispl.x + posPlayer.x), float(tileMapDispl.y + posPlayer.y)));
 }
 
