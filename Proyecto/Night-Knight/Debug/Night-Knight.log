@@ -1,8 +1,0 @@
-﻿  Game.cpp
-  main.cpp
-  Menu.cpp
-C:\Users\Paloli\Desktop\VJ\Videojogos-FIB\Proyecto\Night-Knight\Game.h(51,7): error C3646: 'menu': especificador de invalidación desconocido
-C:\Users\Paloli\Desktop\VJ\Videojogos-FIB\Proyecto\Night-Knight\Game.h(51,11): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
-  Player.cpp
-  Scene.cpp
-  Generando código...
