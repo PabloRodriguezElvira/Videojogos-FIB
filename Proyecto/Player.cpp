@@ -62,7 +62,7 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_LEFT);
 		}
 		//Pintar tiles.
-		map->pintarTiles(posPlayer, glm::ivec2(32,32), &posPlayer.y);
+		if (!bJumping) map->pintarTiles(posPlayer, glm::ivec2(32,32), &posPlayer.y);
 	}
 	else if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 	{
@@ -75,7 +75,7 @@ void Player::update(int deltaTime)
 			sprite->changeAnimation(STAND_RIGHT);
 		}
 		//Pintar tiles.
-		map->pintarTiles(posPlayer, glm::ivec2(32,32), &posPlayer.y);
+		if (!bJumping) map->pintarTiles(posPlayer, glm::ivec2(32,32), &posPlayer.y);
 	}
 	else
 	{
@@ -91,11 +91,12 @@ void Player::update(int deltaTime)
 		if(jumpAngle == 180)
 		{
 			bJumping = false;
-			posPlayer.y = startY;
 		}
 		else
 		{
-			posPlayer.y = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
+			int newPos = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
+			newPos <= posPlayer.y + FALL_STEP ? posPlayer.y = newPos : posPlayer.y += FALL_STEP;
+
 			if(jumpAngle > 90)
 				bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
 		}
