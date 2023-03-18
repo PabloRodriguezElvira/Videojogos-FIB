@@ -94,11 +94,18 @@ void Player::update(int deltaTime)
 		}
 		else
 		{
-			int newPos = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
-			newPos <= posPlayer.y + FALL_STEP ? posPlayer.y = newPos : posPlayer.y += FALL_STEP;
-
-			if(jumpAngle > 90)
+			int newPos;
+			if (jumpAngle <= 90)
+			{
+				newPos = int(startY - 96 * sin(3.14159f * jumpAngle / 180.f));
+				posPlayer.y = newPos;
+			}
+			else
+			{
+				newPos = int(startY - 20 - 76 * sin(3.14159f * jumpAngle / 180.f));
+				newPos <= posPlayer.y + FALL_STEP ? posPlayer.y = newPos : posPlayer.y += FALL_STEP;
 				bJumping = !map->collisionMoveDown(posPlayer, glm::ivec2(32, 32), &posPlayer.y);
+			}	
 		}
 	}
 	else
