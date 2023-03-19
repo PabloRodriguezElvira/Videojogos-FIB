@@ -5,12 +5,11 @@
 
 #include "TileMap.h"
 #include "ShaderCtrl.h"
+#include "Player.h"
 
 
 using namespace std;
 
-#define SCREEN_X 32
-#define SCREEN_Y 16
 
 
 TileMap *TileMap::createTileMap(const string &levelFile, const glm::vec2 &minCoords, ShaderProgram &program)
@@ -160,9 +159,9 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) c
 {
 	int x, y0, y1;
 	
-	x = pos.x / tileSize;
-	y0 = pos.y / tileSize;
-	y1 = (pos.y + size.y - 1) / tileSize;
+	x = (pos.x + PLAYER_HITBOX_X) / tileSize;
+	y0 = (pos.y + PLAYER_HITBOX_Y) / tileSize;
+	y1 = (pos.y + size.y - 1 + PLAYER_HITBOX_Y) / tileSize;
 	for(int y=y0; y<=y1; y++)
 	{
 		if(map[y*mapSize.x+x] != 0)
@@ -176,9 +175,9 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 {
 	int x, y0, y1;
 	
-	x = (pos.x + size.x - 1) / tileSize;
-	y0 = pos.y / tileSize;
-	y1 = (pos.y + size.y - 1) / tileSize;
+	x = (pos.x + size.x - 1 + PLAYER_HITBOX_X) / tileSize;
+	y0 = (pos.y + PLAYER_HITBOX_Y) / tileSize;
+	y1 = (pos.y + size.y - 1 + PLAYER_HITBOX_Y) / tileSize;
 	for(int y=y0; y<=y1; y++)
 	{
 		if(map[y*mapSize.x+x] != 0)
@@ -192,18 +191,18 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 {
 	int x0, x1, y;
 	
-	x0 = pos.x / tileSize;
-	x1 = (pos.x + size.x - 1) / tileSize;
-	y = (pos.y + size.y - 1) / tileSize;
+	x0 = (pos.x + PLAYER_HITBOX_X) / tileSize;
+	x1 = (pos.x + size.x - 1 + PLAYER_HITBOX_X) / tileSize;
+	y = (pos.y + size.y - 1 + PLAYER_HITBOX_Y) / tileSize;
 	for(int x=x0; x<=x1; x++)
 	{
 		int posTile = y * mapSize.x + x;
 		if(map[posTile] != 0)
 		{
 			//Actualizar posición de Y.
-			if(*posY - tileSize * y + size.y <= 4)
+			if(*posY + PLAYER_HITBOX_Y - tileSize * y + size.y <= 4)
 			{
-				*posY = tileSize * y - size.y;
+				*posY = tileSize * y - size.y - PLAYER_HITBOX_Y;
 				return true;
 			}
 		}
@@ -211,13 +210,13 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	return false;
 }
 
-void TileMap::pintarTiles(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY) 
+void TileMap::pintarTiles(const glm::ivec2 &pos, const glm::ivec2 &size) 
 {
 	int x0, x1, y;
 	
-	x0 = pos.x / tileSize;
-	x1 = (pos.x + size.x - 1) / tileSize;
-	y = (pos.y + size.y - 1) / tileSize;
+	x0 = (pos.x + PLAYER_HITBOX_X) / tileSize;
+	x1 = (pos.x + size.x - 1 + PLAYER_HITBOX_X) / tileSize;
+	y = (pos.y + size.y - 1 + PLAYER_HITBOX_Y) / tileSize;
 	for(int x=x0; x<=x1; x++)
 	{
 		int posTile = (y+1) * mapSize.x + x;

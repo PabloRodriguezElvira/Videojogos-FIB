@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimKeyframes.h" />
+    <ClInclude Include="Definitions.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="KeyboardCtrl.h" />
     <ClInclude Include="Menu.h" />

@@ -6,10 +6,6 @@
 #include "Shader.h"
 
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
-
-
 void ShaderCtrl::init()
 {
 	Shader vShader, fShader;

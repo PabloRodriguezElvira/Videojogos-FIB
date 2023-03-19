@@ -1,6 +1,8 @@
 #ifndef _PLAYER_INCLUDE
 #define _PLAYER_INCLUDE
 
+#include "Definitions.h"
+
 
 #include "Sprite.h"
 #include "TileMap.h"
@@ -22,7 +24,7 @@ public:
 	void setPosition(const glm::vec2 &pos);
 	
 private:
-	bool bJumping;
+	bool bJumping, bFalling;
 	glm::ivec2 tileMapDispl, posPlayer;
 	int jumpAngle, startY;
 	Texture spritesheet;

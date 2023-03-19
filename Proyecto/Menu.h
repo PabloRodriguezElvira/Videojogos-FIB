@@ -1,6 +1,8 @@
 #ifndef _MENU_INCLUDE
 #define _MENU_INCLUDE
 
+#include "Definitions.h"
+
 
 #include "State.h"
 

@@ -1,14 +1,12 @@
 #ifndef _GAME_INCLUDE
 #define _GAME_INCLUDE
 
+#include "Definitions.h"
+
 
 #include "Scene.h"
 #include "State.h"
 #include "ShaderCtrl.h"
-
-
-#define SCREEN_WIDTH 640 
-#define SCREEN_HEIGHT 480 
 
 
 // Game is a singleton (a class with a single instance) that represents our whole application

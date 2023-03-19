@@ -1,8 +1,7 @@
 #ifndef _SHADERCTRL_INCLUDE
 #define _SHADERCTRL_INCLUDE
 
-#define RENDER_SHADERS ShaderCtrl::instance().render()
-#define TEX_PROGRAM ShaderCtrl::instance().getTexProgram()
+#include "Definitions.h"
 
 
 #include <glm/glm.hpp>

@@ -1,6 +1,8 @@
 #ifndef _TILE_MAP_INCLUDE
 #define _TILE_MAP_INCLUDE
 
+#include "Definitions.h"
+
 
 #include <glm/glm.hpp>
 
@@ -34,7 +36,7 @@ public:
 	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
 	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY);
-	void pintarTiles(const glm::ivec2 &pos, const glm::ivec2 &size, int *posY);
+	void pintarTiles(const glm::ivec2 &pos, const glm::ivec2 &size);
 	
 private:
 	bool loadLevel(const string &levelFile);
