@@ -17,6 +17,7 @@ bool Game::update(int deltaTime)
 {
 	state->update(deltaTime);
 	
+	return true;
 	return bPlay;
 }
 
