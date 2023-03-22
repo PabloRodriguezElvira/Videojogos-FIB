@@ -15,14 +15,10 @@
 #define PLAYER_HITBOX_Y 26
 #define PLAYER_HITBOX glm::ivec2(PLAYER_HITBOX_X, PLAYER_HITBOX_Y)
 
-// Scene
-#define INIT_PLAYER_X_TILES 3
-#define INIT_PLAYER_Y_TILES 25
+// Scene & TileMap
+#define SCREEN_X 32
+#define SCREEN_Y 16
 
 // ShaderCtrl
 #define RENDER_SHADERS ShaderCtrl::instance().render()
 #define TEX_PROGRAM ShaderCtrl::instance().getTexProgram()
-
-// TileMap
-#define SCREEN_X 32
-#define SCREEN_Y 16

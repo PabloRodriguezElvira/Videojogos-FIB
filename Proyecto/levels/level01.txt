@@ -1,35 +1,28 @@
 TILEMAP
-39 28 							-- Size of tile map in tiles
-16 16 							-- Tile size (físico) & block size (gráfico)
-images/blocksMC.png 					-- Tilesheet
-0							-- Which level to use
+16 22 							-- Size of tile map in tiles
+32 16 32 16 						-- Tile size (físico) & block size (gráfico)
+images/TileSetLvl1.png 					-- Tilesheet
 8 4 							-- Number of tiles in tilesheet
-445555555555555555555555555555555555544
-33                                   33
-33                                   33
-33                                   33
-33               33333               33
-33    111111111113333311111111111    33
-33               33333               33
-33                                   33
-33111                             11133
-33                                   33
-33                                   33
-33  1111111111111111111111111111111  33
-33               45554               33
-33               34543               33
-33    111111111113343311111111111    33
-33               34543               33
-33               45554               33
-33           1111222221111           33
-33                                   33
-33                                   33
-33      11111111111111111111111      33
-33                                   33
-33                                   33
-33111                             11133
-33                                   33
-33                                   33
-33                                   33
-331111111111111111111111111111111111133
-445555555555555555555555555555555555544
+4 3 							-- Initial player tile (la que quieras + (-1, -2))
+B99999999999999B
+C              C
+9              9
+A              A
+9              9
+A   12222223   A
+9      99      9
+A      AA      A
+9  1222992223  9
+A      AA      A
+9      99      9
+A 12222AA22223 A
+9              9
+A              A
+9 13        13 9
+A              A
+9              9
+A 4          4 A
+9              9
+A              A
+B12223    12223B
+CEEEEEEEEEEEEEEC

@@ -57,7 +57,7 @@ void Scene::initPlayer()
 {
 	player = new Player();
 	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
-	player->setPosition(glm::vec2(INIT_PLAYER_X_TILES * map->getTileSize() - PLAYER_HITBOX_X, INIT_PLAYER_Y_TILES * map->getTileSize() - PLAYER_HITBOX_Y));
+	player->setPosition(glm::vec2(map->getInitPlayerPosX() - PLAYER_HITBOX_X, map->getInitPlayerPosY() - PLAYER_HITBOX_Y));
 	player->setTileMap(map);
 }
 
