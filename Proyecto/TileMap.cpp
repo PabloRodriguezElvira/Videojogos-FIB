@@ -78,7 +78,11 @@ bool TileMap::loadLevel(const string &levelFile)
 	tilesheet.setMagFilter(GL_NEAREST);
 	getline(fin, line);
 	sstream.str(line);
+	sstream >> biome;
+	getline(fin, line);
+	sstream.str(line);
 	sstream >> tilesheetSize.x >> tilesheetSize.y;
+	biomeShift = biome * tilesheetSize.x;
 	tileTexSize = glm::vec2(1.f / tilesheetSize.x, 1.f / tilesheetSize.y);
 	
 	map = new int[mapSize.x * mapSize.y];
@@ -90,7 +94,7 @@ bool TileMap::loadLevel(const string &levelFile)
 			if(tile == ' ')
 				map[j*mapSize.x+i] = 0;
 			else
-				map[j*mapSize.x+i] = tile - int('0');
+				map[j*mapSize.x+i] = (tile - int('0')) + biomeShift;
 		}
 		fin.get(tile);
 #ifndef _WIN32
@@ -164,7 +168,7 @@ bool TileMap::collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) c
 	y1 = (pos.y + size.y - 1 + PLAYER_HITBOX_Y) / tileSize;
 	for(int y=y0; y<=y1; y++)
 	{
-		if(map[y*mapSize.x+x] != 0)
+		if(map[y*mapSize.x+x] > (2 + biomeShift))
 			return true;
 	}
 	
@@ -180,7 +184,7 @@ bool TileMap::collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) 
 	y1 = (pos.y + size.y - 1 + PLAYER_HITBOX_Y) / tileSize;
 	for(int y=y0; y<=y1; y++)
 	{
-		if(map[y*mapSize.x+x] != 0)
+		if(map[y*mapSize.x+x] > (2 + biomeShift))
 			return true;
 	}
 	
@@ -210,7 +214,30 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	return false;
 }
 
-void TileMap::pintarTiles(const glm::ivec2 &pos, const glm::ivec2 &size) 
+bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY)
+{
+	//int x0, x1, y;
+
+	//x0 = (pos.x + PLAYER_HITBOX_X) / tileSize;
+	//x1 = (pos.x + size.x - 1 + PLAYER_HITBOX_X) / tileSize;
+	//y = (pos.y + size.y - 1 + PLAYER_HITBOX_Y) / tileSize;
+	//for (int x = x0; x <= x1; x++)
+	//{
+	//	int posTile = y * mapSize.x + x;
+	//	if (map[posTile] != 0)
+	//	{
+	//		//Actualizar posición de Y.
+	//		if (*posY + PLAYER_HITBOX_Y - tileSize * y + size.y <= 4)
+	//		{
+	//			*posY = tileSize * y - size.y - PLAYER_HITBOX_Y;
+	//			return true;
+	//		}
+	//	}
+	//}
+	return false;
+}
+
+void TileMap::paintTiles(const glm::ivec2 &pos, const glm::ivec2 &size) 
 {
 	int x0, x1, y;
 	
@@ -220,10 +247,10 @@ void TileMap::pintarTiles(const glm::ivec2 &pos, const glm::ivec2 &size)
 	for(int x=x0; x<=x1; x++)
 	{
 		int posTile = (y+1) * mapSize.x + x;
-		if(map[posTile] != 0)
+		if(map[posTile] == (1 + biomeShift))
 		{
 			//Pintar tile: (si es diferente del 0 - aire).
-			map[posTile] = 2;
+			map[posTile] = 2 + biomeShift;
 			prepareArrays(glm::vec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
 		}
 	}	

@@ -64,7 +64,7 @@ void Player::update(int deltaTime)
 
 		if (bFalling)
 		{
-			map->pintarTiles(posPlayer, HITBOX_SIZE);
+			map->paintTiles(posPlayer, HITBOX_SIZE);
 			
 			if (sprite->animation() != JUMP_LEFT)
 				sprite->changeAnimation(JUMP_LEFT);
@@ -76,7 +76,7 @@ void Player::update(int deltaTime)
 		}
 		else
 		{
-			map->pintarTiles(posPlayer, HITBOX_SIZE);
+			map->paintTiles(posPlayer, HITBOX_SIZE);
 
 			if (c && sprite->animation() != STAND_LEFT)
 				sprite->changeAnimation(STAND_LEFT);
@@ -92,7 +92,7 @@ void Player::update(int deltaTime)
 
 		if (bFalling)
 		{
-			map->pintarTiles(posPlayer, HITBOX_SIZE);
+			map->paintTiles(posPlayer, HITBOX_SIZE);
 
 			if (sprite->animation() != JUMP_RIGHT)
 				sprite->changeAnimation(JUMP_RIGHT);
@@ -104,7 +104,7 @@ void Player::update(int deltaTime)
 		}
 		else
 		{
-			map->pintarTiles(posPlayer, HITBOX_SIZE);
+			map->paintTiles(posPlayer, HITBOX_SIZE);
 
 			if (c && sprite->animation() != STAND_RIGHT)
 				sprite->changeAnimation(STAND_RIGHT);
@@ -128,7 +128,7 @@ void Player::update(int deltaTime)
 		{
 			bJumping = false;
 		}
-		else if (jumpAngle == 4)
+		else if (jumpAngle == 12)
 		{
 			if (sprite->animation() % 2 == 0 && sprite->animation() != JUMP_LEFT)
 				sprite->changeAnimation(JUMP_LEFT);
@@ -175,7 +175,7 @@ void Player::update(int deltaTime)
 		bFalling = !map->collisionMoveDown(posPlayer, HITBOX_SIZE, &posPlayer.y);
 		if(!bFalling)
 		{
-			map->pintarTiles(posPlayer, HITBOX_SIZE);
+			map->paintTiles(posPlayer, HITBOX_SIZE);
 
 			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
 			{
