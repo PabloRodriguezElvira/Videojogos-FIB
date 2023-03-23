@@ -204,42 +204,42 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 	x1 = (pos.x + size.x - 1 + PLAYER_HITBOX_X) / tileSize.x;
 	y = (pos.y + size.y - 1 + PLAYER_HITBOX_Y) / tileSize.y;
 	int posTile;
-	for(int x=x0; x<=x1; x++)
+	for (int x = x0; x <= x1; x++)
 	{
 		posTile = y * mapSize.x + x;
 		if(map[posTile] != 0)
 		{
 			//Actualizar posición de Y.
-			if(*posY + PLAYER_HITBOX_Y - tileSize.y * y + size.y <= 4)
+			if(*posY + PLAYER_HITBOX_Y + size.y - tileSize.y * y <= FALL_STEP)
 			{
 				*posY = tileSize.y * y - size.y - PLAYER_HITBOX_Y;
 				return true;
 			}
 		}
-	}	
+	}
 	return false;
 }
 
 bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY)
 {
-	//int x0, x1, y;
+	int x0, x1, y;
 
-	//x0 = (pos.x + PLAYER_HITBOX_X) / tileSize;
-	//x1 = (pos.x + size.x - 1 + PLAYER_HITBOX_X) / tileSize;
-	//y = (pos.y + size.y - 1 + PLAYER_HITBOX_Y) / tileSize;
-	//for (int x = x0; x <= x1; x++)
-	//{
-	//	int posTile = y * mapSize.x + x;
-	//	if (map[posTile] != 0)
-	//	{
-	//		//Actualizar posición de Y.
-	//		if (*posY + PLAYER_HITBOX_Y - tileSize * y + size.y <= 4)
-	//		{
-	//			*posY = tileSize * y - size.y - PLAYER_HITBOX_Y;
-	//			return true;
-	//		}
-	//	}
-	//}
+	x0 = (pos.x + PLAYER_HITBOX_X) / tileSize.x;
+	x1 = (pos.x + size.x - 1 + PLAYER_HITBOX_X) / tileSize.x;
+	y = (pos.y + PLAYER_HITBOX_Y) / tileSize.y;
+	for (int x = x0; x <= x1; x++)
+	{
+		int posTile = y * mapSize.x + x;
+		if (map[posTile] > 8)
+		{
+			//Actualizar posición de Y.
+			if (tileSize.y * (y + 1) - (*posY + PLAYER_HITBOX_Y) <= FALL_STEP + 1)
+			{
+				*posY = tileSize.y * (y + 1) - PLAYER_HITBOX_Y;
+				return true;
+			}
+		}
+	}
 	return false;
 }
 

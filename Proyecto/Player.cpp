@@ -18,6 +18,7 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	bJumping = false;
 	bFalling = false;
+	coyote = COYOTE_TIME;
 	spritesheet.loadFromFile("images/zero.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.0625, 0.1), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(8);
@@ -58,58 +59,78 @@ void Player::update(int deltaTime)
 	sprite->update(deltaTime);
 	if(Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
-		posPlayer.x -= MOVE_STEP;
-		bool c = map->collisionMoveLeft(posPlayer, HITBOX_SIZE);
-		if (c) posPlayer.x += MOVE_STEP;
+		if (!Game::instance().getSpecialKey(GLUT_KEY_RIGHT) || bFalling || bJumping)
+		{
+			posPlayer.x -= MOVE_STEP;
+			bool c = map->collisionMoveLeft(posPlayer, HITBOX_SIZE);
+			if (c) posPlayer.x += MOVE_STEP;
 
-		if (bFalling)
-		{
-			map->paintTiles(posPlayer, HITBOX_SIZE);
-			
-			if (sprite->animation() != JUMP_LEFT)
-				sprite->changeAnimation(JUMP_LEFT);
-		}
-		else if (bJumping)
-		{
-			if (sprite->animation() != JUMP_LEFT)
-				sprite->changeAnimation(JUMP_LEFT);
+			if (bFalling)
+			{
+				map->paintTiles(posPlayer, HITBOX_SIZE);
+
+				if (sprite->animation() != JUMP_LEFT)
+					sprite->changeAnimation(JUMP_LEFT);
+			}
+			else if (bJumping)
+			{
+				if (sprite->animation() != JUMP_LEFT)
+					sprite->changeAnimation(JUMP_LEFT);
+			}
+			else
+			{
+				map->paintTiles(posPlayer, HITBOX_SIZE);
+
+				if (c && sprite->animation() != STAND_LEFT)
+					sprite->changeAnimation(STAND_LEFT);
+				else if (!c && sprite->animation() != MOVE_LEFT)
+					sprite->changeAnimation(MOVE_LEFT);
+			}
 		}
 		else
 		{
-			map->paintTiles(posPlayer, HITBOX_SIZE);
-
-			if (c && sprite->animation() != STAND_LEFT)
+			if (sprite->animation() == MOVE_LEFT)
 				sprite->changeAnimation(STAND_LEFT);
-			else if (!c && sprite->animation() != MOVE_LEFT)
-				sprite->changeAnimation(MOVE_LEFT);
+			else if (sprite->animation() == MOVE_RIGHT)
+				sprite->changeAnimation(STAND_RIGHT);
 		}
 	}
 	else if(Game::instance().getSpecialKey(GLUT_KEY_RIGHT))
 	{
-		posPlayer.x += MOVE_STEP;
-		bool c = map->collisionMoveRight(posPlayer, HITBOX_SIZE);
-		if (c) posPlayer.x -= MOVE_STEP;
-
-		if (bFalling)
+		if (!Game::instance().getSpecialKey(GLUT_KEY_LEFT) || bFalling || bJumping)
 		{
-			map->paintTiles(posPlayer, HITBOX_SIZE);
+			posPlayer.x += MOVE_STEP;
+			bool c = map->collisionMoveRight(posPlayer, HITBOX_SIZE);
+			if (c) posPlayer.x -= MOVE_STEP;
 
-			if (sprite->animation() != JUMP_RIGHT)
-				sprite->changeAnimation(JUMP_RIGHT);
-		}
-		else if (bJumping)
-		{
-			if (sprite->animation() != JUMP_RIGHT)
-				sprite->changeAnimation(JUMP_RIGHT);
+			if (bFalling)
+			{
+				map->paintTiles(posPlayer, HITBOX_SIZE);
+
+				if (sprite->animation() != JUMP_RIGHT)
+					sprite->changeAnimation(JUMP_RIGHT);
+			}
+			else if (bJumping)
+			{
+				if (sprite->animation() != JUMP_RIGHT)
+					sprite->changeAnimation(JUMP_RIGHT);
+			}
+			else
+			{
+				map->paintTiles(posPlayer, HITBOX_SIZE);
+
+				if (c && sprite->animation() != STAND_RIGHT)
+					sprite->changeAnimation(STAND_RIGHT);
+				else if (!c && sprite->animation() != MOVE_RIGHT)
+					sprite->changeAnimation(MOVE_RIGHT);
+			}
 		}
 		else
 		{
-			map->paintTiles(posPlayer, HITBOX_SIZE);
-
-			if (c && sprite->animation() != STAND_RIGHT)
+			if (sprite->animation() == MOVE_LEFT)
+				sprite->changeAnimation(STAND_LEFT);
+			else if (sprite->animation() == MOVE_RIGHT)
 				sprite->changeAnimation(STAND_RIGHT);
-			else if (!c && sprite->animation() != MOVE_RIGHT)
-				sprite->changeAnimation(MOVE_RIGHT);
 		}
 	}
 	else
@@ -122,28 +143,52 @@ void Player::update(int deltaTime)
 	if(bJumping)
 	{
 		int newPos;
+		coyote = 0;
 		jumpAngle += JUMP_ANGLE_STEP;
 
 		if(jumpAngle == 180)
 		{
 			bJumping = false;
 		}
-		else if (jumpAngle == 12)
+		else if (jumpAngle < 78)
 		{
-			if (sprite->animation() % 2 == 0 && sprite->animation() != JUMP_LEFT)
-				sprite->changeAnimation(JUMP_LEFT);
-			else if (sprite->animation() % 2 == 1 && sprite->animation() != JUMP_RIGHT)
-				sprite->changeAnimation(JUMP_RIGHT);
+			newPos = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 156.f));
+			posPlayer.y = newPos;
+
+			if (jumpAngle == 12)
+			{
+				if (sprite->animation() % 2 == 0 && sprite->animation() != JUMP_LEFT)
+					sprite->changeAnimation(JUMP_LEFT);
+				else if (sprite->animation() % 2 == 1 && sprite->animation() != JUMP_RIGHT)
+					sprite->changeAnimation(JUMP_RIGHT);
+			}
+			if (map->collisionMoveUp(posPlayer, HITBOX_SIZE, &posPlayer.y))
+			{
+				startY = posPlayer.y + JUMP_HEIGHT;
+				jumpAngle = 78;
+			}
 		}
-		else if (jumpAngle < 92)
+
+
+		else if (jumpAngle == 78)
 		{
-			newPos = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+			newPos = int(startY - JUMP_HEIGHT);
 			posPlayer.y = newPos;
 		}
-		else if (jumpAngle == 92)
+		else if (jumpAngle < 102)
 		{
-			newPos = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
-			posPlayer.y = newPos;
+			bJumping = !map->collisionMoveDown(posPlayer, HITBOX_SIZE, &posPlayer.y);
+			if (!bJumping)
+			{
+				if (sprite->animation() % 2 == 0)
+					sprite->changeAnimation(STAND_LEFT);
+				else if (sprite->animation() % 2 == 1)
+					sprite->changeAnimation(STAND_RIGHT);
+			}
+		}
+
+		else if (jumpAngle == 102)
+		{
 			bJumping = !map->collisionMoveDown(posPlayer, HITBOX_SIZE, &posPlayer.y);
 			bFalling = bJumping;
 			if (!bJumping)
@@ -156,12 +201,12 @@ void Player::update(int deltaTime)
 		}
 		else
 		{
-			newPos = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+			newPos = int(startY - JUMP_HEIGHT * sin(3.14159f * (jumpAngle - 24) / 156.f));
 			newPos <= posPlayer.y + FALL_STEP ? posPlayer.y = newPos : posPlayer.y += FALL_STEP;
+			/*posPlayer.y = newPos;*/
 			bJumping = !map->collisionMoveDown(posPlayer, HITBOX_SIZE, &posPlayer.y);
 			if (!bJumping)
 			{
-				bFalling = false;
 				if (sprite->animation() % 2 == 0)
 					sprite->changeAnimation(STAND_LEFT);
 				else if (sprite->animation() % 2 == 1)
@@ -176,6 +221,7 @@ void Player::update(int deltaTime)
 		if(!bFalling)
 		{
 			map->paintTiles(posPlayer, HITBOX_SIZE);
+			coyote = COYOTE_TIME;
 
 			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
 			{
@@ -190,6 +236,16 @@ void Player::update(int deltaTime)
 		}
 		else
 		{
+			if (coyote) {
+				posPlayer.y -= coyote + (FALL_STEP - COYOTE_TIME);
+				coyote -= 1;
+				if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+				{
+					bJumping = true;
+					jumpAngle = 0;
+					startY = posPlayer.y;
+				}
+			}
 			if (sprite->animation() % 2 == 0 && sprite->animation() != JUMP_LEFT)
 				sprite->changeAnimation(JUMP_LEFT);
 			else if (sprite->animation() % 2 == 1 && sprite->animation() != JUMP_RIGHT)
