@@ -5,7 +5,7 @@
 #define SCREEN_HEIGHT 480
 
 // Player
-#define JUMP_HEIGHT 50
+#define JUMP_HEIGHT 52
 #define JUMP_ANGLE_STEP 6
 
 #define FALL_STEP 5
