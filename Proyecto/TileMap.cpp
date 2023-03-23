@@ -103,7 +103,7 @@ bool TileMap::loadLevel(const string &levelFile)
 #endif
 	}
 	fin.close();
-	//hola	
+
 	return true;
 }
 
