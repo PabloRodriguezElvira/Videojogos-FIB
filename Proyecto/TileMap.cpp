@@ -210,7 +210,7 @@ bool TileMap::collisionMoveDown(const glm::ivec2 &pos, const glm::ivec2 &size, i
 		if(map[posTile] != 0)
 		{
 			//Actualizar posición de Y.
-			if(*posY + PLAYER_HITBOX_Y - tileSize.y * y + size.y <= 4)
+			if(*posY + PLAYER_HITBOX_Y - tileSize.y * y + size.y <= FALL_STEP)
 			{
 				*posY = tileSize.y * y - size.y - PLAYER_HITBOX_Y;
 				return true;

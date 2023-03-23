@@ -5,9 +5,10 @@
 #define SCREEN_HEIGHT 480
 
 // Player
-#define JUMP_ANGLE_STEP 4
-#define JUMP_HEIGHT 76
-#define FALL_STEP 4
+#define JUMP_HEIGHT 50
+#define JUMP_ANGLE_STEP 6
+
+#define FALL_STEP 5
 #define MOVE_STEP 2
 
 #define HITBOX_SIZE glm::ivec2(16, 32)

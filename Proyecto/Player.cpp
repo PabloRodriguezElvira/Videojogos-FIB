@@ -128,22 +128,33 @@ void Player::update(int deltaTime)
 		{
 			bJumping = false;
 		}
-		else if (jumpAngle == 12)
+		else if (jumpAngle <= 78)
 		{
-			if (sprite->animation() % 2 == 0 && sprite->animation() != JUMP_LEFT)
-				sprite->changeAnimation(JUMP_LEFT);
-			else if (sprite->animation() % 2 == 1 && sprite->animation() != JUMP_RIGHT)
-				sprite->changeAnimation(JUMP_RIGHT);
-		}
-		else if (jumpAngle < 92)
-		{
-			newPos = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+			newPos = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 156.f));
 			posPlayer.y = newPos;
+
+			if (jumpAngle == 12)
+			{
+				if (sprite->animation() % 2 == 0 && sprite->animation() != JUMP_LEFT)
+					sprite->changeAnimation(JUMP_LEFT);
+				else if (sprite->animation() % 2 == 1 && sprite->animation() != JUMP_RIGHT)
+					sprite->changeAnimation(JUMP_RIGHT);
+			}
 		}
-		else if (jumpAngle == 92)
+		else if (jumpAngle < 102)
 		{
-			newPos = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
-			posPlayer.y = newPos;
+			bJumping = !map->collisionMoveDown(posPlayer, HITBOX_SIZE, &posPlayer.y);
+			if (!bJumping)
+			{
+				if (sprite->animation() % 2 == 0)
+					sprite->changeAnimation(STAND_LEFT);
+				else if (sprite->animation() % 2 == 1)
+					sprite->changeAnimation(STAND_RIGHT);
+			}
+		}
+
+		else if (jumpAngle == 102)
+		{
 			bJumping = !map->collisionMoveDown(posPlayer, HITBOX_SIZE, &posPlayer.y);
 			bFalling = bJumping;
 			if (!bJumping)
@@ -156,12 +167,12 @@ void Player::update(int deltaTime)
 		}
 		else
 		{
-			newPos = int(startY - JUMP_HEIGHT * sin(3.14159f * jumpAngle / 180.f));
+			newPos = int(startY - JUMP_HEIGHT * sin(3.14159f * (jumpAngle - 24) / 156.f));
 			newPos <= posPlayer.y + FALL_STEP ? posPlayer.y = newPos : posPlayer.y += FALL_STEP;
+			/*posPlayer.y = newPos;*/
 			bJumping = !map->collisionMoveDown(posPlayer, HITBOX_SIZE, &posPlayer.y);
 			if (!bJumping)
 			{
-				bFalling = false;
 				if (sprite->animation() % 2 == 0)
 					sprite->changeAnimation(STAND_LEFT);
 				else if (sprite->animation() % 2 == 1)
@@ -190,6 +201,7 @@ void Player::update(int deltaTime)
 		}
 		else
 		{
+			
 			if (sprite->animation() % 2 == 0 && sprite->animation() != JUMP_LEFT)
 				sprite->changeAnimation(JUMP_LEFT);
 			else if (sprite->animation() % 2 == 1 && sprite->animation() != JUMP_RIGHT)
