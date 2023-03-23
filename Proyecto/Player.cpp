@@ -18,6 +18,7 @@ void Player::init(const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
 {
 	bJumping = false;
 	bFalling = false;
+	coyote = COYOTE_TIME;
 	spritesheet.loadFromFile("images/zero.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(glm::ivec2(64, 64), glm::vec2(0.0625, 0.1), &spritesheet, &shaderProgram);
 	sprite->setNumberAnimations(8);
@@ -122,6 +123,7 @@ void Player::update(int deltaTime)
 	if(bJumping)
 	{
 		int newPos;
+		coyote = 0;
 		jumpAngle += JUMP_ANGLE_STEP;
 
 		if(jumpAngle == 180)
@@ -187,6 +189,7 @@ void Player::update(int deltaTime)
 		if(!bFalling)
 		{
 			map->paintTiles(posPlayer, HITBOX_SIZE);
+			coyote = COYOTE_TIME;
 
 			if(Game::instance().getSpecialKey(GLUT_KEY_UP))
 			{
@@ -201,7 +204,16 @@ void Player::update(int deltaTime)
 		}
 		else
 		{
-			
+			if (coyote) {
+				posPlayer.y -= coyote + (FALL_STEP - COYOTE_TIME);
+				coyote -= 1;
+				if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+				{
+					bJumping = true;
+					jumpAngle = 0;
+					startY = posPlayer.y;
+				}
+			}
 			if (sprite->animation() % 2 == 0 && sprite->animation() != JUMP_LEFT)
 				sprite->changeAnimation(JUMP_LEFT);
 			else if (sprite->animation() % 2 == 1 && sprite->animation() != JUMP_RIGHT)

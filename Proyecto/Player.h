@@ -26,8 +26,7 @@ public:
 private:
 	bool bJumping, bFalling;
 	glm::ivec2 tileMapDispl, posPlayer;
-	int jumpAngle, startY;
-	float airTime;
+	int jumpAngle, startY, coyote;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
