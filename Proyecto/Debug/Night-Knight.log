@@ -5,7 +5,10 @@
   Scene.cpp
   SceneKeyboard.cpp
   ShaderCtrl.cpp
+<<<<<<< Updated upstream
   Sprite.cpp
+=======
+>>>>>>> Stashed changes
   TileMap.cpp
   main.cpp
   Generando código...
