@@ -37,6 +37,7 @@ private:
 	void initMap();
 	void initLvl();
 	void initPlayer();
+	void initBackground();
 
 private:
 	TileMap *map;
@@ -44,6 +45,9 @@ private:
 	Player *player;
 	float currentTime;
 
+	//Background
+	Texture spritesheet;
+	Sprite* backgSprite;
 };
 
 

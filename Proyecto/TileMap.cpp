@@ -104,7 +104,7 @@ bool TileMap::loadLevel(const string &levelFile)
 #endif
 	}
 	fin.close();
-	
+
 	return true;
 }
 
@@ -263,4 +263,5 @@ void TileMap::paintTiles(const glm::ivec2& pos, const glm::ivec2& hitSize, const
 		}
 	}	
 }
+
 

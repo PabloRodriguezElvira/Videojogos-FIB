@@ -3,6 +3,9 @@
 
 
 #include "Mob.h"
+#include "Sprite.h"
+#include "TileMap.h"
+#include <glm/glm.hpp>
 
 
 // Player is basically a Sprite that represents the player. As such it has
