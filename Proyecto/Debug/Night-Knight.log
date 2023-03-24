@@ -5,13 +5,11 @@
   Scene.cpp
   SceneKeyboard.cpp
   ShaderCtrl.cpp
-<<<<<<< Updated upstream
   Sprite.cpp
-=======
->>>>>>> Stashed changes
   TileMap.cpp
   main.cpp
   Generando código...
+  LINK : no se encontró C:\Users\Paloli\Desktop\VJ\Videojogos-FIB\Proyecto\Debug\Night-Knight.exe o no lo generó el último vínculo incremental; ejecutando vínculo completo
 SOIL.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_DXT.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(image_helper.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(image_helper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
 SOIL.lib(SOIL.obj) : warning LNK4099: no se encontró PDB '' con 'SOIL.lib(SOIL.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
