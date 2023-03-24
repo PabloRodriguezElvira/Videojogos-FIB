@@ -19,7 +19,12 @@
 // Scene & TileMap
 #define SCREEN_X 32
 #define SCREEN_Y 16
+#define TILESIZE glm::ivec2(32, 16) 
+#define TILES glm::ivec2(16, 22)
 
 // ShaderCtrl
 #define RENDER_SHADERS ShaderCtrl::instance().render()
 #define TEX_PROGRAM ShaderCtrl::instance().getTexProgram()
+
+//Camera
+#define TRANSLATE glm::vec3(30, 60, 0)

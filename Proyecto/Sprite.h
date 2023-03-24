@@ -5,6 +5,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 
+#include "Definitions.h"
 #include "Texture.h"
 #include "ShaderProgram.h"
 #include "AnimKeyframes.h"

@@ -256,7 +256,7 @@ void Player::update(int deltaTime)
 }
 
 void Player::render()
-{
+{	
 	sprite->render();
 }
 

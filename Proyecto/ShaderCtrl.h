@@ -23,10 +23,11 @@ public:
 	void render();
 
 	ShaderProgram &getTexProgram();
+	void setTranslateModelview();
 
 private:
 	ShaderProgram texProgram;
-	glm::mat4 projection, modelview;
+	glm::mat4 projection;
 
 };
 #endif //_SHADERCTRL_INCLUDE
