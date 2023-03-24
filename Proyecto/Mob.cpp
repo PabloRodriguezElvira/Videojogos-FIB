@@ -17,7 +17,7 @@ void Mob::init(TileMap* tileMap, Level* level, const glm::ivec2& tileMapPos, Sha
 	map = tileMap;
 	lvl = level;
 	initMob();
-	setPosition(glm::ivec2(map->getTileSizeX() * 4 /*lvl->getInitPlayerPosX()*/ - hitboxPos.x, map->getTileSizeY() * 5 /*lvl->getInitPlayerPosY()*/ - hitboxPos.y - hitboxSize.y));
+	setPosition(glm::ivec2(map->getTileSizeX() *  lvl->getInitPlayerPosX() - hitboxPos.x, map->getTileSizeY() * lvl->getInitPlayerPosY() - hitboxPos.y - hitboxSize.y));
 }
 
 void Mob::update(int deltaTime)

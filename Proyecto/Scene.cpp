@@ -28,6 +28,7 @@ Scene::~Scene()
 void Scene::init()
 {
 	initMap();
+	initLvl();
 	initPlayer();
 	
 	currentTime = 0.0f;
