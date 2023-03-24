@@ -1,15 +1,11 @@
-#ifndef _PLAYER_INCLUDE
-#define _PLAYER_INCLUDE
+#ifndef _VAATI_INCLUDE
+#define _VAATI_INCLUDE
 
 
 #include "Mob.h"
 
 
-// Player is basically a Sprite that represents the player. As such it has
-// all properties it needs to track its movement, jumping, and collisions.
-
-
-class Player : public Mob
+class Vaati : public Mob
 {
 
 protected:
@@ -28,4 +24,4 @@ private:
 };
 
 
-#endif // _PLAYER_INCLUDE
+#endif // _VAATI_INCLUDE

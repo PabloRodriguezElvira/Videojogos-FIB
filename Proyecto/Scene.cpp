@@ -50,14 +50,17 @@ void Scene::render()
 
 void Scene::initMap()
 {
-	map = TileMap::createTileMap("levels/level01.txt", glm::vec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
+	map = TileMap::createTileMap("levels/tilemap01.txt", glm::vec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
+}
+
+void Scene::initLvl()
+{
+	lvl = Level::createLevel("levels/level01.txt");
 }
 
 void Scene::initPlayer()
 {
 	player = new Player();
-	player->init(glm::ivec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
-	player->setPosition(glm::vec2(map->getInitPlayerPosX() - PLAYER_HITBOX_X, map->getInitPlayerPosY() - PLAYER_HITBOX_Y));
-	player->setTileMap(map);
+	player->init(map, lvl, glm::ivec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
 }
 

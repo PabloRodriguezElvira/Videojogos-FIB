@@ -8,6 +8,7 @@
 
 #include "ShaderProgram.h"
 #include "TileMap.h"
+#include "Level.h"
 #include "Player.h"
 
 
@@ -34,10 +35,12 @@ private:
 	~Scene();
 
 	void initMap();
+	void initLvl();
 	void initPlayer();
 
 private:
 	TileMap *map;
+	Level* lvl;
 	Player *player;
 	float currentTime;
 

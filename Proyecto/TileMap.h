@@ -31,14 +31,14 @@ public:
 	void render() const;
 	void free();
 	
-	int getInitPlayerPosX() const { return tileSize.x * initPlayerTile.x; }
-	int getInitPlayerPosY() const { return tileSize.y * initPlayerTile.y; }
+	int getTileSizeX() const { return tileSize.x; }
+	int getTileSizeY() const { return tileSize.y; }
 
-	bool collisionMoveLeft(const glm::ivec2 &pos, const glm::ivec2 &size) const;
-	bool collisionMoveRight(const glm::ivec2 &pos, const glm::ivec2 &size) const;
-	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& size, int* posY);
-	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& size, int* posY);
-	void paintTiles(const glm::ivec2 &pos, const glm::ivec2 &size);
+	bool collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos) const;
+	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos) const;
+	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posY, int fallStep);
+	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posY, int fallStep);
+	void paintTiles(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos);
 	
 private:
 	bool loadLevel(const string &levelFile);
