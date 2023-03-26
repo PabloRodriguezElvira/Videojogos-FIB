@@ -5,13 +5,17 @@
 
 
 #include "State.h"
+#include "Sprite.h"
+#include "Texture.h"
 
+
+enum Modes {play, instructions, credits};
 
 class Menu : public State
 {
 
 public:
-	static Menu &getInstance()
+	static Menu &instance()
 	{
 		static Menu M;
 		return M;
@@ -21,11 +25,26 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	void changeMode();
 
 
 private:
-	Menu();
-	~Menu();
+	void initTextures();
+	void initSprites();
+	void changeSprites();
+
+	//Modos del menú:
+	Modes mode;
+
+	Texture menuTexture;
+	Texture nightTexture;
+	Texture knightTexture;
+	Texture playTexture;
+
+	Sprite* backgroundSprite;
+	Sprite* nightSprite;
+	Sprite* knightSprite;
+	Sprite* playSprite;
 
 };
 

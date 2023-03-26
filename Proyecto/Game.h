@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "State.h"
 #include "ShaderCtrl.h"
+#include "Menu.h"
 
 
 // Game is a singleton (a class with a single instance) that represents our whole application

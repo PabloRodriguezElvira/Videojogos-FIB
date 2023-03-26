@@ -8,8 +8,8 @@ void Game::init()
 
 	ShaderCtrl::instance().init();				// initShaders
 
-	// state = &Menu::instance();
-	state = &Scene::instance();
+	state = &Menu::instance();
+	//state = &Scene::instance();
 	state->init();
 }
 
