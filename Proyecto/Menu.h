@@ -40,11 +40,15 @@ private:
 	Texture nightTexture;
 	Texture knightTexture;
 	Texture playTexture;
+	Texture insrtuctionsTexture;
+	Texture creditsTexture;
 
 	Sprite* backgroundSprite;
 	Sprite* nightSprite;
 	Sprite* knightSprite;
 	Sprite* playSprite;
+	Sprite* instructionsSprite;
+	Sprite* creditsSprite;
 
 };
 
