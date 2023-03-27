@@ -6,6 +6,7 @@ void Menu::init()
 {
 	initTextures();
 	initSprites();
+	currentTime = 0.f;
 	mode = play;
 	keyboardCtrl = &MenuKeyboard::instance();
 }
@@ -24,9 +25,10 @@ void Menu::initTextures()
 	knightTexture.setMinFilter(GL_NEAREST);
 	knightTexture.setMagFilter(GL_NEAREST);
 
-	playTexture.loadFromFile("images/playWhite.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	playTexture.loadFromFile("images/PPPlay.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	playTexture.setMinFilter(GL_NEAREST);
 	playTexture.setMagFilter(GL_NEAREST);
+
 }
 
 
@@ -41,9 +43,14 @@ void Menu::initSprites()
 	knightSprite = Sprite::createSprite(glm::vec2(SCREEN_WIDTH/5.f, SCREEN_HEIGHT/10.f), glm::vec2(1.f, 1.f), &knightTexture, &ShaderCtrl::instance().getTexProgram());
 	knightSprite->setPosition(glm::vec2(270, SCREEN_HEIGHT/10.f + 22));
 
-	//Cambiar esto. Añadir animations y tal.
-	playSprite = Sprite::createSprite(glm::vec2(SCREEN_WIDTH/5.f, SCREEN_HEIGHT/10.f), glm::vec2(1.f, 1.f), &playTexture, &ShaderCtrl::instance().getTexProgram());
-	playSprite->setPosition(glm::vec2(270, SCREEN_HEIGHT/3.f));
+	texts[0] = Sprite::createSprite(glm::vec2(SCREEN_WIDTH / 8.f, SCREEN_HEIGHT / 18.f), glm::vec2(1.f, 0.5f), &playTexture, &ShaderCtrl::instance().getTexProgram());
+	texts[0]->setPosition(glm::vec2(290, SCREEN_HEIGHT / 3.f + 20));
+	
+	texts[0]->setNumberAnimations(2);
+	for (int i = 0; i < 2; ++i) {
+		texts[0]->addKeyframe(i, positions[i]);
+	}
+	texts[0]->changeAnimation(1);
 }
 
 
@@ -52,22 +59,22 @@ void Menu::update(int deltaTime)
 	changeSprites();
 }
 
-void Menu::changeMode()
+void Menu::changeModeUp()
 {
-	switch (mode) {
-		case play: mode = instructions; break;
-		case instructions: mode = credits; break;
-		default: mode = play;
-	}
+	if (mode < 3) ++mode;
+}
+
+void Menu::changeModeDown()
+{
+	if (mode >= 0) --mode;	
 }
 
 void Menu::changeSprites()
 {
-	int modeNum = 1;
-	//Transformar mode (enum) en número.
-	if (mode == play) playSprite->changeAnimation(modeNum);
-	else if (mode == instructions) instructionsSprite->changeAnimation(modeNum);
-	else creditsSprite->changeAnimation(modeNum);
+	//if (mode < 3) {
+	//	texts[mode]->changeAnimation(0);
+	//	texts[mode+1]->changeAnimation(1);
+	//}
 }
 
 void Menu::render()
@@ -76,6 +83,6 @@ void Menu::render()
 	backgroundSprite->render();
 	nightSprite->render();
 	knightSprite->render();
-	playSprite->render();
+	for (int i = 0; i < 3; ++i) texts[i]->render();
 }
 

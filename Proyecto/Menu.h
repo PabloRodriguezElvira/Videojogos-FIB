@@ -9,8 +9,6 @@
 #include "Texture.h"
 
 
-enum Modes {play, instructions, credits};
-
 class Menu : public State
 {
 
@@ -25,7 +23,8 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
-	void changeMode();
+	void changeModeUp();
+	void changeModeDown();
 
 
 private:
@@ -34,21 +33,25 @@ private:
 	void changeSprites();
 
 	//Modos del menú:
-	Modes mode;
+	int mode;
 
 	Texture menuTexture;
 	Texture nightTexture;
 	Texture knightTexture;
 	Texture playTexture;
-	Texture insrtuctionsTexture;
+	Texture optionsTexture;
 	Texture creditsTexture;
 
 	Sprite* backgroundSprite;
 	Sprite* nightSprite;
 	Sprite* knightSprite;
-	Sprite* playSprite;
-	Sprite* instructionsSprite;
-	Sprite* creditsSprite;
+	Sprite* texts[3];
+
+	//Positions for text sprites:
+	glm::vec2 positions[2] = {
+		glm::vec2(0.f, 0.f),
+		glm::vec2(0.f, 0.5f)
+	};
 
 };
 
