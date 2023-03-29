@@ -6,8 +6,8 @@ void Menu::init()
 {
 	initTextures();
 	initSprites();
-	currentTime = 0.f;
-	mode = play;
+	mode = 0;
+	modeAnterior = -1;
 	keyboardCtrl = &MenuKeyboard::instance();
 }
 
@@ -25,10 +25,12 @@ void Menu::initTextures()
 	knightTexture.setMinFilter(GL_NEAREST);
 	knightTexture.setMagFilter(GL_NEAREST);
 
-	playTexture.loadFromFile("images/PPPlay.png", TEXTURE_PIXEL_FORMAT_RGBA);
-	playTexture.setMinFilter(GL_NEAREST);
-	playTexture.setMagFilter(GL_NEAREST);
-
+	string paths[4] = { "images/PPPlay.png", "images/OOOptions.png", "images/CCCredits.png", "images/EEExit.png"};
+	for (int i = 0; i < 4; ++i) {
+		textsTex[i].loadFromFile(paths[i], TEXTURE_PIXEL_FORMAT_RGBA);
+		textsTex[i].setMinFilter(GL_NEAREST);
+		textsTex[i].setMagFilter(GL_NEAREST);
+	}
 }
 
 
@@ -37,20 +39,32 @@ void Menu::initSprites()
 	backgroundSprite = Sprite::createSprite(glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT), glm::vec2(1.f, 1.f), &menuTexture, &ShaderCtrl::instance().getTexProgram()); 
 	backgroundSprite->setPosition(glm::vec2(0, 0));
 
-	nightSprite = Sprite::createSprite(glm::vec2(SCREEN_WIDTH/6.f, SCREEN_HEIGHT/10.f), glm::vec2(1.f, 1.f), &nightTexture, &ShaderCtrl::instance().getTexProgram());
+	nightSprite = Sprite::createSprite(glm::vec2(107, 48), glm::vec2(1.f, 1.f), &nightTexture, &ShaderCtrl::instance().getTexProgram());
 	nightSprite->setPosition(glm::vec2(250, 20));
 
-	knightSprite = Sprite::createSprite(glm::vec2(SCREEN_WIDTH/5.f, SCREEN_HEIGHT/10.f), glm::vec2(1.f, 1.f), &knightTexture, &ShaderCtrl::instance().getTexProgram());
-	knightSprite->setPosition(glm::vec2(270, SCREEN_HEIGHT/10.f + 22));
+	knightSprite = Sprite::createSprite(glm::vec2(128, 48), glm::vec2(1.f, 1.f), &knightTexture, &ShaderCtrl::instance().getTexProgram());
+	knightSprite->setPosition(glm::vec2(270, 70));
 
-	texts[0] = Sprite::createSprite(glm::vec2(SCREEN_WIDTH / 8.f, SCREEN_HEIGHT / 18.f), glm::vec2(1.f, 0.5f), &playTexture, &ShaderCtrl::instance().getTexProgram());
-	texts[0]->setPosition(glm::vec2(290, SCREEN_HEIGHT / 3.f + 20));
-	
-	texts[0]->setNumberAnimations(2);
-	for (int i = 0; i < 2; ++i) {
-		texts[0]->addKeyframe(i, positions[i]);
+
+	//Inicializar Sprites de los textos.
+	glm::vec2 sizePlay = glm::vec2(80, 40);
+	int y_offset;
+	float factor_size_x[4] = { 1.0f, 1.5f, 1.5f, 0.6f };
+	float factor_size_y[4] = { 1.0f, 1.0f, 0.8f, 0.6f };
+	int initial_anim[4] = { 1, 0, 0, 0 };
+	for (int i = 0; i < 4; ++i) { 
+		y_offset = i * 60;
+		if (i == 3) y_offset = i * 70;
+		
+		texts[i] = Sprite::createSprite(glm::vec2(sizePlay.x*factor_size_x[i], sizePlay.y*factor_size_y[i]), glm::vec2(1.f, 0.5f), &textsTex[i], &ShaderCtrl::instance().getTexProgram());
+		texts[i]->setPosition(glm::vec2(290, 180 + y_offset));
+		
+		texts[i]->setNumberAnimations(2);
+		for (int j = 0; j < 2; ++j) {
+			texts[i]->addKeyframe(j, positions[j]);
+		}
+		texts[i]->changeAnimation(initial_anim[i]);
 	}
-	texts[0]->changeAnimation(1);
 }
 
 
@@ -61,20 +75,41 @@ void Menu::update(int deltaTime)
 
 void Menu::changeModeUp()
 {
-	if (mode < 3) ++mode;
+	if (mode > 0) {
+		modeAnterior = mode;
+		--mode;
+	}
+
 }
 
 void Menu::changeModeDown()
 {
-	if (mode >= 0) --mode;	
+	if (mode < 3) {
+		modeAnterior = mode;
+		++mode;
+	}
+
 }
 
 void Menu::changeSprites()
 {
-	//if (mode < 3) {
-	//	texts[mode]->changeAnimation(0);
-	//	texts[mode+1]->changeAnimation(1);
+	//switch (modeAnterior) {
+	//case 0: {
+	//	playSprite->changeAnimation(0);
+	//	optionsSprite->changeAnimation(1);
+	//	break;
+	//	}
+	//default:break;
 	//}
+	//if (mode != 0) {
+
+	//}
+	//playSprite->changeAnimation(0);
+	//optionsSprite->changeAnimation(1);
+	//modeAnterior = 0
+	//mode = 1
+	texts[mode]->changeAnimation(1);
+	if (modeAnterior != -1) texts[modeAnterior]->changeAnimation(0);
 }
 
 void Menu::render()
@@ -83,6 +118,8 @@ void Menu::render()
 	backgroundSprite->render();
 	nightSprite->render();
 	knightSprite->render();
-	for (int i = 0; i < 3; ++i) texts[i]->render();
+	for (int i = 0; i < 4; ++i) {
+		texts[i]->render();
+	}
 }
 

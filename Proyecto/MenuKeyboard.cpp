@@ -17,8 +17,11 @@ void MenuKeyboard::keyReleased(int key)
 
 void MenuKeyboard::specialKeyPressed(int key)
 {
-	if (key == GLUT_KEY_DOWN) {
-		Menu::instance().changeMode();
+	if (key == GLUT_KEY_UP) {
+		Menu::instance().changeModeUp();
+	}
+	else if (key == GLUT_KEY_DOWN) {
+		Menu::instance().changeModeDown();
 	}
 }
 

@@ -7,6 +7,7 @@
 #include "State.h"
 #include "Sprite.h"
 #include "Texture.h"
+#include <vector>
 
 
 class Menu : public State
@@ -34,6 +35,7 @@ private:
 
 	//Modos del menú:
 	int mode;
+	int modeAnterior;
 
 	Texture menuTexture;
 	Texture nightTexture;
@@ -41,11 +43,15 @@ private:
 	Texture playTexture;
 	Texture optionsTexture;
 	Texture creditsTexture;
+	Texture textsTex[4];
 
 	Sprite* backgroundSprite;
 	Sprite* nightSprite;
 	Sprite* knightSprite;
-	Sprite* texts[3];
+	Sprite* playSprite;
+	Sprite* optionsSprite;
+	Sprite* creditsSprite;
+	Sprite* texts[4];
 
 	//Positions for text sprites:
 	glm::vec2 positions[2] = {
