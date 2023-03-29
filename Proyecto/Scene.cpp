@@ -40,7 +40,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
-	//updateEnemies(deltaTime);
+	updateEnemies(deltaTime);
 }
 
 void Scene::render()

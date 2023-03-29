@@ -30,6 +30,7 @@ Level::~Level()
 	for (Enemy* enemy : enemies)
 		if (enemy != NULL)
 			delete enemy;
+	enemies.clear();
 }
 
 bool Level::loadLevel(const string& levelFile)
