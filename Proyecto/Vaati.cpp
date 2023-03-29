@@ -9,7 +9,7 @@
 
 enum PlayerAnims
 {
-	MOVE_LEFT, MOVE_RIGHT, TRANSFORMATION
+	MOVE_LEFT, MOVE_RIGHT, TRANSFORM
 };
 
 
@@ -27,7 +27,43 @@ void Vaati::initMob()
 
 void Vaati::updateMob(int deltaTime)
 {
+	if (!transformToWisp && sprite->animation() == TRANSFORM)
+	{
+		if (--transformDuration <= 0)
+		{
+			transformDuration = 2400;
+			transformToWisp = true;
+		}
+	}
+	else if (transformCooldown >= 0)
+	{
+		transformCooldown -= deltaTime;
 
+		if (sprite->animation() == MOVE_LEFT)
+		{
+			position.x -= moveStep;
+			if (map->collisionMoveLeft(position, hitboxSize, hitboxPos) || map->fallMoveLeft(position, hitboxSize, hitboxPos))
+			{
+				position.x += moveStep;
+				sprite->changeAnimation(MOVE_RIGHT);
+			}
+		}
+		else if (sprite->animation() == MOVE_RIGHT)
+		{
+			position.x += moveStep;
+			if (map->collisionMoveRight(position, hitboxSize, hitboxPos) || map->fallMoveRight(position, hitboxSize, hitboxPos))
+			{
+				position.x -= moveStep;
+				sprite->changeAnimation(MOVE_LEFT);
+			}
+		}
+	}
+	else
+	{
+		transformCooldown = 12000;
+		initWispAnim = sprite->animation();
+		sprite->changeAnimation(TRANSFORM);
+	}
 }
 
 string Vaati::setSpriteSheet()
@@ -58,11 +94,11 @@ void Vaati::setAnimations()
 	for (i = 0; i < 4; ++i)
 		sprite->addKeyframe(MOVE_LEFT, glm::vec2((float(i) * 0.0625f), 0.125f));
 
-	sprite->setAnimationSpeed(TRANSFORMATION, 10);
+	sprite->setAnimationSpeed(TRANSFORM, 10);
 	for (i = 0; i < 12; ++i)
-		sprite->addKeyframe(TRANSFORMATION, glm::vec2((float(i) * 0.0625f), 0.25f));
+		sprite->addKeyframe(TRANSFORM, glm::vec2((float(i) * 0.0625f), 0.25f));
 	for (i = 0; i < 12; ++i)
-		sprite->addKeyframe(TRANSFORMATION, glm::vec2((float(i) * 0.0625f), 0.375f));
+		sprite->addKeyframe(TRANSFORM, glm::vec2((float(i) * 0.0625f), 0.375f));
 
 	sprite->changeAnimation(initAnim);
 }

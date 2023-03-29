@@ -30,6 +30,7 @@ void Scene::init()
 	initMap();
 	initLvl();
 	initPlayer();
+	initEnemies();
 		
 	currentTime = 0.0f;
 	keyboardCtrl = &SceneKeyboard::instance();
@@ -39,6 +40,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
+	//updateEnemies(deltaTime);
 }
 
 void Scene::render()
@@ -49,6 +51,7 @@ void Scene::render()
 	ShaderCtrl::instance().setTranslateModelview();
 	map->render();
 	player->render();
+	renderEnemies();
 }
 
 
@@ -68,6 +71,29 @@ void Scene::initPlayer()
 	player->init(map, glm::ivec2(SCREEN_X + TRANSLATE.x, SCREEN_Y + TRANSLATE.y),
 				 glm::ivec2(map->getTileSizeX() * lvl->getInitPlayerPosX(), map->getTileSizeY() * lvl->getInitPlayerPosY()),
 				 lvl->getInitPlayerAnim(), TEX_PROGRAM);
+}
+
+void Scene::initEnemies()
+{
+	enemies = lvl->getEnemies();
+	for (Enemy* enemy : *enemies)
+		enemy->init(map, glm::ivec2(SCREEN_X + TRANSLATE.x, SCREEN_Y + TRANSLATE.y),
+					glm::ivec2(map->getTileSizeX() * enemy->getInitTileX(), map->getTileSizeY() * enemy->getInitTileY()),
+					enemy->getInitAnim(), TEX_PROGRAM);
+}
+
+void Scene::updateEnemies(int deltaTime)
+{
+	for (Enemy* enemy : *enemies)
+	{
+		enemy->update(deltaTime);
+	}
+}
+
+void Scene::renderEnemies()
+{
+	for (Enemy* enemy : *enemies)
+		enemy->render();
 }
 
 void Scene::initBackground()

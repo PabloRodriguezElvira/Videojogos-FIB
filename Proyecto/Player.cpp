@@ -208,7 +208,7 @@ void Player::updateMob(int deltaTime)
 		else
 		{
 			if (coyote) {
-				position.y -= coyote + (fallStep - coyoteTime);
+				position.y -= fallStep + coyote - coyoteTime;
 				coyote -= 1;
 				if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !map->collisionMoveUp(glm::ivec2(position.x, position.y - 1), hitboxSize, hitboxPos, &position.y, fallStep))
 				{

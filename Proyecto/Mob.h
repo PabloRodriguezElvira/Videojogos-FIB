@@ -16,6 +16,9 @@ public:
 	void update(int deltaTime);
 	void render();
 
+	int getInitAnim() { return initAnim; }
+	void setInitAnim(int iniAnim) { initAnim = iniAnim; }
+
 protected:
 	virtual void initMob() = 0;
 	virtual void updateMob(int deltaTime) = 0;

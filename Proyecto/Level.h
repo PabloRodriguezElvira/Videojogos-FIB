@@ -4,8 +4,9 @@
 #include "Definitions.h"
 
 
-#include "Enemy.h"
+#include "Vaati.h"
 #include <glm/glm.hpp>
+#include <vector>
 
 
 class Level
@@ -23,13 +24,15 @@ public:
 	int getInitPlayerPosX() const { return initPlayerTile.x; }
 	int getInitPlayerPosY() const { return initPlayerTile.y; }
 	int getInitPlayerAnim() const { return initPlayerAnim; }
+	std::vector<Enemy*>* getEnemies() { return &enemies; }
 
 private:
 	bool loadLevel(const string& levelFile);
 
 private:
-	int initPlayerAnim;
+	int initPlayerAnim, totalEnemies;
 	glm::ivec2 initPlayerTile;
+	std::vector<Enemy*> enemies;
 	int* lvl;
 
 };
