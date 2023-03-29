@@ -4,6 +4,7 @@
 #include "Definitions.h"
 
 
+#include "Enemy.h"
 #include <glm/glm.hpp>
 
 
@@ -21,11 +22,13 @@ public:
 
 	int getInitPlayerPosX() const { return initPlayerTile.x; }
 	int getInitPlayerPosY() const { return initPlayerTile.y; }
+	int getInitPlayerAnim() const { return initPlayerAnim; }
 
 private:
 	bool loadLevel(const string& levelFile);
 
 private:
+	int initPlayerAnim;
 	glm::ivec2 initPlayerTile;
 	int* lvl;
 

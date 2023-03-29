@@ -6,15 +6,13 @@
 
 #include "Sprite.h"
 #include "TileMap.h"
-#include "TileMap.h"
-#include "Level.h"
 
 
 class Mob
 {
 
 public:
-	void init(TileMap* tileMap, Level* level, const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram);
+	void init(TileMap* tileMap, const glm::ivec2& tileMapPos, const glm::ivec2& iniPos, int iniAnim, ShaderProgram& shaderProgram);
 	void update(int deltaTime);
 	void render();
 
@@ -29,12 +27,11 @@ protected:
 	virtual void setAnimations() = 0;
 
 protected:
-	int startY, jumpHeight, jumpAngle, jumpAngleStep, fallStep, moveStep, coyoteTime;
+	int startY, jumpHeight, jumpAngle, jumpAngleStep, fallStep, moveStep, coyoteTime, initAnim;
 	glm::ivec2 tileMapDispl, position, hitboxSize, hitboxPos;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;
-	Level *lvl;
 };
 
 

@@ -42,7 +42,7 @@ bool Level::loadLevel(const string& levelFile)
 		return false;
 	getline(fin, line);																// Initial player tile
 	sstream.str(line);
-	sstream >> initPlayerTile.x >> initPlayerTile.y;
+	sstream >> initPlayerTile.x >> initPlayerTile.y >> initPlayerAnim;
 	
 	fin.close();
 

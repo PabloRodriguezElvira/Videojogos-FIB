@@ -65,7 +65,9 @@ void Scene::initLvl()
 void Scene::initPlayer()
 {
 	player = new Player();
-	player->init(map, lvl, glm::ivec2(SCREEN_X+TRANSLATE.x, SCREEN_Y+TRANSLATE.y), TEX_PROGRAM);
+	player->init(map, glm::ivec2(SCREEN_X + TRANSLATE.x, SCREEN_Y + TRANSLATE.y),
+				 glm::ivec2(map->getTileSizeX() * lvl->getInitPlayerPosX(), map->getTileSizeY() * lvl->getInitPlayerPosY()),
+				 lvl->getInitPlayerAnim(), TEX_PROGRAM);
 }
 
 void Scene::initBackground()

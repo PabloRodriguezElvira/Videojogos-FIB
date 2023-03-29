@@ -194,7 +194,7 @@ void Player::updateMob(int deltaTime)
 			map->paintTiles(position, hitboxSize, hitboxPos);
 			coyote = coyoteTime;
 
-			if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+			if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !map->collisionMoveUp(glm::ivec2(position.x, position.y - 1), hitboxSize, hitboxPos, &position.y, fallStep))
 			{
 				bJumping = true;
 				jumpAngle = 0;
@@ -210,7 +210,7 @@ void Player::updateMob(int deltaTime)
 			if (coyote) {
 				position.y -= coyote + (fallStep - coyoteTime);
 				coyote -= 1;
-				if (Game::instance().getSpecialKey(GLUT_KEY_UP))
+				if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !map->collisionMoveUp(glm::ivec2(position.x, position.y - 1), hitboxSize, hitboxPos, &position.y, fallStep))
 				{
 					bJumping = true;
 					jumpAngle = 0;
@@ -269,5 +269,5 @@ void Player::setAnimations()
 	for (i = 0; i < 4; ++i)
 		sprite->addKeyframe(JUMP_LEFT, glm::vec2((float(i) * 0.0625f), 0.5f));
 
-	sprite->changeAnimation(STAND_RIGHT);
+	sprite->changeAnimation(initAnim);
 }

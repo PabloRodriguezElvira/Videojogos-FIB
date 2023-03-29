@@ -8,16 +8,16 @@
 #include "Game.h"
 
 
-void Mob::init(TileMap* tileMap, Level* level, const glm::ivec2& tileMapPos, ShaderProgram& shaderProgram)
+void Mob::init(TileMap* tileMap, const glm::ivec2& tileMapPos, const glm::ivec2& iniPos, int iniAnim, ShaderProgram& shaderProgram)
 {
+	initAnim = iniAnim;
 	spritesheet.loadFromFile(setSpriteSheet(), TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(setSpriteSize(), setSizeInSpriteSheet(), &spritesheet, &shaderProgram);
 	setAnimations();
 	tileMapDispl = tileMapPos;
 	map = tileMap;
-	lvl = level;
 	initMob();
-	setPosition(glm::ivec2(map->getTileSizeX() *  lvl->getInitPlayerPosX() - hitboxPos.x, map->getTileSizeY() * lvl->getInitPlayerPosY() - hitboxPos.y - hitboxSize.y));
+	setPosition(glm::ivec2(iniPos.x - hitboxPos.x, iniPos.y - hitboxPos.y - hitboxSize.y));
 }
 
 void Mob::update(int deltaTime)
