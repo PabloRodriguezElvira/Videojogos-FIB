@@ -49,13 +49,15 @@ void Menu::initSprites()
 
 	//Inicializar Sprites de los textos.
 	glm::vec2 sizePlay = glm::vec2(100, 50);
-	float factor_size_x[4] = { 1.0f, 1.0f, 1.0f, 0.4f };
-	float factor_size_y[4] = { 1.0f, 0.7f, 0.55f, 0.4f };
+	float factor_size_x[4] = { 1.0f, 1.2f, 1.2f, 0.4f };
+	float factor_size_y[4] = { 1.0f, 1.0f, 0.75f, 0.4f };
 	int initial_anim[4] = { 1, 0, 0, 0 };
-	int y_offset[4] = { -10, 60, 110, 220 };
+	int y_offset[4] = { -10, 60, 130, 220 };
+	int x_offset = 0;
 	for (int i = 0; i < 4; ++i) { 	
+		if (i == 3) x_offset = 35;
 		texts[i] = Sprite::createSprite(glm::vec2(sizePlay.x*factor_size_x[i], sizePlay.y*factor_size_y[i]), glm::vec2(1.f, 0.5f), &textsTex[i], &ShaderCtrl::instance().getTexProgram());
-		texts[i]->setPosition(glm::vec2(290, 180+y_offset[i]));
+		texts[i]->setPosition(glm::vec2(290+x_offset, 180+y_offset[i]));
 		
 		texts[i]->setNumberAnimations(2);
 		for (int j = 0; j < 2; ++j) {
