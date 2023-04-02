@@ -81,9 +81,6 @@ bool TileMap::loadLevel(const string &levelFile)
 	sstream.str(line);
 	sstream >> tilesheetSize.x >> tilesheetSize.y;
 	tileTexSize = glm::vec2(1.f / tilesheetSize.x, 1.f / tilesheetSize.y);
-	getline(fin, line);																// Initial player tile
-	sstream.str(line);
-	sstream >> initPlayerTile.x >> initPlayerTile.y;
 	
 	map = new int[mapSize.x * mapSize.y];
 	for(int j=0; j<mapSize.y; j++)
@@ -264,4 +261,22 @@ void TileMap::paintTiles(const glm::ivec2& pos, const glm::ivec2& hitSize, const
 	}	
 }
 
+bool TileMap::fallMoveLeft(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos) const
+{
+	int x = (pos.x + hitPos.x) / tileSize.x;
+	int y = (pos.y + hitPos.y + hitSize.y) / tileSize.y;
+	int posTile = y * mapSize.x + x;
 
+	if (map[posTile] != 0) return true;
+	return false;
+}
+
+bool TileMap::fallMoveRight(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos) const
+{
+	int x = (pos.x + hitPos.x + hitSize.x - 1) / tileSize.x;
+	int y = (pos.y + hitPos.y + hitSize.y) / tileSize.y;
+	int posTile = y * mapSize.x + x;
+
+	if (map[posTile] != 0) return true;
+	return false;
+}

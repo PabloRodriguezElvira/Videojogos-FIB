@@ -20,8 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimKeyframes.h" />
+    <ClInclude Include="ConfirmationDialog.h" />
     <ClInclude Include="Definitions.h" />
+    <ClInclude Include="DialogKeyboard.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Info.h" />
+    <ClInclude Include="InfoKeyboard.h" />
     <ClInclude Include="KeyboardCtrl.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Menu.h" />
@@ -41,7 +45,11 @@
     <ClInclude Include="Vaati.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConfirmationDialog.cpp" />
+    <ClCompile Include="DialogKeyboard.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Info.cpp" />
+    <ClCompile Include="InfoKeyboard.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />

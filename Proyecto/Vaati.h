@@ -2,10 +2,10 @@
 #define _VAATI_INCLUDE
 
 
-#include "Mob.h"
+#include "Enemy.h"
 
 
-class Vaati : public Mob
+class Vaati : public Enemy
 {
 
 protected:
@@ -18,8 +18,8 @@ protected:
 	void setAnimations();
 
 private:
-	int coyote, coyoteTime;
-	bool bJumping, bFalling;
+	int transformCooldown, transformDuration, initWispAnim;
+	bool transformToWisp;
 
 };
 

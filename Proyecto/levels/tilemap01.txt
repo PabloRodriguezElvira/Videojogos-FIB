@@ -3,7 +3,6 @@ TILEMAP
 32 16 32 16 						-- Tile size (físico) & block size (gráfico)
 images/tilesheet01.png 					-- Tilesheet
 8 4 							-- Number of tiles in tilesheet
-4 5 							-- Initial player tile
 B99999999999999B
 C              C
 9              9

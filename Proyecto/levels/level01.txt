@@ -1,2 +1,4 @@
 LEVEL
-4 5 							-- Initial player tile
+4 5 1							-- Initial player tile
+1							-- Number of enemies
+V 12 11 0						-- Enemy type, initial enemy tile & anim
