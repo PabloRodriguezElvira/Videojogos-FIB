@@ -9,8 +9,12 @@ void Game::init()
 	ShaderCtrl::instance().init();				// initShaders
 
 	state = &Menu::instance();
-	//state = &Scene::instance();
 	state->init();
+}
+
+void Game::setState(State* state)
+{
+	this->state = state;
 }
 
 bool Game::update(int deltaTime)

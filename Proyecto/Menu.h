@@ -24,9 +24,12 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	void pause();
+	void unpause();
+
 	void changeModeUp();
 	void changeModeDown();
-
+	int getMode();
 
 private:
 	void initTextures();
@@ -34,8 +37,9 @@ private:
 	void changeSprites();
 
 	//Modos del menú:
-	int mode;
+	int mode; //0 -> play, 1 -> options, 2 -> credits, 3 -> exit
 	int modeAnterior;
+	bool bPaused;
 
 	Texture menuTexture;
 	Texture nightTexture;

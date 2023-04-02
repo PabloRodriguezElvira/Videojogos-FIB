@@ -29,6 +29,8 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	void pause();
+	void unpause();
 
 private:
 	Scene();
@@ -45,9 +47,13 @@ private:
 	Player *player;
 	float currentTime;
 
-	//Background
-	Texture spritesheet;
+	//Game background
+	Texture backgTexture;
 	Sprite* backgSprite;
+
+	//Application background
+	Texture backBlackTexture;
+	Sprite* backBlack;
 };
 
 

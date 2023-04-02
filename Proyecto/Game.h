@@ -28,6 +28,7 @@ public:
 	void render();
 
 	State* getState();
+	void setState(State* state);
 	void setBplay(bool b);
 
 	// Input callback methods

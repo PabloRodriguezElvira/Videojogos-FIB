@@ -4,8 +4,11 @@
 
 void SceneKeyboard::keyPressed(int key)
 {
-	if (key == 27) // Escape code
-		Game::instance().setBplay(false);
+	//Escape key:
+	if (key == 27) {
+		StateCtrl::instance().pause(&Scene::instance());
+		StateCtrl::instance().changeToDialog(&Scene::instance());
+	}
 }
 
 void SceneKeyboard::keyReleased(int key)
@@ -15,7 +18,6 @@ void SceneKeyboard::keyReleased(int key)
 
 void SceneKeyboard::specialKeyPressed(int key)
 {
-
 }
 
 void SceneKeyboard::specialKeyReleased(int key)

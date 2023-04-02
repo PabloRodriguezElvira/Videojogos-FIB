@@ -2,6 +2,7 @@
 #define _SCENEKEYBOARD_INCLUDE
 
 
+#include "StateCtrl.h"
 #include "KeyboardCtrl.h"
 
 

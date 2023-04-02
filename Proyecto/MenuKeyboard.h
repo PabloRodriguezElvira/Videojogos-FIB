@@ -1,7 +1,7 @@
 #ifndef _MENUKEYBOARD_INCLUDE
 #define _MENUKEYBOARD_INCLUDE
 
-
+#include "StateCtrl.h"
 #include "KeyboardCtrl.h"
 
 class MenuKeyboard : public KeyboardCtrl

@@ -8,6 +8,7 @@ void Menu::init()
 	initSprites();
 	mode = 0;
 	modeAnterior = -1;
+	bPaused = false;
 	keyboardCtrl = &MenuKeyboard::instance();
 }
 
@@ -47,17 +48,14 @@ void Menu::initSprites()
 
 
 	//Inicializar Sprites de los textos.
-	glm::vec2 sizePlay = glm::vec2(80, 40);
-	int y_offset;
-	float factor_size_x[4] = { 1.0f, 1.5f, 1.5f, 0.6f };
-	float factor_size_y[4] = { 1.0f, 1.0f, 0.8f, 0.6f };
+	glm::vec2 sizePlay = glm::vec2(100, 50);
+	float factor_size_x[4] = { 1.0f, 1.0f, 1.0f, 0.4f };
+	float factor_size_y[4] = { 1.0f, 0.7f, 0.55f, 0.4f };
 	int initial_anim[4] = { 1, 0, 0, 0 };
-	for (int i = 0; i < 4; ++i) { 
-		y_offset = i * 60;
-		if (i == 3) y_offset = i * 70;
-		
+	int y_offset[4] = { -10, 60, 110, 220 };
+	for (int i = 0; i < 4; ++i) { 	
 		texts[i] = Sprite::createSprite(glm::vec2(sizePlay.x*factor_size_x[i], sizePlay.y*factor_size_y[i]), glm::vec2(1.f, 0.5f), &textsTex[i], &ShaderCtrl::instance().getTexProgram());
-		texts[i]->setPosition(glm::vec2(290, 180 + y_offset));
+		texts[i]->setPosition(glm::vec2(290, 180+y_offset[i]));
 		
 		texts[i]->setNumberAnimations(2);
 		for (int j = 0; j < 2; ++j) {
@@ -70,7 +68,12 @@ void Menu::initSprites()
 
 void Menu::update(int deltaTime)
 {
-	changeSprites();
+	if (!bPaused) changeSprites();
+}
+
+int Menu::getMode()
+{
+	return mode;
 }
 
 void Menu::changeModeUp()
@@ -93,21 +96,6 @@ void Menu::changeModeDown()
 
 void Menu::changeSprites()
 {
-	//switch (modeAnterior) {
-	//case 0: {
-	//	playSprite->changeAnimation(0);
-	//	optionsSprite->changeAnimation(1);
-	//	break;
-	//	}
-	//default:break;
-	//}
-	//if (mode != 0) {
-
-	//}
-	//playSprite->changeAnimation(0);
-	//optionsSprite->changeAnimation(1);
-	//modeAnterior = 0
-	//mode = 1
 	texts[mode]->changeAnimation(1);
 	if (modeAnterior != -1) texts[modeAnterior]->changeAnimation(0);
 }
@@ -121,5 +109,15 @@ void Menu::render()
 	for (int i = 0; i < 4; ++i) {
 		texts[i]->render();
 	}
+}
+
+void Menu::pause()
+{
+	bPaused = true;
+}
+
+void Menu::unpause()
+{
+	bPaused = false;
 }
 
