@@ -24,6 +24,7 @@
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="DialogKeyboard.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Info.h" />
     <ClInclude Include="InfoKeyboard.h" />
     <ClInclude Include="KeyboardCtrl.h" />
@@ -31,23 +32,28 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuKeyboard.h" />
     <ClInclude Include="Mob.h" />
+    <ClInclude Include="NumberGenerator.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PuntuacionDisplay.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneKeyboard.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderCtrl.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="StageDisplay.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateCtrl.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Vaati.h" />
+    <ClInclude Include="VidasDisplay.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConfirmationDialog.cpp" />
     <ClCompile Include="DialogKeyboard.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Info.cpp" />
     <ClCompile Include="InfoKeyboard.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -55,18 +61,22 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuKeyboard.cpp" />
     <ClCompile Include="Mob.cpp" />
+    <ClCompile Include="NumberGenerator.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PuntuacionDisplay.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneKeyboard.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderCtrl.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="StageDisplay.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateCtrl.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Vaati.cpp" />
+    <ClCompile Include="VidasDisplay.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

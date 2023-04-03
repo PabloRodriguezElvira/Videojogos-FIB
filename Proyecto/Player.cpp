@@ -13,6 +13,11 @@ enum PlayerAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, JUMP_LEFT, JUMP_RIGHT
 };
 
+int Player::getPuntuacion()
+{
+	return this->puntuacion;
+}
+
 
 void Player::initMob()
 {
@@ -21,6 +26,7 @@ void Player::initMob()
 	fallStep = 5;
 	moveStep = 2;
 	coyoteTime = 4;
+	puntuacion = 0;
 
 	hitboxSize = glm::ivec2(16, 32);
 	hitboxPos = glm::ivec2(17, 26);
@@ -38,7 +44,7 @@ void Player::updateMob(int deltaTime)
 
 			if (bFalling)
 			{
-				map->paintTiles(position, hitboxSize, hitboxPos);
+				map->paintTiles(position, hitboxSize, hitboxPos, &puntuacion);
 
 				if (sprite->animation() != JUMP_LEFT)
 					sprite->changeAnimation(JUMP_LEFT);
@@ -50,7 +56,7 @@ void Player::updateMob(int deltaTime)
 			}
 			else
 			{
-				map->paintTiles(position, hitboxSize, hitboxPos);
+				map->paintTiles(position, hitboxSize, hitboxPos, &puntuacion);
 
 				if (c && sprite->animation() != STAND_LEFT)
 					sprite->changeAnimation(STAND_LEFT);
@@ -76,7 +82,7 @@ void Player::updateMob(int deltaTime)
 
 			if (bFalling)
 			{
-				map->paintTiles(position, hitboxSize, hitboxPos);
+				map->paintTiles(position, hitboxSize, hitboxPos, &puntuacion);
 
 				if (sprite->animation() != JUMP_RIGHT)
 					sprite->changeAnimation(JUMP_RIGHT);
@@ -88,7 +94,7 @@ void Player::updateMob(int deltaTime)
 			}
 			else
 			{
-				map->paintTiles(position, hitboxSize, hitboxPos);
+				map->paintTiles(position, hitboxSize, hitboxPos, &puntuacion);
 
 				if (c && sprite->animation() != STAND_RIGHT)
 					sprite->changeAnimation(STAND_RIGHT);
@@ -191,7 +197,8 @@ void Player::updateMob(int deltaTime)
 		bFalling = !map->collisionMoveDown(position, hitboxSize, hitboxPos, &position.y, fallStep);
 		if (!bFalling)
 		{
-			map->paintTiles(position, hitboxSize, hitboxPos);
+			map->paintTiles(position, hitboxSize, hitboxPos, &puntuacion);
+
 			coyote = coyoteTime;
 
 			if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !map->collisionMoveUp(glm::ivec2(position.x, position.y - 1), hitboxSize, hitboxPos, &position.y, fallStep))

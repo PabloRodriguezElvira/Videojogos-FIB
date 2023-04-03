@@ -15,6 +15,9 @@
 class Player : public Mob
 {
 
+public:
+	int getPuntuacion();
+
 protected:
 	void initMob();
 	void updateMob(int deltaTime);
@@ -27,7 +30,7 @@ protected:
 private:
 	int coyote, coyoteTime;
 	bool bJumping, bFalling;
-
+	int puntuacion;
 };
 
 

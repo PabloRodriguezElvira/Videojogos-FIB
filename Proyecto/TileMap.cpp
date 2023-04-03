@@ -241,7 +241,7 @@ bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& hitSize, 
 	return false;
 }
 
-void TileMap::paintTiles(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos)
+void TileMap::paintTiles(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* puntuacion)
 {
 	int x0, x1, y;
 	
@@ -255,6 +255,7 @@ void TileMap::paintTiles(const glm::ivec2& pos, const glm::ivec2& hitSize, const
 		if(0 < map[posTile] && map[posTile] < 5)
 		{
 			//Pintar tile: (si es diferente del 0 - aire).
+			*puntuacion = *puntuacion + 10;
 			map[posTile] += 4;
 			prepareArrays(glm::vec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
 		}

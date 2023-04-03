@@ -11,6 +11,8 @@
 #include "Level.h"
 #include "Player.h"
 #include "Vaati.h"
+#include "NumberGenerator.h"
+#include "HUD.h"
 
 
 // Scene contains all the entities of our game.
@@ -45,6 +47,7 @@ private:
 	void updateEnemies(int deltaTime);
 	void renderEnemies();
 
+	void initTextures();
 	void initBackground();
 
 private:
