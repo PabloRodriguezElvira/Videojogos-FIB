@@ -16,8 +16,11 @@ public:
 	void update(int deltaTime);
 	void render();
 
-	int getInitAnim() { return initAnim; }
 	void setInitAnim(int iniAnim) { initAnim = iniAnim; }
+
+	int getInitAnim() { return initAnim; }
+	glm::ivec2 getTopLeft() { return (position + hitboxPos); }
+	glm::ivec2 getBotRight() { return (position + hitboxPos + hitboxSize); }
 
 protected:
 	virtual void initMob() = 0;
@@ -31,7 +34,8 @@ protected:
 
 protected:
 	int startY, jumpHeight, jumpAngle, jumpAngleStep, fallStep, moveStep, coyoteTime, initAnim;
-	glm::ivec2 tileMapDispl, position, hitboxSize, hitboxPos;
+	bool mirror, bPaint;
+	glm::ivec2 tileMapDispl, initPos, position, hitboxSize, hitboxPos;
 	Texture spritesheet;
 	Sprite *sprite;
 	TileMap *map;

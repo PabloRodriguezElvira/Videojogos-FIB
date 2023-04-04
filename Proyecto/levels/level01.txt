@@ -1,4 +1,7 @@
 LEVEL
 4 5 1							-- Initial player tile
-1							-- Number of enemies
+4							-- Number of enemies
 V 12 11 0						-- Enemy type, initial enemy tile & anim
+V 3 11 1	\n
+S 11 20 0	\n
+S 4 20 1	\n

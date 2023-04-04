@@ -1,11 +1,11 @@
-#ifndef _VAATI_INCLUDE
-#define _VAATI_INCLUDE
+#ifndef _STALFOS_INCLUDE
+#define _STALFOS_INCLUDE
 
 
 #include "Enemy.h"
 
 
-class Vaati : public Enemy
+class Stalfos : public Enemy
 {
 
 protected:
@@ -17,12 +17,8 @@ protected:
 	glm::ivec2 setSpriteSize();
 	glm::vec2 setSizeInSpriteSheet();
 	void setAnimations();
-	
-private:
-	int transformCooldown, transformDuration;
-	bool goingDown;
 
 };
 
 
-#endif // _VAATI_INCLUDE
+#endif // _STALFOS_INCLUDE

@@ -40,7 +40,7 @@ void Scene::update(int deltaTime)
 {
 	currentTime += deltaTime;
 	player->update(deltaTime);
-	updateEnemies(deltaTime);
+	if (player->getHealth() > 0) updateEnemies(deltaTime);
 }
 
 void Scene::render()
@@ -84,9 +84,32 @@ void Scene::initEnemies()
 
 void Scene::updateEnemies(int deltaTime)
 {
+	glm::ivec2 playerTopLeft = player->getTopLeft();
+	glm::ivec2 playerBotRight = player->getBotRight();
+
+	glm::ivec2 enemyTopLeft, enemyBotRight;
+
 	for (Enemy* enemy : *enemies)
 	{
-		enemy->update(deltaTime);
+		if (player->getHealth() > 0)
+		{
+			enemy->update(deltaTime);
+			
+			if (!player->isHurt())
+			{
+				enemyTopLeft = enemy->getTopLeft();
+				enemyBotRight = enemy->getBotRight();
+
+				if (!(playerBotRight.x < enemyTopLeft.x || enemyBotRight.x < playerTopLeft.x))
+				{
+					if (!(playerBotRight.y < enemyTopLeft.y || enemyBotRight.y < playerTopLeft.y))
+					{
+						player->hit();
+						if (enemy->getType() != 'M') enemy->changeHorizontalDirection();
+					}
+				}
+			}
+		}
 	}
 }
 

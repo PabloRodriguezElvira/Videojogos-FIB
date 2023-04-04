@@ -10,14 +10,19 @@
 
 void Mob::init(TileMap* tileMap, const glm::ivec2& tileMapPos, const glm::ivec2& iniPos, int iniAnim, ShaderProgram& shaderProgram)
 {
+	fallStep = 5;
 	initAnim = iniAnim;
+	mirror = false;
+	bPaint = true;
 	spritesheet.loadFromFile(setSpriteSheet(), TEXTURE_PIXEL_FORMAT_RGBA);
 	sprite = Sprite::createSprite(setSpriteSize(), setSizeInSpriteSheet(), &spritesheet, &shaderProgram);
 	setAnimations();
 	tileMapDispl = tileMapPos;
 	map = tileMap;
 	initMob();
-	setPosition(glm::ivec2(iniPos.x - hitboxPos.x, iniPos.y - hitboxPos.y - hitboxSize.y));
+	initPos = glm::ivec2(iniPos.x - hitboxPos.x, iniPos.y - hitboxPos.y - hitboxSize.y);
+	setPosition(initPos);
+	if (mirror) position.x += TILESIZE.x - hitboxSize.x;
 }
 
 void Mob::update(int deltaTime)
@@ -29,7 +34,7 @@ void Mob::update(int deltaTime)
 
 void Mob::render()
 {
-	sprite->render();
+	if (bPaint) sprite->render();
 }
 
 void Mob::setPosition(const glm::ivec2& pos)

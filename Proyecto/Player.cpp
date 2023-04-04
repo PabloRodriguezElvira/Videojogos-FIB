@@ -1,7 +1,6 @@
-#include <cmath>
-#include <iostream>
 #include <GL/glew.h>
 #include <GL/glut.h>
+#include <iostream>
 
 #include "Player.h"
 
@@ -10,7 +9,7 @@
 
 enum PlayerAnims
 {
-	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, JUMP_LEFT, JUMP_RIGHT
+	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, JUMP_LEFT, JUMP_RIGHT, HURT_LEFT, HURT_RIGHT, FALL_LEFT, FALL_RIGHT
 };
 
 
@@ -18,15 +17,70 @@ void Player::initMob()
 {
 	jumpHeight = 52;
 	jumpAngleStep = 6;
-	fallStep = 5;
 	moveStep = 2;
 	coyoteTime = 4;
+	bFalling = false;
+	bJumping = false;
+
+	health = 3;
+	hurtTime = 0;
+	blink = 5;
+	hurt = false;
+	reset = true;
 
 	hitboxSize = glm::ivec2(16, 32);
 	hitboxPos = glm::ivec2(17, 26);
 }
 
 void Player::updateMob(int deltaTime)
+{
+	if (hurt) updateHurt(deltaTime);
+	if (hurtTime <= 1000) updateMovement();
+
+}
+
+void Player::updateHurt(int deltaTime)
+{
+	hurtTime -= deltaTime;
+	if (hurtTime <= 0)
+	{
+		hurtTime = 0;
+		blink = 5;
+		hurt = false;
+		reset = true;
+		bPaint = true;
+	}
+	else if (hurtTime <= 1000)
+	{
+		if (reset)
+		{
+			setPosition(initPos);
+			sprite->changeAnimation(initAnim);
+			reset = false;
+		}
+		if (--blink == 0)
+		{
+			blink = 5;
+			bPaint = !bPaint;
+		}
+	}
+	else if (sprite->animation() == FALL_LEFT)
+	{
+		position.y += fallStep;
+		if (map->collisionMoveDown(position, hitboxSize, hitboxPos, &position.y, fallStep))
+			sprite->changeAnimation(HURT_LEFT);
+	}
+	else if (sprite->animation() == FALL_RIGHT)
+	{
+		position.y += fallStep;
+		if (map->collisionMoveDown(position, hitboxSize, hitboxPos, &position.y, fallStep))
+			sprite->changeAnimation(HURT_RIGHT);
+	}
+}
+
+
+
+void Player::updateMovement()
 {
 	if (Game::instance().getSpecialKey(GLUT_KEY_LEFT))
 	{
@@ -139,8 +193,6 @@ void Player::updateMob(int deltaTime)
 				jumpAngle = 78;
 			}
 		}
-
-
 		else if (jumpAngle == 78)
 		{
 			newPos = int(startY - jumpHeight);
@@ -174,7 +226,6 @@ void Player::updateMob(int deltaTime)
 		{
 			newPos = int(startY - jumpHeight * sin(3.14159f * (jumpAngle - 24) / 156.f));
 			newPos <= position.y + fallStep ? position.y = newPos : position.y += fallStep;
-			/*position.y = newPos;*/
 			bJumping = !map->collisionMoveDown(position, hitboxSize, hitboxPos, &position.y, fallStep);
 			if (!bJumping)
 			{
@@ -191,19 +242,23 @@ void Player::updateMob(int deltaTime)
 		bFalling = !map->collisionMoveDown(position, hitboxSize, hitboxPos, &position.y, fallStep);
 		if (!bFalling)
 		{
-			map->paintTiles(position, hitboxSize, hitboxPos);
-			coyote = coyoteTime;
-
-			if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !map->collisionMoveUp(glm::ivec2(position.x, position.y - 1), hitboxSize, hitboxPos, &position.y, fallStep))
+			if (!hurt && map->collisionSpikesDown(position, hitboxSize, hitboxPos, &position.y, fallStep)) hit();
+			else
 			{
-				bJumping = true;
-				jumpAngle = 0;
-				startY = position.y;
+				map->paintTiles(position, hitboxSize, hitboxPos);
+				coyote = coyoteTime;
+
+				if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !map->collisionMoveUp(glm::ivec2(position.x, position.y - 1), hitboxSize, hitboxPos, &position.y, fallStep))
+				{
+					bJumping = true;
+					jumpAngle = 0;
+					startY = position.y;
+				}
+				else if (sprite->animation() == JUMP_LEFT)
+					sprite->changeAnimation(STAND_LEFT);
+				else if (sprite->animation() == JUMP_RIGHT)
+					sprite->changeAnimation(STAND_RIGHT);
 			}
-			else if (sprite->animation() == JUMP_LEFT)
-				sprite->changeAnimation(STAND_LEFT);
-			else if (sprite->animation() == JUMP_RIGHT)
-				sprite->changeAnimation(STAND_RIGHT);
 		}
 		else
 		{
@@ -225,6 +280,28 @@ void Player::updateMob(int deltaTime)
 	}
 }
 
+
+void Player::hit()
+{
+	--health;
+	hurtTime = 4000;
+	hurt = true;
+	reset = true;
+
+	if (sprite->animation() % 2 == 0)
+	{
+		if (sprite->animation() == JUMP_LEFT)
+			sprite->changeAnimation(FALL_LEFT);
+		else sprite->changeAnimation(HURT_LEFT);
+	}
+	else
+	{
+		if (sprite->animation() == JUMP_RIGHT)
+			sprite->changeAnimation(FALL_RIGHT);
+		else sprite->changeAnimation(HURT_RIGHT);
+	}
+}
+
 string Player::setSpriteSheet()
 {
 	return "images/zero.png";
@@ -242,7 +319,7 @@ glm::vec2 Player::setSizeInSpriteSheet()
 
 void Player::setAnimations()
 {
-	sprite->setNumberAnimations(8);
+	sprite->setNumberAnimations(12);
 
 	int i;
 	sprite->setAnimationSpeed(STAND_RIGHT, 8);
@@ -268,6 +345,31 @@ void Player::setAnimations()
 	sprite->setAnimationSpeed(JUMP_LEFT, 10);
 	for (i = 0; i < 4; ++i)
 		sprite->addKeyframe(JUMP_LEFT, glm::vec2((float(i) * 0.0625f), 0.5f));
+
+	sprite->setAnimationSpeed(HURT_RIGHT, 10);
+	for (i = 0; i < 5; ++i)
+		sprite->addKeyframe(HURT_RIGHT, glm::vec2((float(i) * 0.0625f), 0.6f));
+	for (i = 0; i < 28; ++i)
+		sprite->addKeyframe(HURT_RIGHT, glm::vec2(0.3125f, 0.6f));
+
+	sprite->setAnimationSpeed(HURT_LEFT, 10);
+	for (i = 0; i < 5; ++i)
+		sprite->addKeyframe(HURT_LEFT, glm::vec2((float(i) * 0.0625f), 0.7f));
+	for (i = 0; i < 28; ++i)
+		sprite->addKeyframe(HURT_LEFT, glm::vec2(0.3125f, 0.7f));
+
+	sprite->setAnimationSpeed(FALL_RIGHT, 10);
+	for (i = 0; i < 5; ++i)
+		sprite->addKeyframe(FALL_RIGHT, glm::vec2((float(i) * 0.0625f), 0.6f));
+	for (i = 0; i < 28; ++i)
+		sprite->addKeyframe(FALL_RIGHT, glm::vec2(0.3125f, 0.6f));
+
+	sprite->setAnimationSpeed(FALL_LEFT, 10);
+	for (i = 0; i < 5; ++i)
+		sprite->addKeyframe(FALL_LEFT, glm::vec2((float(i) * 0.0625f), 0.7f));
+	for (i = 0; i < 28; ++i)
+		sprite->addKeyframe(FALL_LEFT, glm::vec2(0.3125f, 0.7f));
+		
 
 	sprite->changeAnimation(initAnim);
 }

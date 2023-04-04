@@ -5,6 +5,7 @@
 
 
 #include "Vaati.h"
+#include "Stalfos.h"
 #include <glm/glm.hpp>
 #include <vector>
 

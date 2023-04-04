@@ -14,10 +14,17 @@
 
 class Player : public Mob
 {
+public:
+	int getHealth() { return health; }
+	bool isHurt() { return hurt; }
+
+	void hit();
 
 protected:
 	void initMob();
 	void updateMob(int deltaTime);
+	void updateHurt(int deltaTime);
+	void updateMovement();
 
 	string setSpriteSheet();
 	glm::ivec2 setSpriteSize();
@@ -25,8 +32,8 @@ protected:
 	void setAnimations();
 
 private:
-	int coyote, coyoteTime;
-	bool bJumping, bFalling;
+	int coyote, coyoteTime, health, hurtTime, blink;
+	bool bJumping, bFalling, hurt, reset;
 
 };
 

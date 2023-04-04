@@ -62,13 +62,13 @@ bool Level::loadLevel(const string& levelFile)
 		sstream >> enemyType >> initTile.x >> initTile.y >> initAnim;
 		
 		if (enemyType == 'V')
-		{
 			enemy = new Vaati();
-		}
-		else
-		{
-			enemy = new Vaati();
-		}
+
+		else if (enemyType == 'S')
+			enemy = new Stalfos();
+
+		else enemy = new Stalfos();
+
 		enemy->setType(enemyType);
 		enemy->setInitTile(initTile);
 		enemy->setInitAnim(initAnim);
