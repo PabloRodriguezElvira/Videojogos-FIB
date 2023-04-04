@@ -69,7 +69,7 @@ void Scene::update(int deltaTime)
 			timer -= 1;
 			contador = 1000;
 		}
-		else if (timer <= 0) key.changePaint(true);
+		if (map->getNumTilesPisables() == 0) key.changePaint(true);
 		HUD::instance().update(player->getPuntuacion(), timer);
 	}
 }

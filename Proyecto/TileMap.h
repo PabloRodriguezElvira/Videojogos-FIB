@@ -45,6 +45,7 @@ public:
 	bool collisionSpikesDown(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posY, int fallStep);
 	bool fallMoveLeft(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos) const;
 	bool fallMoveRight(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos) const;
+	int getNumTilesPisables() const { return numTilesPisables; }
 	
 private:
 	bool loadLevel(const string &levelFile);
@@ -58,10 +59,8 @@ private:
 	glm::ivec2 position, mapSize, tilesheetSize, tileSize, blockSize;
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
-	int *map;
-
-	//La posición random de la llave:
-	glm::vec2 keyPosition;
+	int* map;
+	int numTilesPisables;
 };
 
 
