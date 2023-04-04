@@ -12,6 +12,11 @@ enum PlayerAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, JUMP_LEFT, JUMP_RIGHT, HURT_LEFT, HURT_RIGHT, FALL_LEFT, FALL_RIGHT
 };
 
+int Player::getPuntuacion()
+{
+	return this->puntuacion;
+}
+
 
 void Player::initMob()
 {
@@ -22,6 +27,7 @@ void Player::initMob()
 	bFalling = false;
 	bJumping = false;
 
+	puntuacion = 0;
 	health = 3;
 	hurtTime = 0;
 	blink = 5;
@@ -92,7 +98,7 @@ void Player::updateMovement()
 
 			if (bFalling)
 			{
-				map->paintTiles(position, hitboxSize, hitboxPos);
+				map->paintTiles(position, hitboxSize, hitboxPos, &puntuacion);
 
 				if (sprite->animation() != JUMP_LEFT)
 					sprite->changeAnimation(JUMP_LEFT);
@@ -104,7 +110,7 @@ void Player::updateMovement()
 			}
 			else
 			{
-				map->paintTiles(position, hitboxSize, hitboxPos);
+				map->paintTiles(position, hitboxSize, hitboxPos, &puntuacion);
 
 				if (c && sprite->animation() != STAND_LEFT)
 					sprite->changeAnimation(STAND_LEFT);
@@ -130,7 +136,7 @@ void Player::updateMovement()
 
 			if (bFalling)
 			{
-				map->paintTiles(position, hitboxSize, hitboxPos);
+				map->paintTiles(position, hitboxSize, hitboxPos, &puntuacion);
 
 				if (sprite->animation() != JUMP_RIGHT)
 					sprite->changeAnimation(JUMP_RIGHT);
@@ -142,7 +148,7 @@ void Player::updateMovement()
 			}
 			else
 			{
-				map->paintTiles(position, hitboxSize, hitboxPos);
+				map->paintTiles(position, hitboxSize, hitboxPos, &puntuacion);
 
 				if (c && sprite->animation() != STAND_RIGHT)
 					sprite->changeAnimation(STAND_RIGHT);
@@ -245,7 +251,7 @@ void Player::updateMovement()
 			if (!hurt && map->collisionSpikesDown(position, hitboxSize, hitboxPos, &position.y, fallStep)) hit();
 			else
 			{
-				map->paintTiles(position, hitboxSize, hitboxPos);
+				map->paintTiles(position, hitboxSize, hitboxPos, &puntuacion);
 				coyote = coyoteTime;
 
 				if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !map->collisionMoveUp(glm::ivec2(position.x, position.y - 1), hitboxSize, hitboxPos, &position.y, fallStep))
@@ -304,7 +310,7 @@ void Player::hit()
 
 string Player::setSpriteSheet()
 {
-	return "images/zero.png";
+	return "images/Mob/Player/zero.png";
 }
 
 glm::ivec2 Player::setSpriteSize()

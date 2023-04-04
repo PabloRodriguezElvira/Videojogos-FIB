@@ -20,6 +20,9 @@ public:
 
 	void hit();
 
+public:
+	int getPuntuacion();
+
 protected:
 	void initMob();
 	void updateMob(int deltaTime);
@@ -32,7 +35,7 @@ protected:
 	void setAnimations();
 
 private:
-	int coyote, coyoteTime, health, hurtTime, blink;
+	int coyote, coyoteTime, puntuacion, health, hurtTime, blink;
 	bool bJumping, bFalling, hurt, reset;
 
 };

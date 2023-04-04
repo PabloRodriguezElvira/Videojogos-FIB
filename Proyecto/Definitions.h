@@ -8,7 +8,6 @@
 #define SCREEN_X 32
 #define SCREEN_Y 16
 #define TILESIZE glm::ivec2(32, 16) 
-#define TILES glm::ivec2(16, 22)
 
 // ShaderCtrl
 #define RENDER_SHADERS ShaderCtrl::instance().render()

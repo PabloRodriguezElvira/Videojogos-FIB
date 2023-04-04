@@ -3,6 +3,10 @@
 
 
 #include "State.h"
+#include "Menu.h"
+#include "Info.h"
+#include "Game.h"
+#include "ConfirmationDialog.h"
 
 
 class StateCtrl
@@ -16,8 +20,10 @@ public:
 		return SC;
 	};
 
-	
-
+	void changeTo(State* st);
+	void changeToDialog(State* st);
+	void pause(State* st);
+	void unpause(State* st);
 };
 
 

@@ -51,7 +51,7 @@ void Stalfos::changeHorizontalDirection()
 
 string Stalfos::setSpriteSheet()
 {
-	return "images/stalfos.png";
+	return "images/Mob/Enemies/stalfos.png";
 }
 
 glm::ivec2 Stalfos::setSpriteSize()

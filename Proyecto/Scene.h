@@ -11,7 +11,9 @@
 #include "Level.h"
 #include "Player.h"
 #include "Vaati.h"
-
+#include "NumberGenerator.h"
+#include "HUD.h"
+#include "Key.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -30,6 +32,9 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
+	void pause();
+	void unpause();
+	int getStageNum();
 
 private:
 	Scene();
@@ -43,6 +48,7 @@ private:
 	void updateEnemies(int deltaTime);
 	void renderEnemies();
 
+	void initTextures();
 	void initBackground();
 
 private:
@@ -52,9 +58,18 @@ private:
 	std::vector<Enemy*>* enemies;
 	float currentTime;
 
-	//Background
-	Texture spritesheet;
+	//Game background
+	Texture backgTexture;
 	Sprite* backgSprite;
+
+	//Application background
+	Texture backBlackTexture;
+	Sprite* backBlack;
+
+	int timer;
+	int contador;
+
+	Key key;
 };
 
 

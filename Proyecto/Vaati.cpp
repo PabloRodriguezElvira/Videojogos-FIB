@@ -155,7 +155,7 @@ void Vaati::changeHorizontalDirection()
 
 string Vaati::setSpriteSheet()
 {
-	return "images/vaati.png";
+	return "images/Mob/Enemies/vaati.png";
 }
 
 glm::ivec2 Vaati::setSpriteSize()
