@@ -10,11 +10,11 @@ void VidasDisplay::init()
 
 void VidasDisplay::initTextures()
 {	
-	heartTex.loadFromFile("images/cora.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	heartTex.loadFromFile("images/HUD/Vidas/cora.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	heartTex.setMinFilter(GL_NEAREST);
 	heartTex.setMagFilter(GL_NEAREST);
 
-	crossTex.loadFromFile("images/cross.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	crossTex.loadFromFile("images/HUD/Vidas/cross.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	crossTex.setMinFilter(GL_NEAREST);
 	crossTex.setMagFilter(GL_NEAREST);	
 }

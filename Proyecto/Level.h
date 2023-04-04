@@ -24,6 +24,8 @@ public:
 	int getInitPlayerPosX() const { return initPlayerTile.x; }
 	int getInitPlayerPosY() const { return initPlayerTile.y; }
 	int getInitPlayerAnim() const { return initPlayerAnim; }
+	int getStageNumber() const { return stageNumber; }
+	glm::vec2 getKeyPosition() const { return keyPosition;  }
 	std::vector<Enemy*>* getEnemies() { return &enemies; }
 
 private:
@@ -34,6 +36,8 @@ private:
 	glm::ivec2 initPlayerTile;
 	std::vector<Enemy*> enemies;
 	int* lvl;
+	int stageNumber;
+	glm::vec2 keyPosition;
 
 };
 

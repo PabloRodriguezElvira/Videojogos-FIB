@@ -9,7 +9,7 @@ void StageDisplay::init()
 
 void StageDisplay::initTextures()
 {
-	stageTex.loadFromFile("images/stage.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	stageTex.loadFromFile("images/HUD/Stage/stage.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	stageTex.setMinFilter(GL_NEAREST);
 	stageTex.setMagFilter(GL_NEAREST);
 }

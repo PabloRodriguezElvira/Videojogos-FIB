@@ -32,6 +32,6 @@ void PuntuacionDisplay::setPosition(glm::vec2 pos)
 	int x_offset = 0;
 	for (int i = 0; i < n; ++i) {
 		numbers[i]->setPosition(pos + glm::vec2(x_offset, 0));
-		x_offset += 20;
+		x_offset += 21;
 	}
 }

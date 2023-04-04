@@ -27,6 +27,8 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Info.h" />
     <ClInclude Include="InfoKeyboard.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Key.h" />
     <ClInclude Include="KeyboardCtrl.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Menu.h" />
@@ -56,6 +58,8 @@
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Info.cpp" />
     <ClCompile Include="InfoKeyboard.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Key.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />

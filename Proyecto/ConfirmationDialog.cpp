@@ -11,7 +11,7 @@ void ConfirmationDialog::init()
 
 void ConfirmationDialog::initTextures()
 {
-	imageTexture.loadFromFile("images/confirmationDialogs.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	imageTexture.loadFromFile("images/HUD/Dialogo/confirmationDialogs.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	imageTexture.setMinFilter(GL_NEAREST);
 	imageTexture.setMagFilter(GL_NEAREST);
 }

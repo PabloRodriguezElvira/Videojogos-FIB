@@ -11,12 +11,12 @@ void Info::initTextures()
 {
 	//Cargamos Opciones:
 	if (mode == 1) {
-		imageTexture.loadFromFile("images/imageOptions.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		imageTexture.loadFromFile("images/Menu/Options/imageOptions.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		imageTexture.setMinFilter(GL_NEAREST);
 		imageTexture.setMagFilter(GL_NEAREST);
 	}
 	else { //Cargamos Credits:
-		imageTexture.loadFromFile("images/imageCredits.png", TEXTURE_PIXEL_FORMAT_RGBA);
+		imageTexture.loadFromFile("images/Menu/Options/imageCredits.png", TEXTURE_PIXEL_FORMAT_RGBA);
 		imageTexture.setMinFilter(GL_NEAREST);
 		imageTexture.setMagFilter(GL_NEAREST);
 	}

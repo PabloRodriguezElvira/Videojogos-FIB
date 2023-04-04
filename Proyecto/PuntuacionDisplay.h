@@ -14,7 +14,6 @@ public:
 	void setPosition(glm::vec2 position);
 
 private:
-	//Sprite* numbers[6];
 	vector<Sprite*> numbers;
 };
 

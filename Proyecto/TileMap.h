@@ -2,7 +2,7 @@
 #define _TILE_MAP_INCLUDE
 
 #include "Definitions.h"
-
+#include <cstdlib>
 
 #include <glm/glm.hpp>
 
@@ -34,6 +34,7 @@ public:
 	
 	int getTileSizeX() const { return tileSize.x; }
 	int getTileSizeY() const { return tileSize.y; }
+	glm::ivec2 getMapSize() const { return mapSize; }
 
 	bool collisionMoveLeft(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos) const;
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos) const;
@@ -56,6 +57,9 @@ private:
 	Texture tilesheet;
 	glm::vec2 tileTexSize;
 	int *map;
+
+	//La posición random de la llave:
+	glm::vec2 keyPosition;
 };
 
 

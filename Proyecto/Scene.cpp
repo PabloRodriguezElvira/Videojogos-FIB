@@ -26,15 +26,18 @@ Scene::~Scene()
 
 void Scene::init()
 {
+	initMap();
 	HUD::instance().init();
 	initTextures();
 	initBackground();
-	initMap();
 	initLvl();
 	initPlayer();
 	bPaused = false;
 	initEnemies();
 	currentTime = 0.0f;
+	contador = 1000;
+	timer = 1;
+	key.init(lvl->getKeyPosition());
 	keyboardCtrl = &SceneKeyboard::instance();
 }
 
@@ -49,13 +52,24 @@ void Scene::unpause()
 	bPaused = false;
 }
 
+int Scene::getStageNum()
+{
+	return lvl->getStageNumber();
+}
+
 void Scene::update(int deltaTime)
 {
 	if (!bPaused) {
 		currentTime += deltaTime;
 		player->update(deltaTime);
 		updateEnemies(deltaTime);
-		HUD::instance().update(player->getPuntuacion());
+		contador -= deltaTime;
+		if (contador <= 0 && timer > 0) {
+			timer -= 1;
+			contador = 1000;
+		}
+		else if (timer <= 0) key.changePaint(true);
+		HUD::instance().update(player->getPuntuacion(), timer);
 	}
 }
 
@@ -71,6 +85,8 @@ void Scene::render()
 	renderEnemies();
 
 	HUD::instance().render();
+
+	key.render();
 }
 
 
@@ -117,18 +133,18 @@ void Scene::renderEnemies()
 
 void Scene::initTextures()
 {
-	backgTexture.loadFromFile("images/fondoPLSPLS.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	backgTexture.loadFromFile("images/Scene/Background/fondoPLSPLS.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	backgTexture.setMinFilter(GL_NEAREST);
 	backgTexture.setMagFilter(GL_NEAREST);
 
-	backBlackTexture.loadFromFile("images/fondoBlack.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	backBlackTexture.loadFromFile("images/Scene/Background/fondoBlack.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	backBlackTexture.setMinFilter(GL_NEAREST);
 	backBlackTexture.setMagFilter(GL_NEAREST);
 }
 
 void Scene::initBackground()
 {
-	backgSprite = Sprite::createSprite(glm::vec2((TILESIZE.x * TILES.x) - 1, TILESIZE.y * TILES.y), glm::vec2(1.f, 1.f), &backgTexture, &TEX_PROGRAM);
+	backgSprite = Sprite::createSprite(glm::vec2((TILESIZE.x * map->getMapSize().x) - 1, TILESIZE.y * map->getMapSize().y), glm::vec2(1.f, 1.f), &backgTexture, &TEX_PROGRAM);
 	backgSprite->setPosition(glm::vec2(SCREEN_X+TRANSLATE.x, SCREEN_Y+TRANSLATE.y));
 
 	backBlack = Sprite::createSprite(glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT), glm::vec2(1.f, 1.f), &backBlackTexture, &TEX_PROGRAM);	

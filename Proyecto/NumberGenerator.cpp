@@ -12,7 +12,7 @@ Sprite* NumberGenerator::createNum()
 
 void NumberGenerator::initTexture()
 {
-	numTexture.loadFromFile("images/nums.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	numTexture.loadFromFile("images/HUD/Numeros/nums.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	numTexture.setMinFilter(GL_NEAREST);
 	numTexture.setMagFilter(GL_NEAREST);
 }

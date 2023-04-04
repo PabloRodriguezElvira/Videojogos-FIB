@@ -40,7 +40,7 @@ bool Level::loadLevel(const string& levelFile)
 	stringstream sstream;
 	int i, initAnim;
 	char enemyType;
-	glm::ivec2 initTile;
+	glm::ivec2 initTile; 
 
 	fin.open(levelFile.c_str());
 	if (!fin.is_open())
@@ -48,6 +48,12 @@ bool Level::loadLevel(const string& levelFile)
 	getline(fin, line);																// LEVEL
 	if (line.compare(0, 5, "LEVEL") != 0)
 		return false;
+	getline(fin, line);                                                             // Read stage number.
+	sstream.str(line);
+	sstream >> stageNumber;
+	getline(fin, line);																// Read key position.
+	sstream.str(line);
+	sstream >> keyPosition.x >> keyPosition.y;
 	getline(fin, line);																// Initial player tile
 	sstream.str(line);
 	sstream >> initPlayerTile.x >> initPlayerTile.y >> initPlayerAnim;

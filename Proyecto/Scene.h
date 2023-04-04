@@ -13,7 +13,7 @@
 #include "Vaati.h"
 #include "NumberGenerator.h"
 #include "HUD.h"
-
+#include "Key.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -34,6 +34,7 @@ public:
 	void render();
 	void pause();
 	void unpause();
+	int getStageNum();
 
 private:
 	Scene();
@@ -64,6 +65,11 @@ private:
 	//Application background
 	Texture backBlackTexture;
 	Sprite* backBlack;
+
+	int timer;
+	int contador;
+
+	Key key;
 };
 
 

@@ -1,6 +1,8 @@
 #ifndef _HUD_INCLUDE
 #define _HUD_INCLUDE
 
+
+#include "Scene.h"
 #include "Sprite.h"
 #include "NumberGenerator.h"
 #include "VidasDisplay.h"
@@ -18,20 +20,15 @@ public:
 	};
 
 	void init();
-	void update(int punt);
+	void update(int punt, int timer);
 	void render();
 
 	void setAllPositions();
 
-	//int getButtonIndexInPos(int posX, int posY);
-	//void changeSelectedButton(int selectedButton);
-	//int getSelectedButtonJobCount();
-
-	//void changeDisplayedJob(string lemmingJobName);
 private:
 	VidasDisplay numVidas;
 	PuntuacionDisplay puntuacion;
-	PuntuacionDisplay time;
+	PuntuacionDisplay tiempo;
 	StageDisplay stage;
 };
 #endif //_HUD_INCLUDE

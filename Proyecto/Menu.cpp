@@ -14,19 +14,19 @@ void Menu::init()
 
 void Menu::initTextures()
 {
-	menuTexture.loadFromFile("images/fondo_noche.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	menuTexture.loadFromFile("images/Menu/Background/fondo_noche.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	menuTexture.setMinFilter(GL_NEAREST);
 	menuTexture.setMagFilter(GL_NEAREST);
 
-	nightTexture.loadFromFile("images/nightWhite.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	nightTexture.loadFromFile("images/Menu/Title/nightWhite.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	nightTexture.setMinFilter(GL_NEAREST);
 	nightTexture.setMagFilter(GL_NEAREST);
 
-	knightTexture.loadFromFile("images/knightWhite.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	knightTexture.loadFromFile("images/Menu/Title/knightWhite.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	knightTexture.setMinFilter(GL_NEAREST);
 	knightTexture.setMagFilter(GL_NEAREST);
 
-	string paths[4] = { "images/PPPlay.png", "images/OOOptions.png", "images/CCCredits.png", "images/EEExit.png"};
+	string paths[4] = { "images/Menu/Play/PPPlay.png", "images/Menu/Options/OOOptions.png", "images/Menu/Credits/CCCredits.png", "images/Menu/Exit/EEExit.png"};
 	for (int i = 0; i < 4; ++i) {
 		textsTex[i].loadFromFile(paths[i], TEXTURE_PIXEL_FORMAT_RGBA);
 		textsTex[i].setMinFilter(GL_NEAREST);

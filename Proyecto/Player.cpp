@@ -234,7 +234,7 @@ void Player::updateMob(int deltaTime)
 
 string Player::setSpriteSheet()
 {
-	return "images/zero.png";
+	return "images/Mob/Player/zero.png";
 }
 
 glm::ivec2 Player::setSpriteSize()

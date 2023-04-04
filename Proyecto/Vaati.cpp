@@ -68,7 +68,7 @@ void Vaati::updateMob(int deltaTime)
 
 string Vaati::setSpriteSheet()
 {
-	return "images/vaati2.png";
+	return "images/Mob/Enemies/Vaati/vaati2.png";
 }
 
 glm::ivec2 Vaati::setSpriteSize()
