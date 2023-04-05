@@ -26,6 +26,9 @@ Scene::~Scene()
 
 void Scene::init()
 {
+	SoundCtrl::instance().loadSound("sounds/Scene/VaatiTheme.mp3", FMOD_LOOP_NORMAL | FMOD_CREATESTREAM);
+	SoundCtrl::instance().playSound();
+	SoundCtrl::instance().setVolume(0.1f);
 	initMap();
 	HUD::instance().init();
 	initTextures();

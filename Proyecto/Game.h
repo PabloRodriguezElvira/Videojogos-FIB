@@ -8,7 +8,7 @@
 #include "State.h"
 #include "ShaderCtrl.h"
 #include "Menu.h"
-
+//#include "SoundCtrl.h"
 
 // Game is a singleton (a class with a single instance) that represents our whole application
 
@@ -44,6 +44,8 @@ public:
 	void mousePress(int button);
 	void mouseRelease(int button);
 
+	//const SoundCtrl* getSoundController() const;
+
 private:
 	Game() {}
 
@@ -51,8 +53,7 @@ private:
 	bool bPlay;                       // Continue to play game?
 	State *state;                     // State to render
 	bool keys[256], specialKeys[256]; // Store key states so that 
-									  // we can have access at any time
-
+	//SoundCtrl soundCtrl;              // we can have access at any time
 };
 
 

@@ -21,6 +21,12 @@ void DialogKeyboard::keyPressed(int key)
 		}
 		//Si no, volvemos al Menu.
 		else {
+			//Volvemos al track del menú principal si no estamos en OPCIONES.
+			int modeMenu = st->getMode();
+			if (modeMenu != 1) {
+				SoundCtrl::instance().endMusic();
+				SoundCtrl::instance().putTrack("sounds/Menu/House.mp3", 0.1f);
+			}
 			StateCtrl::instance().unpause(&Menu::instance());
 		}
 	}

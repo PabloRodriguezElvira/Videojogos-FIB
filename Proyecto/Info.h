@@ -23,11 +23,13 @@ public:
 	void pause();
 	void unpause();
 
-	void setMode(int mode);
+	void setMode(int mode) { this->mode = mode; };
+	int getMode() const { return this->mode; };
 
 private:
 	void initTextures();
 	void initSprites();
+	void initSounds();
 
 	Texture imageTexture;
 	int mode; //1->Options, 2->Credits

@@ -10,6 +10,7 @@ void Menu::init()
 	modeAnterior = -1;
 	bPaused = false;
 	keyboardCtrl = &MenuKeyboard::instance();
+	SoundCtrl::instance().putTrack("sounds/Menu/House.mp3", 0.1f);
 }
 
 void Menu::initTextures()
