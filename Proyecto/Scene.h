@@ -14,6 +14,7 @@
 #include "NumberGenerator.h"
 #include "HUD.h"
 #include "Key.h"
+#include "Gem.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -51,6 +52,10 @@ private:
 	void initTextures();
 	void initBackground();
 
+	void initItems();
+	void renderItems();
+	void updateItems(int contador);
+
 private:
 	TileMap* map;
 	Level* lvl;
@@ -69,7 +74,7 @@ private:
 	int timer;
 	int contador;
 
-	Key key;
+	std::vector<Item*>* items;
 };
 
 

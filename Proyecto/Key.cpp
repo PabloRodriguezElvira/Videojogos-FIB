@@ -2,7 +2,7 @@
 
 string Key::getImagePath()
 {
-	return "images/Items/Key/cross.png";
+	return "images/Items/Key/keyy.png";
 }
 
 void Key::initSprites()

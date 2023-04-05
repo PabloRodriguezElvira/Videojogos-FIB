@@ -20,10 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimKeyframes.h" />
+    <ClInclude Include="Clock.h" />
     <ClInclude Include="ConfirmationDialog.h" />
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="DialogKeyboard.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Gem.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Info.h" />
     <ClInclude Include="InfoKeyboard.h" />
@@ -53,9 +56,11 @@
     <ClInclude Include="VidasDisplay.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Clock.cpp" />
     <ClCompile Include="ConfirmationDialog.cpp" />
     <ClCompile Include="DialogKeyboard.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Gem.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Info.cpp" />
     <ClCompile Include="InfoKeyboard.cpp" />

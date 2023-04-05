@@ -36,8 +36,8 @@ void Scene::init()
 	initEnemies();
 	currentTime = 0.0f;
 	contador = 1000;
-	timer = 1;
-	key.init(lvl->getKeyPosition());
+	timer = 10;
+	initItems();
 	keyboardCtrl = &SceneKeyboard::instance();
 }
 
@@ -65,11 +65,11 @@ void Scene::update(int deltaTime)
 		player->update(deltaTime);
 		if (player->getHealth() > 0) updateEnemies(deltaTime);
 		contador -= deltaTime;
+		updateItems(deltaTime);
 		if (contador <= 0 && timer > 0) {
 			timer -= 1;
 			contador = 1000;
 		}
-		if (map->getNumTilesPisables() == 0) key.changePaint(true);
 		HUD::instance().update(player->getPuntuacion(), timer);
 	}
 }
@@ -87,7 +87,7 @@ void Scene::render()
 
 	HUD::instance().render();
 
-	key.render();
+	renderItems();
 }
 
 
@@ -116,6 +116,33 @@ void Scene::initEnemies()
 		enemy->init(map, glm::ivec2(SCREEN_X + TRANSLATE.x, SCREEN_Y + TRANSLATE.y),
 					glm::ivec2(map->getTileSizeX() * enemy->getInitTileX(), map->getTileSizeY() * enemy->getInitTileY()),
 					enemy->getInitAnim(), TEX_PROGRAM);
+}
+
+void Scene::initItems()
+{
+	items = lvl->getItems();
+	for (Item* item : *items) {
+		item->init();
+	}
+}
+
+void Scene::updateItems(int deltaTime)
+{
+	for (Item* item : *items) {		
+		if (item->getType() == 'K') {
+			if (map->getNumTilesPisables() == 0) item->changeBPaint(true);
+		}
+		else {
+			item->update(deltaTime);
+		}
+	}
+}
+
+void Scene::renderItems()
+{
+	for (Item* item : *items) {
+		item->render();
+	}
 }
 
 void Scene::updateEnemies(int deltaTime)

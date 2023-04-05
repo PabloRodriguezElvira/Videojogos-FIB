@@ -7,3 +7,7 @@ V 12 11 0						-- Enemy type, initial enemy tile & anim
 V 3 11 1	\n
 S 11 20 0	\n
 S 4 20 1	\n
+3							-- Number of items
+K 12 8 -1						-- Item type, initial tile, time to appear
+G 5 5 4         \n
+C 9 5 3	        \n						

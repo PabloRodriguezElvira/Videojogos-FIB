@@ -6,6 +6,9 @@
 
 #include "Vaati.h"
 #include "Stalfos.h"
+#include "Key.h"
+#include "Gem.h"
+#include "Clock.h"
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -28,6 +31,7 @@ public:
 	int getStageNumber() const { return stageNumber; }
 	glm::vec2 getKeyPosition() const { return keyPosition;  }
 	std::vector<Enemy*>* getEnemies() { return &enemies; }
+	std::vector<Item*>* getItems() { return &items; }
 
 private:
 	bool loadLevel(const string& levelFile);
@@ -39,6 +43,8 @@ private:
 	int* lvl;
 	int stageNumber;
 	glm::vec2 keyPosition;
+	int totalItems;
+	std::vector<Item*> items;
 
 };
 
