@@ -23,38 +23,28 @@ Scene::~Scene()
 		delete player;
 }
 
-
 void Scene::init()
 {
+	if (stage == 0) stage = 1;
+
 	initMap();
-	HUD::instance().init();
 	initTextures();
 	initBackground();
+
 	initLvl();
 	initPlayer();
-	bPaused = false;
 	initEnemies();
+	
+	bPaused = true;
+	pauseDuration = 3000;
+
 	currentTime = 0.0f;
-	contador = 1000;
-	timer = 1;
+	timerCooldown = 1000;
+	timer = 60;
+	initHUD();
+
 	key.init(lvl->getKeyPosition());
 	keyboardCtrl = &SceneKeyboard::instance();
-}
-
-
-void Scene::pause() 
-{
-	bPaused = true;
-}
-
-void Scene::unpause()
-{
-	bPaused = false;
-}
-
-int Scene::getStageNum()
-{
-	return lvl->getStageNumber();
 }
 
 void Scene::update(int deltaTime)
@@ -63,14 +53,29 @@ void Scene::update(int deltaTime)
 	{
 		currentTime += deltaTime;
 		player->update(deltaTime);
-		if (player->getHealth() > 0) updateEnemies(deltaTime);
-		contador -= deltaTime;
-		if (contador <= 0 && timer > 0) {
-			timer -= 1;
-			contador = 1000;
+		updateEnemies(deltaTime);
+		updateTimer(deltaTime);
+		HUD::instance().update(player->getHealth(), player->getPuntuacion(), timer, stage);
+		
+		if (player->getHealth() == 0)
+		{
+			player->unpaint();
+			unpaintEnemies();
+			bPaused = true;
+			pauseDuration = 4000;
 		}
-		else if (timer <= 0) key.changePaint(true);
-		HUD::instance().update(player->getPuntuacion(), timer);
+	}
+	else
+	{
+		if (pauseDuration <= 3000)
+		{
+			pauseDuration -= deltaTime;
+			if (pauseDuration <= 0)
+			{
+				bPaused = false;
+				pauseDuration = 4000;
+			}
+		}
 	}
 }
 
@@ -82,7 +87,7 @@ void Scene::render()
 	backgSprite->render();
 	ShaderCtrl::instance().setTranslateModelview();
 	map->render();
-	player->render();
+	if (player->bePainted()) player->render();
 	renderEnemies();
 
 	HUD::instance().render();
@@ -90,15 +95,20 @@ void Scene::render()
 	key.render();
 }
 
+void Scene::flipGodMode() {
+	if (!bPaused)
+		player->flipGodMode();
+}
 
 void Scene::initMap()
 {
-	map = TileMap::createTileMap("levels/tilemap01.txt", glm::vec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
+	map = TileMap::createTileMap("levels/tilemap0" + std::to_string(stage) + ".txt",
+								 glm::vec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
 }
 
 void Scene::initLvl()
 {
-	lvl = Level::createLevel("levels/level01.txt");
+	lvl = Level::createLevel("levels/level0" + std::to_string(stage) + ".txt");
 }
 
 void Scene::initPlayer()
@@ -118,6 +128,12 @@ void Scene::initEnemies()
 					enemy->getInitAnim(), TEX_PROGRAM);
 }
 
+void Scene::initHUD()
+{
+	HUD::instance().init();
+	HUD::instance().update(player->getHealth(), player->getPuntuacion(), timer, stage);
+}
+
 void Scene::updateEnemies(int deltaTime)
 {
 	glm::ivec2 playerTopLeft = player->getTopLeft();
@@ -129,22 +145,13 @@ void Scene::updateEnemies(int deltaTime)
 	{
 		if (player->getHealth() > 0)
 		{
-			enemy->update(deltaTime);
-			
-			if (!player->isHurt())
-			{
-				enemyTopLeft = enemy->getTopLeft();
-				enemyBotRight = enemy->getBotRight();
+			enemy->setPlayerTopLeft(playerTopLeft);
+			enemy->setPlayerBotRight(playerBotRight);
 
-				if (!(playerBotRight.x < enemyTopLeft.x || enemyBotRight.x < playerTopLeft.x))
-				{
-					if (!(playerBotRight.y < enemyTopLeft.y || enemyBotRight.y < playerTopLeft.y))
-					{
-						player->hit();
-						if (enemy->getType() != 'M') enemy->changeHorizontalDirection();
-					}
-				}
-			}
+			enemy->update(deltaTime);
+
+			if (!player->isHurt() && !player->isGodMode() && enemy->collision())
+				player->hit();
 		}
 	}
 }
@@ -152,7 +159,31 @@ void Scene::updateEnemies(int deltaTime)
 void Scene::renderEnemies()
 {
 	for (Enemy* enemy : *enemies)
-		enemy->render();
+		if (enemy->bePainted()) enemy->render();
+}
+
+void Scene::unpaintEnemies()
+{
+	for (Enemy* enemy : *enemies)
+		enemy->unpaint();
+}
+
+void Scene::updateTimer(int deltaTime)
+{
+	timerCooldown -= deltaTime;
+	if (timerCooldown <= 0) {
+		timer -= 1;
+		timerCooldown = 1000;
+	}
+
+	if (timer == 0)
+	{
+		if (player->getHealth() > 0)
+			player->hit();
+
+		if (player->getHealth() > 0)
+			timer = 60;
+	}
 }
 
 void Scene::initTextures()

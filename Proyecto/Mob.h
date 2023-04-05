@@ -17,8 +17,10 @@ public:
 	void render();
 
 	void setInitAnim(int iniAnim) { initAnim = iniAnim; }
+	void unpaint() { bPaint = false; }
 
 	int getInitAnim() { return initAnim; }
+	bool bePainted() { return bPaint; }
 	glm::ivec2 getTopLeft() { return (position + hitboxPos); }
 	glm::ivec2 getBotRight() { return (position + hitboxPos + hitboxSize); }
 

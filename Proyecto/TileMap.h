@@ -40,11 +40,19 @@ public:
 	bool collisionMoveRight(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos) const;
 	bool collisionMoveDown(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posY, int fallStep);
 	bool collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posY, int fallStep);
+
+	bool collisionMoveLeftEnemy(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posX, int moveStep);
+	bool collisionMoveRightEnemy(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posX, int moveStep);
 	bool collisionMoveUpEnemy(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int fallStep);
-	void paintTiles(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* puntuacion);
-	bool collisionSpikesDown(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posY, int fallStep);
+
 	bool fallMoveLeft(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos) const;
 	bool fallMoveRight(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos) const;
+	bool fallMoveLeft(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posX, int moveStep) const;
+	bool fallMoveRight(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posX, int moveStep) const;
+
+	void paintTiles(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* puntuacion);
+	bool collisionSpikesDown(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posY, int fallStep);
+
 	
 private:
 	bool loadLevel(const string &levelFile);

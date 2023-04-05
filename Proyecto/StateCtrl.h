@@ -21,6 +21,7 @@ public:
 	};
 
 	void changeTo(State* st);
+	void changeStage(int stage);
 	void changeToDialog(State* st);
 	void pause(State* st);
 	void unpause(State* st);

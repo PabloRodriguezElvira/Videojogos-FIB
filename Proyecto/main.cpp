@@ -6,7 +6,8 @@
 
 //Remove console (only works in Visual Studio)
 //#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
-
+//#include <iostream>
+//std::cout << "algo" << std::endl;
 
 #define TIME_PER_FRAME 1000.f / 60.f // Approx. 60 fps
 

@@ -10,15 +10,22 @@ class Enemy : public Mob
 public:
 	void setType(char t) { type = t; }
 	void setInitTile(glm::ivec2 iniTile) { initTile = iniTile; }
-	virtual void changeHorizontalDirection() { ; }
-	
+
+	void setPlayerTopLeft(glm::ivec2 playerTL) { playerTopLeft = playerTL; }
+	void setPlayerBotRight(glm::ivec2 playerBR) { playerBotRight = playerBR; }
+
+	bool collision();
+
 	char getType() { return type; }
 	int getInitTileX() { return initTile.x; }
 	int getInitTileY() { return initTile.y; }
 
 protected:
+	virtual void changeHorizontalDirection() { ; }
+
+protected:
 	char type;
-	glm::ivec2 initTile;
+	glm::ivec2 initTile, playerTopLeft, playerBotRight;
 
 };
 

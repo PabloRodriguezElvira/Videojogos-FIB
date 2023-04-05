@@ -15,10 +15,12 @@
 class Player : public Mob
 {
 public:
+	void hit();
+	void flipGodMode() { godMode = !godMode; }
+
 	int getHealth() { return health; }
 	bool isHurt() { return hurt; }
-
-	void hit();
+	bool isGodMode() { return godMode; }
 
 public:
 	int getPuntuacion();
@@ -36,7 +38,7 @@ protected:
 
 private:
 	int coyote, coyoteTime, puntuacion, health, hurtTime, blink;
-	bool bJumping, bFalling, hurt, reset;
+	bool bJumping, bFalling, hurt, reset, godMode;
 
 };
 

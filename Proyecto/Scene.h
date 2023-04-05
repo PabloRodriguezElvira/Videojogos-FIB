@@ -10,7 +10,6 @@
 #include "TileMap.h"
 #include "Level.h"
 #include "Player.h"
-#include "Vaati.h"
 #include "NumberGenerator.h"
 #include "HUD.h"
 #include "Key.h"
@@ -32,9 +31,14 @@ public:
 	void init();
 	void update(int deltaTime);
 	void render();
-	void pause();
-	void unpause();
-	int getStageNum();
+
+	void pause() { bPaused = true; }
+	void unpause() { bPaused = false; }
+
+	void flipGodMode();
+	void changeStage(int s) { stage = s; }
+
+	int getStage() { return stage; }
 
 private:
 	Scene();
@@ -47,6 +51,10 @@ private:
 	void initEnemies();
 	void updateEnemies(int deltaTime);
 	void renderEnemies();
+	void unpaintEnemies();
+
+	void initHUD();
+	void updateTimer(int deltaTime);
 
 	void initTextures();
 	void initBackground();
@@ -66,9 +74,8 @@ private:
 	Texture backBlackTexture;
 	Sprite* backBlack;
 
-	int timer;
-	int contador;
-
+	int stage = 0;
+	int pauseDuration, timer, timerCooldown;
 	Key key;
 };
 

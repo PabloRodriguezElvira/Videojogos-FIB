@@ -14,22 +14,27 @@ void Mob::init(TileMap* tileMap, const glm::ivec2& tileMapPos, const glm::ivec2&
 	initAnim = iniAnim;
 	mirror = false;
 	bPaint = true;
+
 	spritesheet.loadFromFile(setSpriteSheet(), TEXTURE_PIXEL_FORMAT_RGBA);
+	spritesheet.setMinFilter(GL_NEAREST);
+	spritesheet.setMagFilter(GL_NEAREST);
 	sprite = Sprite::createSprite(setSpriteSize(), setSizeInSpriteSheet(), &spritesheet, &shaderProgram);
 	setAnimations();
+
 	tileMapDispl = tileMapPos;
 	map = tileMap;
 	initMob();
 	initPos = glm::ivec2(iniPos.x - hitboxPos.x, iniPos.y - hitboxPos.y - hitboxSize.y);
-	setPosition(initPos);
+	position = initPos;
 	if (mirror) position.x += TILESIZE.x - hitboxSize.x;
+	setPosition(position);
 }
 
 void Mob::update(int deltaTime)
 {
-	sprite->update(deltaTime);
 	updateMob(deltaTime);
 	setPosition(position);
+	sprite->update(deltaTime);
 }
 
 void Mob::render()

@@ -1,5 +1,4 @@
 LEVEL
-1                                                       -- Stage number
 5 5  							-- Key position           
 4 5 1							-- Initial player tile
 4							-- Number of enemies

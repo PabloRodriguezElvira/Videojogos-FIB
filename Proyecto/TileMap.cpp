@@ -241,6 +241,54 @@ bool TileMap::collisionMoveUp(const glm::ivec2& pos, const glm::ivec2& hitSize, 
 	return false;
 }
 
+bool TileMap::collisionMoveLeftEnemy(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posX, int moveStep)
+{
+	int x, y0, y1;
+
+	x = (pos.x + hitPos.x) / tileSize.x;
+	y0 = (pos.y + hitPos.y) / tileSize.y;
+	y1 = (pos.y + hitPos.y + hitSize.y - 1) / tileSize.y;
+	int posTile;
+	for (int y = y0; y <= y1; y++)
+	{
+		posTile = y * mapSize.x + x;
+		if (map[posTile] > 8 && y0 != 0)
+		{
+			//Actualizar posición de X.
+			if (tileSize.x * (x + 1) - (*posX + hitPos.x) <= moveStep + 1)
+			{
+				*posX = tileSize.x * (x + 1) - hitPos.x;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool TileMap::collisionMoveRightEnemy(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posX, int moveStep)
+{
+	int x, y0, y1;
+
+	x = (pos.x + hitPos.x) / tileSize.x;
+	y0 = (pos.y + hitPos.y) / tileSize.y;
+	y1 = (pos.y + hitPos.y + hitSize.y - 1) / tileSize.y;
+	int posTile;
+	for (int y = y0; y <= y1; y++)
+	{
+		posTile = y * mapSize.x + x;
+		if (map[posTile] > 8 && y0 != 0)
+		{
+			//Actualizar posición de X.
+			if (*posX + hitPos.x + hitSize.x - tileSize.x * x <= moveStep)
+			{
+				*posX = tileSize.x * x - hitSize.x - hitPos.x;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 bool TileMap::collisionMoveUpEnemy(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int fallStep)
 {
 	int x0, x1, y;
@@ -253,43 +301,6 @@ bool TileMap::collisionMoveUpEnemy(const glm::ivec2& pos, const glm::ivec2& hitS
 		int posTile = y * mapSize.x + x;
 		if (map[posTile] != 0)
 			return true;
-	}
-	return false;
-}
-
-void TileMap::paintTiles(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* puntuacion)
-{
-	int x0, x1, y;
-	
-	x0 = (pos.x + hitPos.x) / tileSize.x;
-	x1 = (pos.x + hitPos.x + hitSize.x - 1) / tileSize.x;
-	y = (pos.y + hitPos.y + hitSize.y - 1) / tileSize.y;
-	int posTile;
-	for(int x=x0; x<=x1; x++)
-	{
-		posTile = (y + 1) * mapSize.x + x;
-		if(0 < map[posTile] && map[posTile] < 5)
-		{
-			//Pintar tile: (si es diferente del 0 - aire).
-			*puntuacion = *puntuacion + 10;
-			map[posTile] += 4;
-			prepareArrays(glm::vec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
-		}
-	}	
-}
-
-bool TileMap::collisionSpikesDown(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posY, int fallStep)
-{
-	int x0, x1, y;
-
-	x0 = (pos.x + hitPos.x) / tileSize.x;
-	x1 = (pos.x + hitPos.x + hitSize.x - 1) / tileSize.x;
-	y = (pos.y + hitPos.y + hitSize.y - 1) / tileSize.y;
-	int posTile;
-	for (int x = x0; x <= x1; x++)
-	{
-		posTile = (y + 1) * mapSize.x + x;
-		if (map[posTile] == 15) return true;
 	}
 	return false;
 }
@@ -311,5 +322,78 @@ bool TileMap::fallMoveRight(const glm::ivec2& pos, const glm::ivec2& hitSize, co
 	int posTile = y * mapSize.x + x;
 
 	if (map[posTile] == 0 || map[posTile] == 15) return true;
+	return false;
+}
+
+bool TileMap::fallMoveLeft(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posX, int moveStep) const
+{
+	int x = (pos.x + hitPos.x) / tileSize.x;
+	int y = (pos.y + hitPos.y + hitSize.y) / tileSize.y;
+	int posTile = y * mapSize.x + x;
+
+	if (map[posTile] == 0 || map[posTile] == 15)
+	{
+		//Actualizar posición de X.
+		if (tileSize.x * (x + 1) - (*posX + hitPos.x) <= moveStep + 1)
+		{
+			*posX = tileSize.x * (x + 1) - hitPos.x;
+			return true;
+		}
+	}
+	return false;
+}
+
+bool TileMap::fallMoveRight(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posX, int moveStep) const
+{
+	int x = (pos.x + hitPos.x + hitSize.x - 1) / tileSize.x;
+	int y = (pos.y + hitPos.y + hitSize.y) / tileSize.y;
+	int posTile = y * mapSize.x + x;
+
+	if (map[posTile] == 0 || map[posTile] == 15)
+	{
+		//Actualizar posición de X.
+		if (*posX + hitPos.x + hitSize.x - tileSize.x * x <= moveStep)
+		{
+			*posX = tileSize.x * x - hitSize.x - hitPos.x;
+			return true;
+		}
+	}
+	return false;
+}
+
+void TileMap::paintTiles(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* puntuacion)
+{
+	int x0, x1, y;
+
+	x0 = (pos.x + hitPos.x) / tileSize.x;
+	x1 = (pos.x + hitPos.x + hitSize.x - 1) / tileSize.x;
+	y = (pos.y + hitPos.y + hitSize.y - 1) / tileSize.y;
+	int posTile;
+	for (int x = x0; x <= x1; x++)
+	{
+		posTile = (y + 1) * mapSize.x + x;
+		if (0 < map[posTile] && map[posTile] < 5)
+		{
+			//Pintar tile: (si es diferente del 0 - aire).
+			*puntuacion = *puntuacion + 10;
+			map[posTile] += 4;
+			prepareArrays(glm::vec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
+		}
+	}
+}
+
+bool TileMap::collisionSpikesDown(const glm::ivec2& pos, const glm::ivec2& hitSize, const glm::ivec2& hitPos, int* posY, int fallStep)
+{
+	int x0, x1, y;
+
+	x0 = (pos.x + hitPos.x) / tileSize.x;
+	x1 = (pos.x + hitPos.x + hitSize.x - 1) / tileSize.x;
+	y = (pos.y + hitPos.y + hitSize.y - 1) / tileSize.y;
+	int posTile;
+	for (int x = x0; x <= x1; x++)
+	{
+		posTile = (y + 1) * mapSize.x + x;
+		if (map[posTile] == 15) return true;
+	}
 	return false;
 }

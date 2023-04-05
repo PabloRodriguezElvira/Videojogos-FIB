@@ -11,7 +11,6 @@ void DialogKeyboard::keyPressed(int key)
 	//Escape o enter al No.
 	if (key == 27 || (key == 13 && mode == 1)) {
 		StateCtrl::instance().unpause(st);
-		Game::instance().setState(st);
 	}
 	//Enter al Yes.
 	else if (key == 13 && mode == 0) {
@@ -24,6 +23,9 @@ void DialogKeyboard::keyPressed(int key)
 			StateCtrl::instance().unpause(&Menu::instance());
 		}
 	}
+
+	if (key == '1' || key == '2' || key == '3')
+		StateCtrl::instance().changeStage(key - 48);
 }
 
 void DialogKeyboard::keyReleased(int key)

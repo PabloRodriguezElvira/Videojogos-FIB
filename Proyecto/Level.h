@@ -5,6 +5,7 @@
 
 
 #include "Vaati.h"
+#include "Moblin.h"
 #include "Stalfos.h"
 #include <glm/glm.hpp>
 #include <vector>
@@ -25,7 +26,6 @@ public:
 	int getInitPlayerPosX() const { return initPlayerTile.x; }
 	int getInitPlayerPosY() const { return initPlayerTile.y; }
 	int getInitPlayerAnim() const { return initPlayerAnim; }
-	int getStageNumber() const { return stageNumber; }
 	glm::vec2 getKeyPosition() const { return keyPosition;  }
 	std::vector<Enemy*>* getEnemies() { return &enemies; }
 
@@ -37,7 +37,6 @@ private:
 	glm::ivec2 initPlayerTile;
 	std::vector<Enemy*> enemies;
 	int* lvl;
-	int stageNumber;
 	glm::vec2 keyPosition;
 
 };

@@ -1,6 +1,5 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
-#include <iostream>
 
 #include "Player.h"
 
@@ -33,6 +32,7 @@ void Player::initMob()
 	blink = 5;
 	hurt = false;
 	reset = true;
+	godMode = false;
 
 	hitboxSize = glm::ivec2(16, 32);
 	hitboxPos = glm::ivec2(17, 26);
@@ -62,6 +62,7 @@ void Player::updateHurt(int deltaTime)
 		{
 			setPosition(initPos);
 			sprite->changeAnimation(initAnim);
+			setPosition(initPos);
 			reset = false;
 		}
 		if (--blink == 0)
@@ -248,7 +249,7 @@ void Player::updateMovement()
 		bFalling = !map->collisionMoveDown(position, hitboxSize, hitboxPos, &position.y, fallStep);
 		if (!bFalling)
 		{
-			if (!hurt && map->collisionSpikesDown(position, hitboxSize, hitboxPos, &position.y, fallStep)) hit();
+			if (!hurt && !godMode && map->collisionSpikesDown(position, hitboxSize, hitboxPos, &position.y, fallStep)) hit();
 			else
 			{
 				map->paintTiles(position, hitboxSize, hitboxPos, &puntuacion);
@@ -289,22 +290,27 @@ void Player::updateMovement()
 
 void Player::hit()
 {
-	--health;
-	hurtTime = 4000;
-	hurt = true;
-	reset = true;
+	if (!godMode)
+	{
+		--health;
+		hurtTime = 4000;
+		hurt = true;
+		reset = true;
+		bJumping = false;
+		bFalling = false;
 
-	if (sprite->animation() % 2 == 0)
-	{
-		if (sprite->animation() == JUMP_LEFT)
-			sprite->changeAnimation(FALL_LEFT);
-		else sprite->changeAnimation(HURT_LEFT);
-	}
-	else
-	{
-		if (sprite->animation() == JUMP_RIGHT)
-			sprite->changeAnimation(FALL_RIGHT);
-		else sprite->changeAnimation(HURT_RIGHT);
+		if (sprite->animation() % 2 == 0)
+		{
+			if (sprite->animation() == JUMP_LEFT)
+				sprite->changeAnimation(FALL_LEFT);
+			else sprite->changeAnimation(HURT_LEFT);
+		}
+		else
+		{
+			if (sprite->animation() == JUMP_RIGHT)
+				sprite->changeAnimation(FALL_RIGHT);
+			else sprite->changeAnimation(HURT_RIGHT);
+		}
 	}
 }
 

@@ -20,7 +20,7 @@ public:
 	};
 
 	void init();
-	void update(int punt, int timer);
+	void update(int vidas, int punt, int timer, int stage);
 	void render();
 
 	void setAllPositions();
@@ -29,7 +29,7 @@ private:
 	VidasDisplay numVidas;
 	PuntuacionDisplay puntuacion;
 	PuntuacionDisplay tiempo;
-	StageDisplay stage;
+	StageDisplay numStage;
 };
 #endif //_HUD_INCLUDE
 

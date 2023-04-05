@@ -6,6 +6,14 @@ void StateCtrl::changeTo(State* st)
 	Game::instance().setState(st);
 }
 
+void StateCtrl::changeStage(int stage)
+{
+	
+	Scene::instance().changeStage(stage);
+	Scene::instance().init();
+	Game::instance().setState(&Scene::instance());
+}
+
 void StateCtrl::pause(State* st)
 {
 	st->pause();

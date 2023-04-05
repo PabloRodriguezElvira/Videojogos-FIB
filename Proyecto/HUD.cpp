@@ -7,16 +7,16 @@ void HUD::init()
 	numVidas.init();
 	puntuacion.init(6);
 	tiempo.init(2);
-	stage.init();
+	numStage.init();
 	setAllPositions();
 }
 
-void HUD::update(int punt, int timer)
+void HUD::update(int vidas, int punt, int timer, int stage)
 {
-	numVidas.displayVidas(9);
+	numVidas.displayVidas(vidas);
 	puntuacion.displayNum(punt);
 	tiempo.displayNum(timer);
-	stage.displayLevel(Scene::instance().getStageNum());
+	numStage.displayLevel(stage);
 }
 
 void HUD::render()
@@ -24,7 +24,7 @@ void HUD::render()
 	numVidas.render();
 	puntuacion.render();
 	tiempo.render();
-	stage.render();
+	numStage.render();
 }
 
 void HUD::setAllPositions()
@@ -32,7 +32,7 @@ void HUD::setAllPositions()
 	numVidas.setPosition(glm::vec2(20, 25));
 	puntuacion.setPosition(glm::vec2(120, 25));
 	tiempo.setPosition(glm::vec2(300, 25));
-	stage.setPosition(glm::vec2(450, 25));
+	numStage.setPosition(glm::vec2(450, 25));
 }
 
 
