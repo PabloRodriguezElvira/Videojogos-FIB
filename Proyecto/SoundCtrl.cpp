@@ -10,6 +10,16 @@ void SoundCtrl::putTrack(std::string track, float volume)
 	setVolume(volume);
 }
 
+void SoundCtrl::pauseMusic()
+{
+	channel->setPaused(true);
+}
+
+void SoundCtrl::unpauseMusic()
+{
+	channel->setPaused(false);
+}
+
 void SoundCtrl::loadSound(const std::string& file, FMOD_MODE mode) {
 	lowLevelSystem->createSound(file.c_str(), mode, nullptr, &music);
 }

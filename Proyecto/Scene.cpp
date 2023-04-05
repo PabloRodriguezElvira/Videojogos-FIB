@@ -26,9 +26,7 @@ Scene::~Scene()
 
 void Scene::init()
 {
-	SoundCtrl::instance().loadSound("sounds/Scene/VaatiTheme.mp3", FMOD_LOOP_NORMAL | FMOD_CREATESTREAM);
-	SoundCtrl::instance().playSound();
-	SoundCtrl::instance().setVolume(0.1f);
+	SoundCtrl::instance().putTrack("sounds/Scene/VaatiTheme.mp3", 0.1f);
 	initMap();
 	HUD::instance().init();
 	initTextures();
@@ -73,6 +71,8 @@ void Scene::update(int deltaTime)
 			timer -= 1;
 			contador = 1000;
 		}
+		if (timer == 5) SoundCtrl::instance().pauseMusic();
+		if (timer == 4) SoundCtrl::instance().unpauseMusic();
 		HUD::instance().update(player->getPuntuacion(), timer);
 	}
 }

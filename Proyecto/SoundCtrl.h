@@ -20,12 +20,13 @@ public:
 	void playSound();
 	void setVolume(float vol);
 	void endMusic();
+	void pauseMusic();
+	void unpauseMusic();
 	void update();
 	SoundCtrl();
 	~SoundCtrl();
 
 	//Variables para el sonido:
-	SoundCtrl* soundCtrl;
 	FMOD::Sound* music;
 	FMOD::Channel* channel;	
 };
