@@ -8,6 +8,7 @@
 #include "Moblin.h"
 #include "Stalfos.h"
 #include "Key.h"
+#include "Door.h"
 #include "Gem.h"
 #include "Clock.h"
 #include <glm/glm.hpp>

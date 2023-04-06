@@ -38,6 +38,7 @@ void Player::initMob()
 	key = false;
 	clock = false;
 	clockTime = 5000;
+	win = false;
 
 	hitboxSize = glm::ivec2(16, 32);
 	hitboxPos = glm::ivec2(17, 26);
@@ -345,9 +346,13 @@ void Player::takeItem(char item)
 	{
 		puntuacion += 500;
 	}
-	if (item == 'C')
+	else if (item == 'C')
 	{
 		clock = true;
+	}
+	else if (item == 'D')
+	{
+		win = true;
 	}
 }
 

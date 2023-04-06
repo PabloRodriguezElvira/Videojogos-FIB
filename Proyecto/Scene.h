@@ -37,6 +37,7 @@ public:
 	void unpause() { bPaused = false; }
 
 	void flipGodMode();
+	void giveKey();
 	void changeStage(int s) { stage = s; }
 
 	int getStage() { return stage; }

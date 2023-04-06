@@ -19,8 +19,14 @@ Scene::~Scene()
 {
 	if(map != NULL)
 		delete map;
+	if (lvl != NULL)
+		delete lvl;
 	if(player != NULL)
 		delete player;
+	if (backgSprite != NULL)
+		delete backgSprite;
+	if (backBlack != NULL)
+		delete backBlack;
 }
 
 void Scene::init()
@@ -86,22 +92,27 @@ void Scene::update(int deltaTime)
 void Scene::render()
 {
 	RENDER_SHADERS;
-	
+
 	backBlack->render();
 	backgSprite->render();
 	ShaderCtrl::instance().setTranslateModelview();
 	map->render();
+
+	renderItems();
 	if (player->bePainted()) player->render();
 	renderEnemies();
 
 	HUD::instance().render();
-
-	renderItems();
 }
 
 void Scene::flipGodMode() {
 	if (!bPaused)
 		player->flipGodMode();
+}
+
+void Scene::giveKey() {
+	if (!bPaused)
+		player->takeItem('K');
 }
 
 void Scene::initMap()
@@ -182,10 +193,14 @@ void Scene::updateItems(int deltaTime)
 		{
 			item->setPlayerTopLeft(playerTopLeft);
 			item->setPlayerBotRight(playerBotRight);
+
 			if (item->getType() == 'K' && map->getNumTilesPisables() == 0)
 				item->changeBPaint(true);
 
-			if (!player->hasClock()) item->update(deltaTime);
+			else if (item->getType() == 'D' && player->hasKey())
+				item->setTimeToAppear(0); // la puerta se abre
+
+			if (!player->hasClock() || item->getType() == 'D') item->update(deltaTime);
 
 			if (item->getBPaint() && item->collision())
 				player->takeItem(item->getType());

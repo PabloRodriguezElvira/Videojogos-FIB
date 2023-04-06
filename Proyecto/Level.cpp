@@ -25,12 +25,18 @@ Level::Level(const string& levelFile)
 
 Level::~Level()
 {
-	if (lvl != NULL)
-		delete lvl;
 	for (Enemy* enemy : enemies)
 		if (enemy != NULL)
 			delete enemy;
 	enemies.clear();
+
+	for (Item* item : items)
+		if (item != NULL)
+			delete item;
+	items.clear();
+	
+	if (lvl != NULL)
+		delete lvl;
 }
 
 bool Level::loadLevel(const string& levelFile)
@@ -48,9 +54,6 @@ bool Level::loadLevel(const string& levelFile)
 	getline(fin, line);																// LEVEL
 	if (line.compare(0, 5, "LEVEL") != 0)
 		return false;
-	getline(fin, line);																// Read key position.
-	sstream.str(line);
-	sstream >> keyPosition.x >> keyPosition.y;
 	getline(fin, line);																// Initial player tile & anim
 	sstream.str(line);
 	sstream >> initPlayerTile.x >> initPlayerTile.y >> initPlayerAnim;
@@ -95,6 +98,7 @@ bool Level::loadLevel(const string& levelFile)
 		sstream >> itemType >> initialTile.x >> initialTile.y >> timeToAppear;
 
 		if (itemType == 'K') item = new Key();
+		else if (itemType == 'D') item = new Door();
 		else if (itemType == 'G') item = new Gem();
 		else item = new Clock();
 

@@ -24,6 +24,7 @@ public:
 	bool isGodMode() { return godMode; }
 	bool hasKey() { return key; }
 	bool hasClock() { return clock; }
+	bool hasWon() { return win; }
 
 public:
 	int getPuntuacion();
@@ -42,7 +43,7 @@ protected:
 
 private:
 	int coyote, coyoteTime, puntuacion, puntGoal, health, hurtTime, blink, clockTime;
-	bool bJumping, bFalling, hurt, reset, godMode, key, clock;
+	bool bJumping, bFalling, hurt, reset, godMode, key, clock, win;
 
 };
 

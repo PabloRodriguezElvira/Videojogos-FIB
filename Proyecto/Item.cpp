@@ -1,5 +1,5 @@
 #include "Item.h"
-#include <iostream>
+
 
 void Item::init()
 {
@@ -9,6 +9,7 @@ void Item::init()
 	setPosition();
 	bPaint = false;
 	taken = false;
+	initItem();
 }
 
 void Item::update(int deltaTime)
@@ -44,7 +45,6 @@ bool Item::collision()
 	if (!(playerBotRight.x < topLeft.x || botRight.x < playerTopLeft.x) &&
 		!(playerBotRight.y < topLeft.y || botRight.y < playerTopLeft.y))
 	{
-		std::cout << type << std::endl;
 		bPaint = false;
 		taken = true;
 		return true;

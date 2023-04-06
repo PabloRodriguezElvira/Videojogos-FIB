@@ -11,6 +11,8 @@ void SceneKeyboard::keyPressed(int key)
 	}
 	if (key == 'g' || key == 'G')
 		Scene::instance().flipGodMode();
+	if (key == 'k' || key == 'K')
+		Scene::instance().giveKey();
 
 	if (key == '1' || key == '2' || key == '3')
 		StateCtrl::instance().changeStage(key-48);

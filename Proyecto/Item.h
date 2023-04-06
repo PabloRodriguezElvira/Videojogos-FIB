@@ -18,7 +18,7 @@ public:
 	void setPlayerTopLeft(glm::ivec2 playerTL) { playerTopLeft = playerTL; }
 	void setPlayerBotRight(glm::ivec2 playerBR) { playerBotRight = playerBR; }
 	
-	bool collision();
+	virtual bool collision();
 	bool getBPaint() { return bPaint; }
 	bool isTaken() { return taken; }
 	char getType() const { return this->type; }
@@ -27,6 +27,7 @@ public:
 	glm::ivec2 getBotRight() { return (position + hitboxSize); }
 	
 protected:
+	virtual void initItem() { ; }
 	virtual void updateItem(int deltaTime) { ; }
 
 	void initTextures();
