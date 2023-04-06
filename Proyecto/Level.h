@@ -10,6 +10,7 @@
 #include "Key.h"
 #include "Door.h"
 #include "Gem.h"
+#include "Shield.h"
 #include "Clock.h"
 #include <glm/glm.hpp>
 #include <vector>

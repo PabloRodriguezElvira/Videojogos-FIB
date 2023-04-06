@@ -20,7 +20,7 @@ void MenuKeyboard::keyPressed(int key)
 	//Enter:
 	else if (key == 13) {
 		if (mode == 0) //ESCENA
-			StateCtrl::instance().changeTo(&Scene::instance());
+			StateCtrl::instance().changeStage(1, 0, 3);
 
 		else
 		{
@@ -30,7 +30,7 @@ void MenuKeyboard::keyPressed(int key)
 	}
 
 	if (key == '1' || key == '2' || key == '3')
-		StateCtrl::instance().changeStage(key - 48);
+		StateCtrl::instance().changeStage(key - 48, 0, 3);
 }
 
 void MenuKeyboard::keyReleased(int key)

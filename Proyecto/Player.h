@@ -18,16 +18,18 @@ public:
 	void hit();
 	void flipGodMode() { godMode = !godMode; }
 	void takeItem(char item);
+	void givePoints(int pts) { puntuacion += pts; }
+	void setHealth(int h) { health = h; }
 
 	int getHealth() { return health; }
+	int getPuntuacion() { return this->puntuacion; }
+	
 	bool isHurt() { return hurt; }
 	bool isGodMode() { return godMode; }
 	bool hasKey() { return key; }
 	bool hasClock() { return clock; }
+	bool hasShield() { return shield; }
 	bool hasWon() { return win; }
-
-public:
-	int getPuntuacion();
 
 protected:
 	void initMob();
@@ -43,7 +45,7 @@ protected:
 
 private:
 	int coyote, coyoteTime, puntuacion, puntGoal, health, hurtTime, blink, clockTime;
-	bool bJumping, bFalling, hurt, reset, godMode, key, clock, win;
+	bool bJumping, bFalling, hurt, reset, godMode, key, clock, shield, win;
 
 };
 

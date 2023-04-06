@@ -34,6 +34,7 @@ public:
 	void flipGodMode();
 	void giveKey();
 	void changeStage(int s) { stage = s; }
+	void setPrevStats(int pts, int h);
 
 	int getStage() { return stage; }
 
@@ -56,6 +57,7 @@ private:
 	void unpaintItems();
 
 	void initHUD();
+	void updateHUD();
 	void updateTimer(int deltaTime);
 
 	void initTextures();
@@ -86,9 +88,9 @@ private:
 	Sprite* gameOverSprite;
 
 	int stage = 0;
-	int pauseDuration, timer, timerCooldown, deathDuration, gameOverDuration;
+	int pauseDuration, timer, timerCooldown, deathDuration, gameOverDuration, winDuration, timeToPoints, timeToPointsDuration, winScreenDuration;
 
-	bool gameOver, musicChanged;
+	bool gameOver, musicChanged, winScreen;
 
 };
 

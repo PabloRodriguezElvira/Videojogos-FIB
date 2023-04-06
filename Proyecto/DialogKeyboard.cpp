@@ -23,7 +23,7 @@ void DialogKeyboard::keyPressed(int key)
 	}
 
 	if (key == '1' || key == '2' || key == '3')
-		StateCtrl::instance().changeStage(key - 48);
+		StateCtrl::instance().changeStage(key - 48, 0, 3);
 }
 
 void DialogKeyboard::keyReleased(int key)

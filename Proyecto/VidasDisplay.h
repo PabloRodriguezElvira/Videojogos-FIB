@@ -11,6 +11,7 @@ public:
 	void render();
 	void setPosition(glm::vec2 position);
 	void initTextures();
+	void setShield(bool s) { bShield = s; }
 
 private:
 	Sprite* heart;
@@ -19,7 +20,12 @@ private:
 	Sprite* cross;
 	Texture crossTex;
 
+	Sprite* shield;
+	Texture shieldTex;
+
 	Sprite* numV;
+
+	bool bShield;
 };
 #endif
 

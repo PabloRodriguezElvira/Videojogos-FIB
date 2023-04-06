@@ -10,4 +10,4 @@ V 4 5 1		\n
 K 9 11 -1						-- Item type, initial tile, time to appear
 D 10 5 -1	\n
 G 4 5 20	\n
-C 14 8 10	\n
+S 14 8 10	\n

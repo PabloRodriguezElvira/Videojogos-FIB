@@ -18,11 +18,12 @@ void StateCtrl::changeToMenu()
 	Game::instance().setState(&Menu::instance());
 }
 
-void StateCtrl::changeStage(int stage)
+void StateCtrl::changeStage(int stage, int pts, int h)
 {
 	SoundCtrl::instance().endMusic();
 	Scene::instance().changeStage(stage);
 	Scene::instance().init();
+	Scene::instance().setPrevStats(pts, h);
 	Game::instance().setState(&Scene::instance());
 }
 

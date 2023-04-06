@@ -52,12 +52,17 @@ void Scene::init()
 	gameOver = false;
 	musicChanged = false;
 	pauseDuration = 2800;
-	deathDuration = 3000;
+	deathDuration = 2800;
 	gameOverDuration = 4800;
 
 	currentTime = 0.0f;
 	timerCooldown = 1000;
 	timer = 60;
+	timeToPoints = 250;
+	timeToPointsDuration = 2000;
+	winDuration = 2000;
+	winScreen = false;
+	winScreenDuration = 4800;
 	initHUD();
 	initItems();
 
@@ -70,6 +75,16 @@ void Scene::update(int deltaTime)
 		if (gameOverDuration > 0) {
 			gameOverDuration -= deltaTime;
 			if (gameOverDuration <= 0)
+			{
+				StateCtrl::instance().changeToMenu();
+			}
+		}
+	}
+	else if (winScreen)
+	{
+		if (winScreenDuration > 0) {
+			winScreenDuration -= deltaTime;
+			if (winScreenDuration <= 0)
 			{
 				StateCtrl::instance().changeToMenu();
 			}
@@ -91,6 +106,39 @@ void Scene::update(int deltaTime)
 			}
 		}
 	}
+	else if (player->hasWon())
+	{
+		if (winDuration > 0) {
+			winDuration -= deltaTime;
+			/*if (winDuration <= 0)
+			{
+				SoundCtrl::instance().putTrack("sounds/GameOver/GameOver.mp3", 0.1f);
+			}*/
+		}
+		else
+		{
+			if (timer == 0)
+			{
+				timeToPointsDuration -= deltaTime;
+				if (timeToPointsDuration <= 0) {
+					if (stage < 3)
+						StateCtrl::instance().changeStage(stage + 1, player->getPuntuacion(), player->getHealth());
+					else winScreen = true;
+				}
+			}
+			else
+			{
+				timeToPoints -= deltaTime;
+				if (timeToPoints <= 0) {
+					timer -= 1;
+					timeToPoints = 100;
+					player->givePoints(10);
+					player->update(deltaTime);
+					updateHUD();
+				}
+			}
+		}
+	}
 	else if (!bPaused)
 	{
 		currentTime += deltaTime;
@@ -98,17 +146,18 @@ void Scene::update(int deltaTime)
 		updateItems(deltaTime);
 		updateEnemies(deltaTime);
 		if (!player->hasClock()) updateTimer(deltaTime);
-		HUD::instance().update(player->getHealth(), player->getPuntuacion(), timer, stage);
+		updateHUD();
 		
-		if (player->getHealth() == 0)
+		if (player->getHealth() == 0 || player->hasWon())
 		{
+			if (player->hasWon()) player->unpaint();
 			unpaintEnemies();
 			unpaintItems();
 		}
 	}
 	else
 	{
-		if (pauseDuration <= 3000)
+		if (pauseDuration <= 2800)
 		{
 			pauseDuration -= deltaTime;
 			if (pauseDuration <= 0)
@@ -125,7 +174,7 @@ void Scene::render()
 	RENDER_SHADERS;
 	backBlack->render();
 
-	if (!gameOver) {
+	if (!gameOver && !winScreen) {
 		backgSprite->render();
 		ShaderCtrl::instance().setTranslateModelview();
 		map->render();
@@ -150,6 +199,12 @@ void Scene::flipGodMode() {
 void Scene::giveKey() {
 	if (!bPaused)
 		player->takeItem('K');
+}
+
+void Scene::setPrevStats(int pts, int h) {
+	player->givePoints(pts);
+	player->setHealth(h);
+	HUD::instance().update(player->getHealth(), player->getPuntuacion(), timer, stage);
 }
 
 void Scene::initMap()
@@ -263,6 +318,12 @@ void Scene::unpaintItems()
 void Scene::initHUD()
 {
 	HUD::instance().init();
+	HUD::instance().update(player->getHealth(), player->getPuntuacion(), timer, stage);
+}
+
+void Scene::updateHUD()
+{
+	HUD::instance().setShield(player->hasShield());
 	HUD::instance().update(player->getHealth(), player->getPuntuacion(), timer, stage);
 }
 

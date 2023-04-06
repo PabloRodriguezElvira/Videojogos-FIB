@@ -11,12 +11,6 @@ enum PlayerAnims
 	STAND_LEFT, STAND_RIGHT, MOVE_LEFT, MOVE_RIGHT, JUMP_LEFT, JUMP_RIGHT, HURT_LEFT, HURT_RIGHT, FALL_LEFT, FALL_RIGHT
 };
 
-int Player::getPuntuacion()
-{
-	return this->puntuacion;
-}
-
-
 void Player::initMob()
 {
 	jumpHeight = 52;
@@ -32,6 +26,7 @@ void Player::initMob()
 	hurt = false;
 	reset = true;
 	godMode = false;
+	shield = false;
 
 	puntuacion = 0;
 	puntGoal = 1000;
@@ -74,7 +69,7 @@ void Player::updateHurt(int deltaTime)
 		if (--blink == 0)
 		{
 			blink = 5;
-			bPaint = !bPaint;
+			if (!win) bPaint = !bPaint;
 		}
 	}
 	else if (sprite->animation() == FALL_LEFT)
@@ -314,24 +309,34 @@ void Player::hit()
 {
 	if (!godMode)
 	{
-		--health;
-		hurtTime = 4000;
-		hurt = true;
-		reset = true;
-		bJumping = false;
-		bFalling = false;
-
-		if (sprite->animation() % 2 == 0)
+		
+		if (shield)
 		{
-			if (sprite->animation() == JUMP_LEFT)
-				sprite->changeAnimation(FALL_LEFT);
-			else sprite->changeAnimation(HURT_LEFT);
+			shield = false;
+			hurtTime = 1000;
+			hurt = true;
+			reset = false;
 		}
-		else
-		{
-			if (sprite->animation() == JUMP_RIGHT)
-				sprite->changeAnimation(FALL_RIGHT);
-			else sprite->changeAnimation(HURT_RIGHT);
+		else {
+			--health;
+			hurtTime = 4000;
+			hurt = true;
+			reset = true;
+			bJumping = false;
+			bFalling = false;
+
+			if (sprite->animation() % 2 == 0)
+			{
+				if (sprite->animation() == JUMP_LEFT)
+					sprite->changeAnimation(FALL_LEFT);
+				else sprite->changeAnimation(HURT_LEFT);
+			}
+			else
+			{
+				if (sprite->animation() == JUMP_RIGHT)
+					sprite->changeAnimation(FALL_RIGHT);
+				else sprite->changeAnimation(HURT_RIGHT);
+			}
 		}
 	}
 }
@@ -345,6 +350,10 @@ void Player::takeItem(char item)
 	else if (item == 'G')
 	{
 		puntuacion += 500;
+	}
+	else if (item == 'S')
+	{
+		shield = true;
 	}
 	else if (item == 'C')
 	{

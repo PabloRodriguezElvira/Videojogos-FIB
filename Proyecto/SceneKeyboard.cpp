@@ -15,7 +15,7 @@ void SceneKeyboard::keyPressed(int key)
 		Scene::instance().giveKey();
 
 	if (key == '1' || key == '2' || key == '3')
-		StateCtrl::instance().changeStage(key-48);
+		StateCtrl::instance().changeStage(key-48, 0, 3);
 }
 
 void SceneKeyboard::keyReleased(int key)

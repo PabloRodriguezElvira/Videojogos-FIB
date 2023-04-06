@@ -24,6 +24,7 @@ public:
 	void render();
 
 	void setAllPositions();
+	void setShield(bool s) { numVidas.setShield(s); }
 
 private:
 	VidasDisplay numVidas;

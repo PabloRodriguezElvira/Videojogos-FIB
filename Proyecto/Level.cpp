@@ -100,6 +100,7 @@ bool Level::loadLevel(const string& levelFile)
 		if (itemType == 'K') item = new Key();
 		else if (itemType == 'D') item = new Door();
 		else if (itemType == 'G') item = new Gem();
+		else if (itemType == 'S') item = new Shield();
 		else item = new Clock();
 
 		item->setInitialTile(initialTile);
