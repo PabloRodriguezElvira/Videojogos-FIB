@@ -27,7 +27,7 @@ void DialogKeyboard::keyPressed(int key)
 		SoundCtrl::instance().endMusic();
 	}
 	if (key == '1' || key == '2' || key == '3')
-		StateCtrl::instance().changeStage(key - 48, 0, 3);
+		StateCtrl::instance().changeStage(key - 48, 0, 3, 1000);
 }
 
 void DialogKeyboard::keyReleased(int key)

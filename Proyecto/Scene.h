@@ -34,7 +34,7 @@ public:
 	void flipGodMode();
 	void giveKey();
 	void changeStage(int s) { stage = s; }
-	void setPrevStats(int pts, int h);
+	void setPrevStats(int pts, int h, int pg);
 
 	int getStage() { return stage; }
 

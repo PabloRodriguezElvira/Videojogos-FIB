@@ -110,10 +110,6 @@ void Scene::update(int deltaTime)
 	{
 		if (winDuration > 0) {
 			winDuration -= deltaTime;
-			if (winDuration <= 0)
-			{
-				SoundCtrl::instance().putTrack("sounds/SFX/stageClear.wav", 0.2f);
-			}
 		}
 		else
 		{
@@ -122,7 +118,7 @@ void Scene::update(int deltaTime)
 				timeToPointsDuration -= deltaTime;
 				if (timeToPointsDuration <= 0) {
 					if (stage < 3)
-						StateCtrl::instance().changeStage(stage + 1, player->getPuntuacion(), player->getHealth());
+						StateCtrl::instance().changeStage(stage + 1, player->getPuntuacion(), player->getHealth(), player->getPuntGoal());
 					else {
 						winScreen = true;
 						SoundCtrl::instance().putSFX("sounds/SFX/win.wav", 0.2f);
@@ -154,7 +150,12 @@ void Scene::update(int deltaTime)
 		
 		if (player->getHealth() == 0 || player->hasWon())
 		{
-			if (player->hasWon()) player->unpaint();
+			if (player->hasWon())
+			{
+				player->unpaint();
+				SoundCtrl::instance().endMusic();
+				SoundCtrl::instance().putSFX("sounds/SFX/stageClear.wav", 0.2f);
+			}
 			unpaintEnemies();
 			unpaintItems();
 		}
@@ -209,9 +210,10 @@ void Scene::giveKey() {
 		player->takeItem('K');
 }
 
-void Scene::setPrevStats(int pts, int h) {
+void Scene::setPrevStats(int pts, int h, int pg) {
 	player->givePoints(pts);
 	player->setHealth(h);
+	player->setPuntGoal(pg);
 	HUD::instance().update(player->getHealth(), player->getPuntuacion(), timer, stage);
 }
 

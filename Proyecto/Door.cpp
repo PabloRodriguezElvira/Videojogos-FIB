@@ -1,4 +1,5 @@
 #include "Door.h"
+#include "SoundCtrl.h"
 
 
 void Door::initItem()
@@ -12,8 +13,10 @@ void Door::updateItem(int deltaTime)
 	if (timeToAppear == 0)
 	{
 		if (itemSprite->animation() == 0)
+		{
 			itemSprite->changeAnimation(1);
-		
+			SoundCtrl::instance().putSFX("sounds/SFX/door_open.wav", 0.2f);
+		}
 		else if (itemSprite->animation() == 1)
 		{
 			if (opening >= 0)
