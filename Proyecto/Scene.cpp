@@ -112,7 +112,7 @@ void Scene::update(int deltaTime)
 			winDuration -= deltaTime;
 			if (winDuration <= 0)
 			{
-				SoundCtrl::instance().putTrack("sounds/SFX/stageClear.wav", 0.2f);
+				SoundCtrl::instance().putSFX("sounds/SFX/stageClear.wav", 0.2f);
 			}
 		}
 		else
