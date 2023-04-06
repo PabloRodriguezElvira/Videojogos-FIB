@@ -179,6 +179,7 @@ void Scene::render()
 		ShaderCtrl::instance().setTranslateModelview();
 		map->render();
 		if (bPaused) readySprite->render();
+		if (player->isGodMode()) godModeSprite->render();
 		if (player->hasWon()) stClearSprite->render();
 		renderItems();
 		if (player->bePainted()) player->render();
@@ -373,6 +374,10 @@ void Scene::initTextures()
 	stClearTex.loadFromFile("images/HUD/stageClear.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	stClearTex.setMinFilter(GL_NEAREST);
 	stClearTex.setMagFilter(GL_NEAREST);
+
+	godModeTex.loadFromFile("images/HUD/GodMode/gloriousWhite.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	godModeTex.setMinFilter(GL_NEAREST);
+	godModeTex.setMagFilter(GL_NEAREST);
 }
 
 
@@ -399,5 +404,9 @@ void Scene::initBackground()
 	//Stage clear sprite
 	stClearSprite = Sprite::createSprite(glm::vec2(190, 80), glm::vec2(1.f, 1.f), &stClearTex, &TEX_PROGRAM);	
 	stClearSprite->setPosition(glm::vec2(SCREEN_WIDTH/2.f - 95.f, SCREEN_HEIGHT/2.f - 40.f));
+
+	//God Mode sprite:
+	godModeSprite = Sprite::createSprite(glm::vec2(120, 50), glm::vec2(1.f, 1.f), &godModeTex, &TEX_PROGRAM);
+	godModeSprite->setPosition(glm::vec2(330, 15));
 }
 

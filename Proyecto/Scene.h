@@ -95,6 +95,9 @@ private:
 	Texture stClearTex;
 	Sprite* stClearSprite;
 
+	Texture godModeTex;
+	Sprite* godModeSprite;
+
 	int stage = 0;
 	int pauseDuration, timer, timerCooldown, deathDuration, gameOverDuration, winDuration, timeToPoints, timeToPointsDuration, winScreenDuration;
 
