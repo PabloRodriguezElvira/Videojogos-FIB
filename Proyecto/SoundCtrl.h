@@ -33,6 +33,10 @@ public:
 
 	FMOD::Sound* musicSFX;
 	FMOD::Channel* channelSFX;	
+	void pressM() { play = !play; }
+
+private:
+	bool play = true;
 };
 
 #endif

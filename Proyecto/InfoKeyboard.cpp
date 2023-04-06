@@ -10,7 +10,11 @@ void InfoKeyboard::keyPressed(int key)
 	if (key == 27 || key == 13) {
 		StateCtrl::instance().changeTo(&Menu::instance());
 	}
-
+	if (key == 'm' || key == 'M')
+	{
+		SoundCtrl::instance().pressM();
+		SoundCtrl::instance().endMusic();
+	}
 	if (key == '1' || key == '2' || key == '3')
 		StateCtrl::instance().changeStage(key - 48, 0, 3);
 }
