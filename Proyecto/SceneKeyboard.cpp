@@ -5,7 +5,7 @@
 void SceneKeyboard::keyPressed(int key)
 {
 	//Escape key:
-	if (key == 27) {
+	if (key == 27 && !Scene::instance().isPaused()) {
 		StateCtrl::instance().pause(&Scene::instance());
 		StateCtrl::instance().changeToDialog(&Scene::instance());
 	}

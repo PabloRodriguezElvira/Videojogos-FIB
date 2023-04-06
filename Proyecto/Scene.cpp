@@ -185,7 +185,7 @@ void Scene::updateItems(int deltaTime)
 			if (item->getType() == 'K' && map->getNumTilesPisables() == 0)
 				item->changeBPaint(true);
 
-			item->update(deltaTime);
+			if (!player->hasClock()) item->update(deltaTime);
 
 			if (item->getBPaint() && item->collision())
 				player->takeItem(item->getType());

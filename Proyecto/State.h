@@ -17,6 +17,8 @@ public:
 	virtual void unpause() = 0;
 	virtual int getMode() const { return 0; };
 
+	bool isPaused() { return bPaused; }
+
 	KeyboardCtrl *getKeyboardCtrl();
 
 protected:

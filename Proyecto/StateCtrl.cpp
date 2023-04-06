@@ -17,12 +17,14 @@ void StateCtrl::changeStage(int stage)
 
 void StateCtrl::pause(State* st)
 {
+	SoundCtrl::instance().pauseMusic();
 	st->pause();
 	Game::instance().setState(st);
 }
 
 void StateCtrl::unpause(State* st)
 {
+	SoundCtrl::instance().unpauseMusic();
 	st->unpause();
 	Game::instance().setState(st);
 }
