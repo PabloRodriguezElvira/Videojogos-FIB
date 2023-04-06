@@ -349,14 +349,17 @@ void Player::takeItem(char item)
 {
 	if (item == 'K')
 	{
+		SoundCtrl::instance().putSFX("sounds/SFX/pickup.wav", 0.2f);
 		key = true;
 	}
 	else if (item == 'G')
 	{
+		SoundCtrl::instance().putSFX("sounds/SFX/pickup.wav", 0.2f);
 		puntuacion += 500;
 	}
 	else if (item == 'S')
 	{
+		SoundCtrl::instance().putSFX("sounds/SFX/pickup.wav", 0.2f);
 		shield = true;
 	}
 	else if (item == 'C')

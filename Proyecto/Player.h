@@ -20,9 +20,11 @@ public:
 	void takeItem(char item);
 	void givePoints(int pts) { puntuacion += pts; }
 	void setHealth(int h) { health = h; }
+	void setPuntGoal(int pts) { puntGoal = pts; }
 
 	int getHealth() { return health; }
 	int getPuntuacion() { return this->puntuacion; }
+	int getPuntGoal() { return this->puntGoal; }
 	
 	bool isHurt() { return hurt; }
 	bool isGodMode() { return godMode; }
