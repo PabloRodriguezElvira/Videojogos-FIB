@@ -12,9 +12,12 @@ void SoundCtrl::putSFX(std::string track, float volume)
 
 void SoundCtrl::putTrack(std::string track, float volume)
 {
-	loadSound(track, FMOD_LOOP_NORMAL | FMOD_CREATESTREAM);
-	playSound();
-	setVolume(volume);
+	if (play)
+	{
+		loadSound(track, FMOD_LOOP_NORMAL | FMOD_CREATESTREAM);
+		playSound();
+		setVolume(volume);
+	}
 }
 
 void SoundCtrl::pauseMusic()

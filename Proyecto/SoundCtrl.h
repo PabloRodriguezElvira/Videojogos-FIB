@@ -30,6 +30,11 @@ public:
 	//Variables para el sonido:
 	FMOD::Sound* music;
 	FMOD::Channel* channel;	
+
+	void pressM() { play = !play; }
+
+private:
+	bool play = true;
 };
 
 #endif
