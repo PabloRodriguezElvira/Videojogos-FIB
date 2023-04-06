@@ -16,6 +16,7 @@ public:
 	FMOD::Studio::System* system;
 	FMOD::System* lowLevelSystem;
 	void putTrack(std::string track, float volume);
+	void putSFX(std::string track, float volume);
 	void loadSound(const std::string& file, FMOD_MODE mode);
 	void playSound();
 	void setVolume(float vol);

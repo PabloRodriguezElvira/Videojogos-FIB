@@ -24,6 +24,7 @@
     <ClInclude Include="ConfirmationDialog.h" />
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="DialogKeyboard.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gem.h" />
@@ -37,6 +38,7 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuKeyboard.h" />
     <ClInclude Include="Mob.h" />
+    <ClInclude Include="Moblin.h" />
     <ClInclude Include="NumberGenerator.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PuntuacionDisplay.h" />
@@ -60,6 +62,8 @@
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="ConfirmationDialog.cpp" />
     <ClCompile Include="DialogKeyboard.cpp" />
+    <ClCompile Include="Door.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gem.cpp" />
     <ClCompile Include="HUD.cpp" />
@@ -72,6 +76,7 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuKeyboard.cpp" />
     <ClCompile Include="Mob.cpp" />
+    <ClCompile Include="Moblin.cpp" />
     <ClCompile Include="NumberGenerator.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PuntuacionDisplay.cpp" />
