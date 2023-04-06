@@ -256,6 +256,7 @@ void Player::updateMovement()
 
 				if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !map->collisionMoveUp(glm::ivec2(position.x, position.y - 1), hitboxSize, hitboxPos, &position.y, fallStep))
 				{
+					SoundCtrl::instance().putSFX("sounds/SFX/jump.wav", 0.2f);
 					bJumping = true;
 					jumpAngle = 0;
 					startY = position.y;
@@ -273,6 +274,7 @@ void Player::updateMovement()
 				coyote -= 1;
 				if (Game::instance().getSpecialKey(GLUT_KEY_UP) && !map->collisionMoveUp(glm::ivec2(position.x, position.y - 1), hitboxSize, hitboxPos, &position.y, fallStep))
 				{
+					SoundCtrl::instance().putSFX("sounds/SFX/jump.wav", 0.2f);
 					bJumping = true;
 					jumpAngle = 0;
 					startY = position.y;
@@ -290,6 +292,7 @@ void Player::updateStats(int deltaTime)
 {
 	while (puntGoal <= puntuacion)
 	{
+		SoundCtrl::instance().putSFX("sounds/SFX/obtenerVida.wav", 0.2f);
 		++health;
 		puntGoal += 1000;
 	}
@@ -308,16 +311,17 @@ void Player::updateStats(int deltaTime)
 void Player::hit()
 {
 	if (!godMode)
-	{
-		
+	{	
 		if (shield)
 		{
+			SoundCtrl::instance().putSFX("sounds/SFX/shieldbreaking.wav", 0.2f);
 			shield = false;
 			hurtTime = 1000;
 			hurt = true;
 			reset = false;
 		}
 		else {
+			SoundCtrl::instance().putSFX("sounds/SFX/hurt.wav", 0.2f);
 			--health;
 			hurtTime = 4000;
 			hurt = true;
@@ -357,6 +361,7 @@ void Player::takeItem(char item)
 	}
 	else if (item == 'C')
 	{
+		SoundCtrl::instance().putSFX("sounds/SFX/clockiti.mp3", 10.0f);
 		clock = true;
 	}
 	else if (item == 'D')

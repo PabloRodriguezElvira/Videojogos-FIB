@@ -73,6 +73,7 @@ void Vaati::updateMob(int deltaTime)
 			transformCooldown = TRANS_W_COOLDOWN;
 			initAnim = sprite->animation() + 3;
 			sprite->changeAnimation(TRANS_TO_WISP);
+			SoundCtrl::instance().putSFX("sounds/SFX/fadeIn.wav", 0.2f);
 		}
 	}
 	else																// Wisp
@@ -130,6 +131,7 @@ void Vaati::updateMob(int deltaTime)
 						transformCooldown = TRANS_V_COOLDOWN;
 						initAnim = sprite->animation() - 3;
 						sprite->changeAnimation(TRANS_TO_VAATI);
+						SoundCtrl::instance().putSFX("sounds/SFX/fadeOut.wav", 0.2f);
 					}
 					else
 						goingDown = false;

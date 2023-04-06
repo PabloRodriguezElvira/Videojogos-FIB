@@ -110,10 +110,10 @@ void Scene::update(int deltaTime)
 	{
 		if (winDuration > 0) {
 			winDuration -= deltaTime;
-			/*if (winDuration <= 0)
+			if (winDuration <= 0)
 			{
-				SoundCtrl::instance().putTrack("sounds/GameOver/GameOver.mp3", 0.1f);
-			}*/
+				SoundCtrl::instance().putTrack("sounds/SFX/stageClear.wav", 0.2f);
+			}
 		}
 		else
 		{
@@ -123,13 +123,17 @@ void Scene::update(int deltaTime)
 				if (timeToPointsDuration <= 0) {
 					if (stage < 3)
 						StateCtrl::instance().changeStage(stage + 1, player->getPuntuacion(), player->getHealth());
-					else winScreen = true;
+					else {
+						winScreen = true;
+						SoundCtrl::instance().putSFX("sounds/SFX/win.wav", 0.2f);
+					}
 				}
 			}
 			else
 			{
 				timeToPoints -= deltaTime;
 				if (timeToPoints <= 0) {
+					SoundCtrl::instance().putSFX("sounds/SFX/sumar_puntos.wav", 0.2f);
 					timer -= 1;
 					timeToPoints = 100;
 					player->givePoints(10);

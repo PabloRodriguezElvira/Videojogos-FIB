@@ -1,4 +1,5 @@
 #include "Moblin.h"
+#include "SoundCtrl.h"
 
 
 #define ANGER_COOLDOWN 1000
@@ -58,6 +59,7 @@ void Moblin::updateMob(int deltaTime)
 			angerCooldown -= deltaTime;
 			if (angerCooldown <= 0)
 			{
+				SoundCtrl::instance().putSFX("sounds/SFX/scream.wav", 0.2f);
 				angerCooldown = ANGER_COOLDOWN;
 
 				if (sprite->animation() == READY_LEFT)
@@ -69,7 +71,8 @@ void Moblin::updateMob(int deltaTime)
 		}
 		else
 		{
-			angry = true;
+			angry = true;	
+			SoundCtrl::instance().putSFX("sounds/SFX/spear.wav", 0.2f);
 			if (sprite->animation() == STAND_LEFT)
 				sprite->changeAnimation(READY_LEFT);
 
