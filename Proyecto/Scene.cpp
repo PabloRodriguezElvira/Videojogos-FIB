@@ -7,6 +7,11 @@
 
 #include "SceneKeyboard.h"
 #include "Game.h"
+#include "NumberGenerator.h"
+#include "HUD.h"
+#include "Key.h"
+#include "Gem.h"
+#include "StateCtrl.h"
 
 
 Scene::Scene()
@@ -38,7 +43,11 @@ void Scene::init()
 	initEnemies();
 	
 	bPaused = true;
+	gameOver = false;
+	musicChanged = false;
 	pauseDuration = 2800;
+	deathDuration = 3000;
+	gameOverDuration = 5000;
 
 	currentTime = 0.0f;
 	timerCooldown = 1000;
@@ -51,7 +60,31 @@ void Scene::init()
 
 void Scene::update(int deltaTime)
 {
-	if (!bPaused)
+	if (gameOver) {
+		if (gameOverDuration > 0) {
+			gameOverDuration -= deltaTime;
+			if (gameOverDuration <= 0)
+			{
+				StateCtrl::instance().changeToMenu();
+			}
+		}
+	}
+	else if (player->getHealth() == 0) {
+		if (!musicChanged) {
+			//Pausar música de escena.
+			SoundCtrl::instance().endMusic();
+			musicChanged = true;
+		}
+		if (deathDuration > 0) {
+			deathDuration -= deltaTime;
+			if (deathDuration <= 0)
+			{
+				SoundCtrl::instance().putTrack("sounds/GameOver/GameOver.mp3", 0.1f);
+				gameOver = true;
+			}
+		}
+	}
+	else if (!bPaused)
 	{
 		currentTime += deltaTime;
 		player->update(deltaTime);
@@ -65,8 +98,6 @@ void Scene::update(int deltaTime)
 			player->unpaint();
 			unpaintEnemies();
 			unpaintItems();
-			bPaused = true;
-			pauseDuration = 4000;
 		}
 	}
 	else
@@ -86,17 +117,22 @@ void Scene::update(int deltaTime)
 void Scene::render()
 {
 	RENDER_SHADERS;
-	
 	backBlack->render();
-	backgSprite->render();
-	ShaderCtrl::instance().setTranslateModelview();
-	map->render();
-	if (player->bePainted()) player->render();
-	renderEnemies();
+	if (!gameOver) {
+		backgSprite->render();
+		ShaderCtrl::instance().setTranslateModelview();
+		map->render();
+		if (bPaused) readySprite->render();
+		if (player->bePainted()) player->render();
+		renderEnemies();
 
-	HUD::instance().render();
+		HUD::instance().render();
 
-	renderItems();
+		renderItems();
+	}
+	else {
+		gameOverSprite->render();
+	}	
 }
 
 void Scene::flipGodMode() {
@@ -187,8 +223,10 @@ void Scene::updateItems(int deltaTime)
 
 			if (!player->hasClock()) item->update(deltaTime);
 
-			if (item->getBPaint() && item->collision())
+			if (item->getBPaint() && item->collision()) {
+				SoundCtrl::instance().putSFX("sounds/SFX/pickup.wav", 0.2f);
 				player->takeItem(item->getType());
+			}
 		}
 	}
 }
@@ -239,7 +277,16 @@ void Scene::initTextures()
 	backBlackTexture.loadFromFile("images/Scene/Background/fondoBlack.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	backBlackTexture.setMinFilter(GL_NEAREST);
 	backBlackTexture.setMagFilter(GL_NEAREST);
+
+	readyTex.loadFromFile("images/HUD/Ready/readyy.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	readyTex.setMinFilter(GL_NEAREST);
+	readyTex.setMagFilter(GL_NEAREST);
+
+	gameOverTex.loadFromFile("images/HUD/GameOver/gameOver.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	gameOverTex.setMinFilter(GL_NEAREST);
+	gameOverTex.setMagFilter(GL_NEAREST);
 }
+
 
 void Scene::initBackground()
 {
@@ -248,5 +295,13 @@ void Scene::initBackground()
 
 	backBlack = Sprite::createSprite(glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT), glm::vec2(1.f, 1.f), &backBlackTexture, &TEX_PROGRAM);	
 	backBlack->setPosition(glm::vec2(0,0));
+
+	//Ready sprite:
+	readySprite = Sprite::createSprite(glm::vec2(160, 80), glm::vec2(1.f, 1.f), &readyTex, &TEX_PROGRAM);	
+	readySprite->setPosition(glm::vec2(SCREEN_WIDTH/2.f - 80.f, SCREEN_HEIGHT/2.f - 40.f));
+
+	//Game Over sprite:
+	gameOverSprite = Sprite::createSprite(glm::vec2(180, 50), glm::vec2(1.f, 1.f), &gameOverTex, &TEX_PROGRAM);	
+	gameOverSprite->setPosition(glm::vec2(SCREEN_WIDTH/2.f - 90.f, SCREEN_HEIGHT/2.f - 25.f));
 }
 

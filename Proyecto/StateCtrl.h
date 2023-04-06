@@ -3,11 +3,6 @@
 
 
 #include "State.h"
-#include "Menu.h"
-#include "Info.h"
-#include "Game.h"
-#include "ConfirmationDialog.h"
-
 
 class StateCtrl
 {
@@ -21,6 +16,7 @@ public:
 	};
 
 	void changeTo(State* st);
+	void changeToMenu();
 	void changeStage(int stage);
 	void changeToDialog(State* st);
 	void pause(State* st);

@@ -3,6 +3,7 @@
 
 
 #include "KeyboardCtrl.h"
+#include "SoundCtrl.h"
 
 
 class State

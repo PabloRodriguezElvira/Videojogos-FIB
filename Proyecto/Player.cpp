@@ -26,7 +26,7 @@ void Player::initMob()
 	bFalling = false;
 	bJumping = false;
 	
-	health = 3;
+	health = 1;
 	hurtTime = 0;
 	blink = 5;
 	hurt = false;

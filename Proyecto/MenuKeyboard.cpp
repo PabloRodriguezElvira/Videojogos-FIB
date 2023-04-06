@@ -2,6 +2,9 @@
 #include <GL/glut.h>
 #include "MenuKeyboard.h"
 #include "Game.h"
+#include "Info.h"
+#include "StateCtrl.h"
+#include "SoundCtrl.h"
 #include <iostream>
 
 

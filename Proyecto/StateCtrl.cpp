@@ -1,10 +1,21 @@
 #include "StateCtrl.h"
+#include "Menu.h"
+#include "Info.h"
+#include "Game.h"
+#include "ConfirmationDialog.h"
 
 void StateCtrl::changeTo(State* st)
 {
 	SoundCtrl::instance().endMusic();
 	st->init();
 	Game::instance().setState(st);
+}
+
+void StateCtrl::changeToMenu()
+{
+	SoundCtrl::instance().endMusic();
+	Menu::instance().init();
+	Game::instance().setState(&Menu::instance());
 }
 
 void StateCtrl::changeStage(int stage)

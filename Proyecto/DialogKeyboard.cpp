@@ -2,6 +2,7 @@
 #include <GL/glut.h>
 #include "DialogKeyboard.h"
 #include "Game.h"
+#include "ConfirmationDialog.h"
 
 void DialogKeyboard::keyPressed(int key)
 {

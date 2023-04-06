@@ -10,14 +10,9 @@
 #include "TileMap.h"
 #include "Level.h"
 #include "Player.h"
-#include "NumberGenerator.h"
-#include "HUD.h"
-#include "Key.h"
-#include "Gem.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
-
 
 class Scene : public State
 {
@@ -81,8 +76,18 @@ private:
 	Texture backBlackTexture;
 	Sprite* backBlack;
 
+	//Ready:
+	Texture readyTex;
+	Sprite* readySprite;
+
+	//Game Over: 
+	Texture gameOverTex;
+	Sprite* gameOverSprite;
+
 	int stage = 0;
-	int pauseDuration, timer, timerCooldown;
+	int pauseDuration, timer, timerCooldown, deathDuration, gameOverDuration;
+
+	bool gameOver, musicChanged;
 
 };
 
