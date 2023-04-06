@@ -1,5 +1,5 @@
 LEVEL
 5 5  							-- Key position           
-4 5 1							-- Initial player tile
+4 5 1							-- Initial player tile & anim
 1							-- Number of enemies
 M 12 8 0						-- Enemy type, initial enemy tile & anim

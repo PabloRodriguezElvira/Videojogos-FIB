@@ -4,7 +4,13 @@ void Info::init()
 {
 	initTextures();
 	initSprites();
+	initSounds();
 	keyboardCtrl = &InfoKeyboard::instance();
+}
+
+void Info::initSounds()
+{
+	SoundCtrl::instance().putTrack("sounds/Menu/EzloAppears.mp3", 0.1f);
 }
 
 void Info::initTextures()
@@ -27,11 +33,6 @@ void Info::initSprites()
 {
 	imageSprite = Sprite::createSprite(glm::vec2(SCREEN_WIDTH, SCREEN_HEIGHT+100), glm::vec2(1.f, 1.f), &imageTexture, &TEX_PROGRAM);
 	imageSprite->setPosition(glm::vec2(0, 0));
-}
-
-void Info::setMode(int mode)
-{
-	this->mode = mode;
 }
 
 void Info::update(int deltaTime)

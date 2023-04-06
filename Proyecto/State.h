@@ -15,6 +15,7 @@ public:
 	virtual void render() = 0;					// (abstract)
 	virtual void pause() = 0;
 	virtual void unpause() = 0;
+	virtual int getMode() const { return 0; };
 
 	KeyboardCtrl *getKeyboardCtrl();
 

@@ -27,6 +27,8 @@ void Scene::init()
 {
 	if (stage == 0) stage = 1;
 
+	SoundCtrl::instance().putTrack("sounds/Scene/VaatiTheme.mp3", 0.1f);
+
 	initMap();
 	initTextures();
 	initBackground();
@@ -36,14 +38,14 @@ void Scene::init()
 	initEnemies();
 	
 	bPaused = true;
-	pauseDuration = 3000;
+	pauseDuration = 2800;
 
 	currentTime = 0.0f;
 	timerCooldown = 1000;
 	timer = 60;
 	initHUD();
+	initItems();
 
-	key.init(lvl->getKeyPosition());
 	keyboardCtrl = &SceneKeyboard::instance();
 }
 
@@ -53,14 +55,16 @@ void Scene::update(int deltaTime)
 	{
 		currentTime += deltaTime;
 		player->update(deltaTime);
+		updateItems(deltaTime);
 		updateEnemies(deltaTime);
-		updateTimer(deltaTime);
+		if (!player->hasClock()) updateTimer(deltaTime);
 		HUD::instance().update(player->getHealth(), player->getPuntuacion(), timer, stage);
 		
 		if (player->getHealth() == 0)
 		{
 			player->unpaint();
 			unpaintEnemies();
+			unpaintItems();
 			bPaused = true;
 			pauseDuration = 4000;
 		}
@@ -92,7 +96,7 @@ void Scene::render()
 
 	HUD::instance().render();
 
-	key.render();
+	renderItems();
 }
 
 void Scene::flipGodMode() {
@@ -128,18 +132,10 @@ void Scene::initEnemies()
 					enemy->getInitAnim(), TEX_PROGRAM);
 }
 
-void Scene::initHUD()
-{
-	HUD::instance().init();
-	HUD::instance().update(player->getHealth(), player->getPuntuacion(), timer, stage);
-}
-
 void Scene::updateEnemies(int deltaTime)
 {
 	glm::ivec2 playerTopLeft = player->getTopLeft();
 	glm::ivec2 playerBotRight = player->getBotRight();
-
-	glm::ivec2 enemyTopLeft, enemyBotRight;
 
 	for (Enemy* enemy : *enemies)
 	{
@@ -148,7 +144,7 @@ void Scene::updateEnemies(int deltaTime)
 			enemy->setPlayerTopLeft(playerTopLeft);
 			enemy->setPlayerBotRight(playerBotRight);
 
-			enemy->update(deltaTime);
+			if (!player->hasClock()) enemy->update(deltaTime);
 
 			if (!player->isHurt() && !player->isGodMode() && enemy->collision())
 				player->hit();
@@ -166,6 +162,54 @@ void Scene::unpaintEnemies()
 {
 	for (Enemy* enemy : *enemies)
 		enemy->unpaint();
+}
+
+void Scene::initItems()
+{
+	items = lvl->getItems();
+	for (Item* item : *items) {
+		item->init();
+	}
+}
+
+void Scene::updateItems(int deltaTime)
+{
+	glm::ivec2 playerTopLeft = player->getTopLeft();
+	glm::ivec2 playerBotRight = player->getBotRight();
+
+	for (Item* item : *items) {
+		if (player->getHealth() > 0 && !item->isTaken())
+		{
+			item->setPlayerTopLeft(playerTopLeft);
+			item->setPlayerBotRight(playerBotRight);
+			if (item->getType() == 'K' && map->getNumTilesPisables() == 0)
+				item->changeBPaint(true);
+
+			item->update(deltaTime);
+
+			if (item->getBPaint() && item->collision())
+				player->takeItem(item->getType());
+		}
+	}
+}
+
+void Scene::renderItems()
+{
+	for (Item* item : *items) {
+		item->render();
+	}
+}
+
+void Scene::unpaintItems()
+{
+	for (Item* item : *items)
+		item->changeBPaint(false);
+}
+
+void Scene::initHUD()
+{
+	HUD::instance().init();
+	HUD::instance().update(player->getHealth(), player->getPuntuacion(), timer, stage);
 }
 
 void Scene::updateTimer(int deltaTime)

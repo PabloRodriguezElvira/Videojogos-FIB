@@ -2,6 +2,7 @@
 #define _MENUKEYBOARD_INCLUDE
 
 #include "StateCtrl.h"
+#include "SoundCtrl.h"
 #include "KeyboardCtrl.h"
 
 class MenuKeyboard : public KeyboardCtrl
@@ -19,6 +20,7 @@ public:
 	void specialKeyPressed(int key);
 	void specialKeyReleased(int key);
 
-
+	//Menu songs:
+	string tracks[4] = { "/sounds/Menu/House.mp3", "/sounds/Menu/House.mp3", "/sound/Menu/EzloAppears.mp3", "/sound/Menu/House.mp3"};
 };
 #endif // _MENUKEYBOARD_INCLUDE

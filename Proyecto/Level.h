@@ -7,6 +7,9 @@
 #include "Vaati.h"
 #include "Moblin.h"
 #include "Stalfos.h"
+#include "Key.h"
+#include "Gem.h"
+#include "Clock.h"
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -28,6 +31,7 @@ public:
 	int getInitPlayerAnim() const { return initPlayerAnim; }
 	glm::vec2 getKeyPosition() const { return keyPosition;  }
 	std::vector<Enemy*>* getEnemies() { return &enemies; }
+	std::vector<Item*>* getItems() { return &items; }
 
 private:
 	bool loadLevel(const string& levelFile);
@@ -38,6 +42,8 @@ private:
 	std::vector<Enemy*> enemies;
 	int* lvl;
 	glm::vec2 keyPosition;
+	int totalItems;
+	std::vector<Item*> items;
 
 };
 

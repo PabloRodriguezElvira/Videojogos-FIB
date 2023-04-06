@@ -7,6 +7,7 @@
 #include "State.h"
 #include "Sprite.h"
 #include "Texture.h"
+#include "SoundCtrl.h"
 #include <vector>
 
 
@@ -62,6 +63,10 @@ private:
 		glm::vec2(0.f, 0.f),
 		glm::vec2(0.f, 0.5f)
 	};
+
+	//const SoundCtrl* soundCtrl;
+	//FMOD::Sound* music;
+	//FMOD::Channel* channel;
 
 };
 

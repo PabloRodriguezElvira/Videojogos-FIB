@@ -2,13 +2,14 @@
 
 void StateCtrl::changeTo(State* st)
 {
+	SoundCtrl::instance().endMusic();
 	st->init();
 	Game::instance().setState(st);
 }
 
 void StateCtrl::changeStage(int stage)
 {
-	
+	SoundCtrl::instance().endMusic();
 	Scene::instance().changeStage(stage);
 	Scene::instance().init();
 	Game::instance().setState(&Scene::instance());

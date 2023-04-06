@@ -17,10 +17,13 @@ class Player : public Mob
 public:
 	void hit();
 	void flipGodMode() { godMode = !godMode; }
+	void takeItem(char item);
 
 	int getHealth() { return health; }
 	bool isHurt() { return hurt; }
 	bool isGodMode() { return godMode; }
+	bool hasKey() { return key; }
+	bool hasClock() { return clock; }
 
 public:
 	int getPuntuacion();
@@ -30,6 +33,7 @@ protected:
 	void updateMob(int deltaTime);
 	void updateHurt(int deltaTime);
 	void updateMovement();
+	void updateStats(int deltaTime);
 
 	string setSpriteSheet();
 	glm::ivec2 setSpriteSize();
@@ -37,8 +41,8 @@ protected:
 	void setAnimations();
 
 private:
-	int coyote, coyoteTime, puntuacion, health, hurtTime, blink;
-	bool bJumping, bFalling, hurt, reset, godMode;
+	int coyote, coyoteTime, puntuacion, puntGoal, health, hurtTime, blink, clockTime;
+	bool bJumping, bFalling, hurt, reset, godMode, key, clock;
 
 };
 

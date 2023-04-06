@@ -13,6 +13,7 @@
 #include "NumberGenerator.h"
 #include "HUD.h"
 #include "Key.h"
+#include "Gem.h"
 
 // Scene contains all the entities of our game.
 // It is responsible for updating and render them.
@@ -53,6 +54,11 @@ private:
 	void renderEnemies();
 	void unpaintEnemies();
 
+	void initItems();
+	void updateItems(int contador);
+	void renderItems();
+	void unpaintItems();
+
 	void initHUD();
 	void updateTimer(int deltaTime);
 
@@ -64,6 +70,7 @@ private:
 	Level* lvl;
 	Player* player;
 	std::vector<Enemy*>* enemies;
+	std::vector<Item*>* items;
 	float currentTime;
 
 	//Game background
@@ -76,7 +83,7 @@ private:
 
 	int stage = 0;
 	int pauseDuration, timer, timerCooldown;
-	Key key;
+
 };
 
 

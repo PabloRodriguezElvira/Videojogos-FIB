@@ -87,3 +87,7 @@ void Game::mousePress(int button)
 void Game::mouseRelease(int button)
 {
 }
+
+//const SoundCtrl* Game::getSoundController() const {
+//	return &soundCtrl;
+//}

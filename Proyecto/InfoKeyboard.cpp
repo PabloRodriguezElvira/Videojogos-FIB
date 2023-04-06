@@ -8,7 +8,7 @@ void InfoKeyboard::keyPressed(int key)
 {
 	//If esc is pressed, return to Menu.
 	if (key == 27 || key == 13) {
-		StateCtrl::instance().unpause(&Menu::instance());
+		StateCtrl::instance().changeTo(&Menu::instance());
 	}
 
 	if (key == '1' || key == '2' || key == '3')

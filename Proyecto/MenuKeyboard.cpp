@@ -2,6 +2,7 @@
 #include <GL/glut.h>
 #include "MenuKeyboard.h"
 #include "Game.h"
+#include <iostream>
 
 
 void MenuKeyboard::keyPressed(int key)
@@ -15,14 +16,13 @@ void MenuKeyboard::keyPressed(int key)
 	}
 	//Enter:
 	else if (key == 13) {
-		switch (mode) {
-			//ESCENA:
-			case 0: StateCtrl::instance().changeTo(&Scene::instance()); break;
-			//OTROS MODOS (OPTIONS, CREDITS Y EXIT)
-			default: {
-				Info::instance().setMode(mode);
-				StateCtrl::instance().changeTo(&Info::instance());
-			}
+		if (mode == 0) //ESCENA
+			StateCtrl::instance().changeTo(&Scene::instance());
+
+		else
+		{
+			Info::instance().setMode(mode);
+			StateCtrl::instance().changeTo(&Info::instance());
 		}
 	}
 

@@ -1,22 +1,25 @@
 #include "Item.h"
+#include <iostream>
 
-void Item::init(glm::vec2 posTile)
+void Item::init()
 {
+	timeToDisappear = 10000;
 	initTextures();
 	initSprites();
-	glm::vec2 pos = glm::vec2(SCREEN_X + posTile.x * TILESIZE.x, SCREEN_Y + posTile.y * TILESIZE.y);
-	setPosition(pos + glm::vec2(TRANSLATE.x, TRANSLATE.y) - glm::vec2(0, TILESIZE.y));
+	setPosition();
 	bPaint = false;
+	taken = false;
 }
 
-void Item::setPosition(glm::vec2 pos)
+void Item::update(int deltaTime)
 {
-	this->itemSprite->setPosition(pos);
+	updateItem(deltaTime);
+	itemSprite->update(deltaTime);
 }
 
-bool Item::getBPaint()
+void Item::render()
 {
-	return bPaint;
+	if (bPaint) itemSprite->render();
 }
 
 void Item::initTextures()
@@ -26,12 +29,25 @@ void Item::initTextures()
 	itemTex.setMagFilter(GL_NEAREST);
 }
 
-void Item::render()
+void Item::setPosition()
 {
-	if (bPaint) itemSprite->render();
+	glm::ivec2 tileMapDispl = glm::ivec2(SCREEN_X + TRANSLATE.x, SCREEN_Y + TRANSLATE.y);
+	position = glm::ivec2(initTile.x * TILESIZE.x, initTile.y * TILESIZE.y - hitboxSize.y);
+	this->itemSprite->setPosition(glm::vec2(float(tileMapDispl.x + position.x), float(tileMapDispl.y + position.y)));
 }
 
-void Item::changePaint(bool b)
+bool Item::collision()
 {
-	bPaint = b;
+	glm::ivec2 topLeft = getTopLeft();
+	glm::ivec2 botRight = getBotRight();
+
+	if (!(playerBotRight.x < topLeft.x || botRight.x < playerTopLeft.x) &&
+		!(playerBotRight.y < topLeft.y || botRight.y < playerTopLeft.y))
+	{
+		std::cout << type << std::endl;
+		bPaint = false;
+		taken = true;
+		return true;
+	}
+	return false;
 }

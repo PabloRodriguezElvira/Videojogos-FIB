@@ -15,13 +15,10 @@ void DialogKeyboard::keyPressed(int key)
 	//Enter al Yes.
 	else if (key == 13 && mode == 0) {
 		//Si estamos en Menu, salimos del juego.
-		if (st == &Menu::instance()) {
-			Game::instance().setBplay(false);
-		}
+		if (st == &Menu::instance()) Game::instance().setBplay(false);
+
 		//Si no, volvemos al Menu.
-		else {
-			StateCtrl::instance().unpause(&Menu::instance());
-		}
+		else StateCtrl::instance().changeTo(&Menu::instance());
 	}
 
 	if (key == '1' || key == '2' || key == '3')

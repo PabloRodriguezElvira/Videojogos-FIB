@@ -94,6 +94,8 @@ bool TileMap::loadLevel(const string &levelFile)
 				map[j*mapSize.x+i] = (tile - int('0'));
 			else
 				map[j * mapSize.x + i] = 10 + (tile - int('A'));
+			//Incrementar cantidad de tiles pisables.
+			if (tile >= '1' && tile <= '4') numTilesPisables += 1;
 		}
 		fin.get(tile);
 #ifndef _WIN32
@@ -376,6 +378,7 @@ void TileMap::paintTiles(const glm::ivec2& pos, const glm::ivec2& hitSize, const
 		{
 			//Pintar tile: (si es diferente del 0 - aire).
 			*puntuacion = *puntuacion + 10;
+			numTilesPisables -= 1;
 			map[posTile] += 4;
 			prepareArrays(glm::vec2(SCREEN_X, SCREEN_Y), TEX_PROGRAM);
 		}

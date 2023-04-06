@@ -20,10 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimKeyframes.h" />
+    <ClInclude Include="Clock.h" />
     <ClInclude Include="ConfirmationDialog.h" />
     <ClInclude Include="Definitions.h" />
     <ClInclude Include="DialogKeyboard.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Gem.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Info.h" />
     <ClInclude Include="InfoKeyboard.h" />
@@ -42,6 +45,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderCtrl.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="SoundCtrl.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StageDisplay.h" />
     <ClInclude Include="Stalfos.h" />
@@ -53,9 +57,11 @@
     <ClInclude Include="VidasDisplay.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Clock.cpp" />
     <ClCompile Include="ConfirmationDialog.cpp" />
     <ClCompile Include="DialogKeyboard.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Gem.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Info.cpp" />
     <ClCompile Include="InfoKeyboard.cpp" />
@@ -74,6 +80,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderCtrl.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="SoundCtrl.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StageDisplay.cpp" />
     <ClCompile Include="Stalfos.cpp" />
@@ -142,13 +149,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>libs\Simple OpenGL Image Library\src;libs\freeglut\include;libs\glew-1.13.0\include;libs\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>libs\FMODapi\studio\inc;libs\FMODapi\lowlevel\inc;libs\Simple OpenGL Image Library\src;libs\freeglut\include;libs\glew-1.13.0\include;libs\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>libs\Simple OpenGL Image Library\projects\VC9\Debug;libs\freeglut\lib;libs\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SOIL.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>libs\FMODapi\lowlevel\lib;libs\FMODapi\studio\lib;libs\Simple OpenGL Image Library\projects\VC9\Debug;libs\freeglut\lib;libs\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SOIL.lib;glew32.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

@@ -25,14 +25,19 @@ void Player::initMob()
 	coyoteTime = 4;
 	bFalling = false;
 	bJumping = false;
-
-	puntuacion = 0;
+	
 	health = 3;
 	hurtTime = 0;
 	blink = 5;
 	hurt = false;
 	reset = true;
 	godMode = false;
+
+	puntuacion = 0;
+	puntGoal = 1000;
+	key = false;
+	clock = false;
+	clockTime = 5000;
 
 	hitboxSize = glm::ivec2(16, 32);
 	hitboxPos = glm::ivec2(17, 26);
@@ -42,7 +47,7 @@ void Player::updateMob(int deltaTime)
 {
 	if (hurt) updateHurt(deltaTime);
 	if (hurtTime <= 1000) updateMovement();
-
+	updateStats(deltaTime);
 }
 
 void Player::updateHurt(int deltaTime)
@@ -84,8 +89,6 @@ void Player::updateHurt(int deltaTime)
 			sprite->changeAnimation(HURT_RIGHT);
 	}
 }
-
-
 
 void Player::updateMovement()
 {
@@ -287,6 +290,24 @@ void Player::updateMovement()
 	}
 }
 
+void Player::updateStats(int deltaTime)
+{
+	while (puntGoal <= puntuacion)
+	{
+		++health;
+		puntGoal += 1000;
+	}
+	if (clock)
+	{
+		clockTime -= deltaTime;
+		if (clockTime <= 0)
+		{
+			clock = false;
+			clockTime = 5000;
+		}
+	}
+		
+}
 
 void Player::hit()
 {
@@ -311,6 +332,22 @@ void Player::hit()
 				sprite->changeAnimation(FALL_RIGHT);
 			else sprite->changeAnimation(HURT_RIGHT);
 		}
+	}
+}
+
+void Player::takeItem(char item)
+{
+	if (item == 'K')
+	{
+		key = true;
+	}
+	else if (item == 'G')
+	{
+		puntuacion += 500;
+	}
+	if (item == 'C')
+	{
+		clock = true;
 	}
 }
 

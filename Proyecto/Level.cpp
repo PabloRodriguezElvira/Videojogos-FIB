@@ -51,7 +51,7 @@ bool Level::loadLevel(const string& levelFile)
 	getline(fin, line);																// Read key position.
 	sstream.str(line);
 	sstream >> keyPosition.x >> keyPosition.y;
-	getline(fin, line);																// Initial player tile
+	getline(fin, line);																// Initial player tile & anim
 	sstream.str(line);
 	sstream >> initPlayerTile.x >> initPlayerTile.y >> initPlayerAnim;
 	getline(fin, line);																// Number of enemies
@@ -77,6 +77,32 @@ bool Level::loadLevel(const string& levelFile)
 		enemy->setInitAnim(initAnim);
 
 		enemies.push_back(enemy);
+	}
+
+	//Read items:
+	char itemType;
+	int timeToAppear;
+	glm::ivec2 initialTile;
+	getline(fin, line);
+	sstream.str(line);
+	sstream >> totalItems;
+
+	for (int i = 0; i < totalItems; ++i)
+	{
+		Item* item;
+		getline(fin, line);
+		sstream.str(line);
+		sstream >> itemType >> initialTile.x >> initialTile.y >> timeToAppear;
+
+		if (itemType == 'K') item = new Key();
+		else if (itemType == 'G') item = new Gem();
+		else item = new Clock();
+
+		item->setInitialTile(initialTile);
+		item->setType(itemType);
+		item->setTimeToAppear(timeToAppear);
+
+		items.push_back(item);
 	}
 	
 	fin.close();
