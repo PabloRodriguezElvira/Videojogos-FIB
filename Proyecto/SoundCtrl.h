@@ -30,6 +30,9 @@ public:
 	//Variables para el sonido:
 	FMOD::Sound* music;
 	FMOD::Channel* channel;	
+
+	FMOD::Sound* musicSFX;
+	FMOD::Channel* channelSFX;	
 };
 
 #endif

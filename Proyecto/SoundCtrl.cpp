@@ -3,11 +3,18 @@
 #include <fmod_errors.h>
 
 
+//void SoundCtrl::putSFX(std::string track, float volume)
+//{
+//	loadSound(track, FMOD_LOOP_OFF | FMOD_CREATESTREAM);
+//	playSound();
+//	setVolume(volume);
+//}
+
 void SoundCtrl::putSFX(std::string track, float volume)
 {
-	loadSound(track, FMOD_LOOP_OFF | FMOD_CREATESTREAM);
-	playSound();
-	setVolume(volume);
+	lowLevelSystem->createSound(track.c_str(), FMOD_LOOP_OFF | FMOD_CREATESTREAM, nullptr, &musicSFX);
+	lowLevelSystem->playSound(musicSFX, nullptr, false, &channelSFX);
+	channelSFX->setVolume(volume);
 }
 
 void SoundCtrl::putTrack(std::string track, float volume)

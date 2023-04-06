@@ -179,15 +179,18 @@ void Scene::render()
 		ShaderCtrl::instance().setTranslateModelview();
 		map->render();
 		if (bPaused) readySprite->render();
-		
+		if (player->hasWon()) stClearSprite->render();
 		renderItems();
 		if (player->bePainted()) player->render();
 		renderEnemies();
 
 		HUD::instance().render();
 	}
-	else {
+	else if (gameOver) {
 		gameOverSprite->render();
+	}
+	else if (winScreen) {
+		winSprite->render();
 	}
 }
 
@@ -362,6 +365,14 @@ void Scene::initTextures()
 	gameOverTex.loadFromFile("images/HUD/GameOver/gameOver.png", TEXTURE_PIXEL_FORMAT_RGBA);
 	gameOverTex.setMinFilter(GL_NEAREST);
 	gameOverTex.setMagFilter(GL_NEAREST);
+
+	winTex.loadFromFile("images/HUD/youWin.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	winTex.setMinFilter(GL_NEAREST);
+	winTex.setMagFilter(GL_NEAREST);
+
+	stClearTex.loadFromFile("images/HUD/stageClear.png", TEXTURE_PIXEL_FORMAT_RGBA);
+	stClearTex.setMinFilter(GL_NEAREST);
+	stClearTex.setMagFilter(GL_NEAREST);
 }
 
 
@@ -380,5 +391,13 @@ void Scene::initBackground()
 	//Game Over sprite:
 	gameOverSprite = Sprite::createSprite(glm::vec2(180, 50), glm::vec2(1.f, 1.f), &gameOverTex, &TEX_PROGRAM);	
 	gameOverSprite->setPosition(glm::vec2(SCREEN_WIDTH/2.f - 90.f, SCREEN_HEIGHT/2.f - 25.f));
+
+	//Win sprite
+	winSprite = Sprite::createSprite(glm::vec2(180, 50), glm::vec2(1.f, 1.f), &winTex, &TEX_PROGRAM);	
+	winSprite->setPosition(glm::vec2(SCREEN_WIDTH/2.f - 90.f, SCREEN_HEIGHT/2.f - 25.f));
+
+	//Stage clear sprite
+	stClearSprite = Sprite::createSprite(glm::vec2(190, 80), glm::vec2(1.f, 1.f), &stClearTex, &TEX_PROGRAM);	
+	stClearSprite->setPosition(glm::vec2(SCREEN_WIDTH/2.f - 95.f, SCREEN_HEIGHT/2.f - 40.f));
 }
 

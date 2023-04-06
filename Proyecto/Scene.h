@@ -87,6 +87,14 @@ private:
 	Texture gameOverTex;
 	Sprite* gameOverSprite;
 
+	//Win Screen: 
+	Texture winTex;
+	Sprite* winSprite;
+
+	//Stage Clear: 
+	Texture stClearTex;
+	Sprite* stClearSprite;
+
 	int stage = 0;
 	int pauseDuration, timer, timerCooldown, deathDuration, gameOverDuration, winDuration, timeToPoints, timeToPointsDuration, winScreenDuration;
 
