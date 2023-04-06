@@ -254,7 +254,7 @@ bool TileMap::collisionMoveLeftEnemy(const glm::ivec2& pos, const glm::ivec2& hi
 	for (int y = y0; y <= y1; y++)
 	{
 		posTile = y * mapSize.x + x;
-		if (map[posTile] > 8 && y0 != 0)
+		if (map[posTile] > 8)
 		{
 			//Actualizar posición de X.
 			if (tileSize.x * (x + 1) - (*posX + hitPos.x) <= moveStep + 1)
@@ -271,14 +271,14 @@ bool TileMap::collisionMoveRightEnemy(const glm::ivec2& pos, const glm::ivec2& h
 {
 	int x, y0, y1;
 
-	x = (pos.x + hitPos.x) / tileSize.x;
+	x = (pos.x + hitPos.x + hitSize.x - 1) / tileSize.x;
 	y0 = (pos.y + hitPos.y) / tileSize.y;
 	y1 = (pos.y + hitPos.y + hitSize.y - 1) / tileSize.y;
 	int posTile;
 	for (int y = y0; y <= y1; y++)
 	{
 		posTile = y * mapSize.x + x;
-		if (map[posTile] > 8 && y0 != 0)
+		if (map[posTile] > 8)
 		{
 			//Actualizar posición de X.
 			if (*posX + hitPos.x + hitSize.x - tileSize.x * x <= moveStep)

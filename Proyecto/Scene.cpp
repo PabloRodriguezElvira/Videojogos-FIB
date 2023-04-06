@@ -53,7 +53,7 @@ void Scene::init()
 	musicChanged = false;
 	pauseDuration = 2800;
 	deathDuration = 3000;
-	gameOverDuration = 5000;
+	gameOverDuration = 4800;
 
 	currentTime = 0.0f;
 	timerCooldown = 1000;
@@ -82,6 +82,7 @@ void Scene::update(int deltaTime)
 			musicChanged = true;
 		}
 		if (deathDuration > 0) {
+			player->update(deltaTime);
 			deathDuration -= deltaTime;
 			if (deathDuration <= 0)
 			{
@@ -101,7 +102,6 @@ void Scene::update(int deltaTime)
 		
 		if (player->getHealth() == 0)
 		{
-			player->unpaint();
 			unpaintEnemies();
 			unpaintItems();
 		}
